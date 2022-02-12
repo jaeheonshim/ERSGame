@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame;
+package com.jaeheonshim.ersgame.game;
 
 public enum CardType {
     CLOVER_A("Clovers_A_white"),

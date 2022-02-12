@@ -4,6 +4,54 @@ size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+Clovers_10_white
+  rotate: false
+  xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_2_white
+  rotate: false
+  xy: 691, 965
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_3_white
+  rotate: false
+  xy: 1348, 965
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_4_white
+  rotate: false
+  xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_5_white
+  rotate: false
+  xy: 1316, 33
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 934
+  size: 687, 961
+  orig: 687, 961
+  offset: 0, 0
+  index: -1
+
+cards2.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
 Clovers_6_white
   rotate: false
   xy: 2, 934
@@ -11,23 +59,98 @@ Clovers_6_white
   orig: 655, 930
   offset: 0, 0
   index: -1
-Clovers_Jack_white
+Clovers_7_white
   rotate: false
-  xy: 1316, 934
+  xy: 2, 2
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
   index: -1
-Clovers_Queen_white
+Clovers_8_white
   rotate: false
   xy: 659, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
   index: -1
-Hearts_King_white
+Clovers_9_white
   rotate: false
   xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_A_white
+  rotate: false
+  xy: 1316, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_Jack_white
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+
+cards3.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Clovers_King_white
+  rotate: false
+  xy: 2, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Clovers_Queen_white
+  rotate: false
+  xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_10_white
+  rotate: false
+  xy: 659, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_2_white
+  rotate: false
+  xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_3_white
+  rotate: false
+  xy: 1316, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_4_white
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+
+cards4.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Hearts_5_white
+  rotate: false
+  xy: 2, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
@@ -35,6 +158,75 @@ Hearts_King_white
 Hearts_6_white
   rotate: false
   xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_7_white
+  rotate: false
+  xy: 659, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_8_white
+  rotate: false
+  xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_9_white
+  rotate: false
+  xy: 1316, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_A_white
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+
+cards5.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Hearts_Jack_white
+  rotate: false
+  xy: 2, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_King_white
+  rotate: false
+  xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Hearts_Queen_white
+  rotate: false
+  xy: 659, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Pikes_10_white
+  rotate: false
+  xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Pikes_2_white
+  rotate: false
+  xy: 1316, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
@@ -47,25 +239,11 @@ Pikes_3_white
   offset: 0, 0
   index: -1
 
-cards2.png
+cards6.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Hearts_2_white
-  rotate: false
-  xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_3_white
-  rotate: false
-  xy: 1316, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
 Pikes_4_white
   rotate: false
   xy: 2, 934
@@ -94,22 +272,91 @@ Pikes_7_white
   orig: 655, 930
   offset: 0, 0
   index: -1
+Pikes_8_white
+  rotate: false
+  xy: 1316, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Pikes_9_white
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
 
-cards3.png
+cards7.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Hearts_4_white
+Pikes_A_white
   rotate: false
   xy: 2, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
   index: -1
-Hearts_5_white
+Pikes_Jack_white
   rotate: false
   xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Pikes_King_white
+  rotate: false
+  xy: 659, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Pikes_Queen_white
+  rotate: false
+  xy: 659, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Tiles_10_white
+  rotate: false
+  xy: 1316, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Tiles_2_white
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+
+cards8.png
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+Tiles_3_white
+  rotate: false
+  xy: 2, 934
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Tiles_4_white
+  rotate: false
+  xy: 2, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1
+Tiles_5_white
+  rotate: false
+  xy: 659, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
@@ -135,50 +382,29 @@ Tiles_8_white
   orig: 655, 930
   offset: 0, 0
   index: -1
-Tiles_A_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
 
-cards4.png
+cards9.png
 size: 2048, 2048
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
-Clovers_8_white
+Tiles_9_white
   rotate: false
-  xy: 1316, 2
+  xy: 2, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
   index: -1
-Clovers_A_white
-  rotate: false
-  xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_10_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_10_white
+Tiles_A_white
   rotate: false
   xy: 2, 2
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
   index: -1
-Tiles_9_white
+Tiles_Jack_white
   rotate: false
-  xy: 2, 934
+  xy: 659, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
@@ -190,228 +416,9 @@ Tiles_King_white
   orig: 655, 930
   offset: 0, 0
   index: -1
-
-cards5.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-Clovers_10_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Clovers_2_white
-  rotate: false
-  xy: 2, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Clovers_9_white
-  rotate: false
-  xy: 2, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_Queen_white
-  rotate: false
-  xy: 659, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_A_white
-  rotate: false
-  xy: 1316, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_King_white
-  rotate: false
-  xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-
-cards6.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-Hearts_7_white
-  rotate: false
-  xy: 1316, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_9_white
-  rotate: false
-  xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_Jack_white
-  rotate: false
-  xy: 2, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_2_white
-  rotate: false
-  xy: 2, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_8_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_9_white
-  rotate: false
-  xy: 659, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-
-cards7.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-Hearts_8_white
-  rotate: false
-  xy: 2, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_A_white
-  rotate: false
-  xy: 2, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_Jack_white
-  rotate: false
-  xy: 1316, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Pikes_Queen_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_3_white
-  rotate: false
-  xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
 Tiles_Queen_white
   rotate: false
-  xy: 659, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-
-cards8.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-Clovers_5_white
-  rotate: false
-  xy: 1316, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Clovers_7_white
-  rotate: false
-  xy: 659, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Clovers_King_white
-  rotate: false
   xy: 1316, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_2_white
-  rotate: false
-  xy: 2, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_4_white
-  rotate: false
-  xy: 2, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_5_white
-  rotate: false
-  xy: 659, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-
-cards9.png
-size: 2048, 2048
-format: RGBA8888
-filter: Nearest, Nearest
-repeat: none
-Clovers_3_white
-  rotate: false
-  xy: 2, 934
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Clovers_4_white
-  rotate: false
-  xy: 659, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Hearts_10_white
-  rotate: false
-  xy: 2, 2
-  size: 655, 930
-  orig: 655, 930
-  offset: 0, 0
-  index: -1
-Tiles_Jack_white
-  rotate: false
-  xy: 659, 934
   size: 655, 930
   orig: 655, 930
   offset: 0, 0
