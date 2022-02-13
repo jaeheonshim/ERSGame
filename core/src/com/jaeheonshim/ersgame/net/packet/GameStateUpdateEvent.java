@@ -9,6 +9,7 @@ public class GameStateUpdateEvent {
     public CardType[] pile;
     public PlayerInfo[] players;
     public String currentTurnUUID;
+    public String gameAdminUUID;
 
     public static class PlayerInfo {
         public String uuid;

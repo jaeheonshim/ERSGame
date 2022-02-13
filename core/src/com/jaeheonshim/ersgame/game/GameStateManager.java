@@ -46,6 +46,10 @@ public class GameStateManager {
             gameState.setCurrentTurn(event.currentTurnUUID);
         }
 
+        if(event.gameAdminUUID != null) {
+            gameState.setGameAdmin(gameState.getPlayerMap().get(event.gameAdminUUID));
+        }
+
         gameState.setPile(new LinkedList<CardType>(Arrays.asList(event.pile)));
         fireUpdate();
     }

@@ -61,6 +61,7 @@ public class GamesManager {
         updateEvent.currentTurnUUID = gameState.getCurrentTurn() == null ? null : gameState.getCurrentTurn().getUuid();
         updateEvent.players = new GameStateUpdateEvent.PlayerInfo[gameState.getPlayerMap().size()];
         updateEvent.joinCode = gameState.getJoinCode();
+        updateEvent.gameAdminUUID = gameState.getGameAdmin().getUuid();
 
         int i = 0;
         for(Player player : gameState.getPlayers()) {

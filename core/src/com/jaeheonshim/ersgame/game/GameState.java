@@ -7,6 +7,7 @@ public class GameState {
     private Deque<CardType> pile = new LinkedList<>();
     private Map<String, Player> playerMap = new HashMap<>();
     private Player currentTurn;
+    private Player gameAdmin;
     private GameEventListener gameEventListener = new GameEventListener();
 
     public GameState() {
@@ -34,6 +35,9 @@ public class GameState {
     public void addNewPlayer(Player player) {
         player.setOrdinal(playerMap.size());
         playerMap.put(player.getUuid(), player);
+        if(gameAdmin == null) {
+            gameAdmin = player;
+        }
 
         gameEventListener.onPlayerJoin(this, player);
     }
@@ -95,6 +99,14 @@ public class GameState {
 
     public GameEventListener getGameEventListener() {
         return gameEventListener;
+    }
+
+    public Player getGameAdmin() {
+        return gameAdmin;
+    }
+
+    public void setGameAdmin(Player gameAdmin) {
+        this.gameAdmin = gameAdmin;
     }
 
     public static void main(String[] args) {

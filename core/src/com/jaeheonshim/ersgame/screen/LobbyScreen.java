@@ -25,6 +25,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
     private Table table;
 
     private ERSLabel playersLabel;
+    private ERSLabel titleLabel;
 
     public LobbyScreen(ERSGame game) {
         this.game = game;
@@ -35,7 +36,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         table.setDebug(true);
         stage.addActor(table);
 
-        ERSLabel titleLabel = new ERSLabel("Jaeheon's game", StyleUtil.labelStyle64(game), game);
+        titleLabel = new ERSLabel("", StyleUtil.labelStyle64(game), game);
         titleLabel.setAlignment(Align.center);
 
         playersLabel = new ERSLabel(getPlayerCount() + " players", StyleUtil.labelStyle24(game), game);
@@ -48,6 +49,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         table.add(playersLabel).fill().padTop(8).expandX();
         table.pad(32);
 
+        setTitleLabel();
         GameStateManager.getInstance().addUpdateListener(this);
     }
 
@@ -62,6 +64,12 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         ScreenUtils.clear(new Color(232 / 255f, 232 / 255f, 232 / 255f, 1));
         stage.act(delta);
         stage.draw();
+    }
+
+    public void setTitleLabel() {
+        GameState gameState = GameStateManager.getInstance().getGameState();
+        if(gameState.getGameAdmin() == null) return;
+        titleLabel.setText(String.format("%s's game", gameState.getGameAdmin().getName()));
     }
 
     public int getPlayerCount() {
@@ -95,6 +103,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
 
     @Override
     public void updateOccurred(GameState gameState) {
+        setTitleLabel();
         playersLabel.setText(getPlayerCount() + " players");
     }
 }
