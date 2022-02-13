@@ -35,7 +35,7 @@ public class PlayersList extends ScrollPane {
             PlayerListItem listItem = new PlayerListItem(game, player, gameState);
             playerListItemList.add(listItem);
 
-            table.add(listItem).expandX().fillX().height(68);
+            table.add(listItem).expandX().fillX().height(72);
             table.row();
         }
 

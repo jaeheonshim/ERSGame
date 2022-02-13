@@ -14,6 +14,7 @@ import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.scene.CardActor;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
+import com.jaeheonshim.ersgame.scene.PlayButton;
 import com.jaeheonshim.ersgame.scene.PlayersList;
 
 public class GameScreen implements Screen {
@@ -57,6 +58,8 @@ public class GameScreen implements Screen {
         table.add(playersList).expandX().fillX().maxHeight(400).top();
         table.row();
         table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(200);
+        table.row();
+        table.add(new PlayButton(game));
 
         stage.addActor(table);
         stage.addActor(animationCard);
