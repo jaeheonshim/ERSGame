@@ -123,6 +123,7 @@ project(":server") {
 
 
     dependencies {
+        implementation project(":core")
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
     }

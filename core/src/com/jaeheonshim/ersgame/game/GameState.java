@@ -3,9 +3,11 @@ package com.jaeheonshim.ersgame.game;
 import java.util.*;
 
 public class GameState {
+    private String joinCode;
     private Deque<CardType> pile = new LinkedList<>();
     private Map<String, Player> playerMap = new HashMap<>();
     private Player currentTurn;
+    private GameEventListener gameEventListener = new GameEventListener();
 
     public GameState() {
         pile.addLast(CardType.SPADE_2);
@@ -18,6 +20,10 @@ public class GameState {
         return pile;
     }
 
+    public void setPile(Deque<CardType> pile) {
+        this.pile = pile;
+    }
+
     public void initializeNew() {
         List<CardType> newDeck = CardUtil.randomDeck();
         List<Player> players = new ArrayList<>(playerMap.values());
@@ -28,6 +34,8 @@ public class GameState {
     public void addNewPlayer(Player player) {
         player.setOrdinal(playerMap.size());
         playerMap.put(player.getUuid(), player);
+
+        gameEventListener.onPlayerJoin(this, player);
     }
 
     public List<CardType> getTopN(int n) {
@@ -55,8 +63,38 @@ public class GameState {
         return playerMap.values();
     }
 
+    public void setCurrentTurn(String uuid) {
+        currentTurn = playerMap.get(uuid);
+    }
+
     public Player getCurrentTurn() {
         return currentTurn;
+    }
+
+    public String getJoinCode() {
+        return joinCode;
+    }
+
+    public void setJoinCode(String joinCode) {
+        this.joinCode = joinCode;
+    }
+
+    public boolean usernameExists(String username) {
+        for(Player player : playerMap.values()) {
+            if(player.getName().toLowerCase().trim().equals(username.toLowerCase().trim())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void setGameEventListener(GameEventListener gameEventListener) {
+        this.gameEventListener = gameEventListener;
+    }
+
+    public GameEventListener getGameEventListener() {
+        return gameEventListener;
     }
 
     public static void main(String[] args) {

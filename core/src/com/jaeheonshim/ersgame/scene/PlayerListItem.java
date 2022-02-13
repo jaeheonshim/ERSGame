@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateManager;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 
@@ -19,6 +20,7 @@ public class PlayerListItem extends Table {
     private NinePatchDrawable border;
     private Label.LabelStyle labelStyle;
     private Label cardCountLabel;
+    private ERSLabel nameLabel;
 
     public PlayerListItem(ERSGame game, Player player, GameState gameState) {
         this.player = player;
@@ -27,8 +29,9 @@ public class PlayerListItem extends Table {
         labelStyle = new Label.LabelStyle(game.assets.get(game.poppins64, BitmapFont.class), Color.BLACK);
         cardCountLabel = new ERSLabel(Integer.toString(player.getCards().size()), labelStyle, game);
 
+        nameLabel = new ERSLabel(player.getName(), labelStyle, game);
         setBackground(border);
-        add(new ERSLabel(player.getName(), labelStyle, game)).expandX().fill().pad(0, 8, 0, 8);
+        add(nameLabel).expandX().fill().pad(8);
         add(cardCountLabel).right();
 
         updateState();
@@ -39,6 +42,10 @@ public class PlayerListItem extends Table {
 
         if(gameState.getCurrentTurn() == player) {
             setColor(Color.YELLOW);
+        }
+
+        if(player.getUuid().equals(GameStateManager.getInstance().getSelfUUID())) {
+            nameLabel.setText(nameLabel.getText() + " (me)");
         }
     }
 }

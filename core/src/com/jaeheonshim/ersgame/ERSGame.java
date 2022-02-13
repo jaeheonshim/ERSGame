@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.screen.GameScreen;
 import com.jaeheonshim.ersgame.screen.LobbyScreen;
+import com.jaeheonshim.ersgame.util.RandomNameGenerator;
+
+import java.io.IOException;
 
 public class ERSGame extends Game {
 	public final String cardsAtlas = "cards/cards.atlas";
@@ -39,6 +43,8 @@ public class ERSGame extends Game {
 	@Override
 	public void create () {
 		loadAssets();
+		NetManager.getInstance().connect();
+		RandomNameGenerator.initialize();
 		setScreen(new LobbyScreen(this));
 	}
 

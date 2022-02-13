@@ -10,9 +10,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.scene.PlayersList;
 import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
+import com.jaeheonshim.ersgame.util.RandomNameGenerator;
 
 public class LobbyScreen implements Screen {
     private ERSGame game;
@@ -44,6 +46,7 @@ public class LobbyScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        NetManager.getInstance().join("000000", RandomNameGenerator.randomName());
     }
 
     @Override

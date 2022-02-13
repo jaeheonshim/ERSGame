@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.GameStateManager;
+import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
 import com.jaeheonshim.ersgame.game.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayersList extends ScrollPane {
+public class PlayersList extends ScrollPane implements GameStateUpdateListener {
     private ERSGame game;
     private Table table = new Table();
 
@@ -40,11 +41,30 @@ public class PlayersList extends ScrollPane {
         }
 
         setActor(table);
+
+        GameStateManager.getInstance().addUpdateListener(this);
     }
 
-    public void updateState() {
-        for(PlayerListItem listItem : playerListItemList) {
-            listItem.updateState();
+    @Override
+    public void updateOccurred(GameState gameState) {
+        if(gameState.getPlayers().size() != playerListItemList.size()) {
+            table.clearChildren();
+            playerListItemList.clear();
+
+            List<Player> players = new ArrayList<>(gameState.getPlayers());
+            Collections.sort(players);
+
+            for(Player player : players) {
+                PlayerListItem listItem = new PlayerListItem(game, player, gameState);
+                playerListItemList.add(listItem);
+
+                table.add(listItem).expandX().fillX().height(72);
+                table.row();
+            }
+        } else {
+            for(PlayerListItem listItem : playerListItemList) {
+                listItem.updateState();
+            }
         }
     }
 }
