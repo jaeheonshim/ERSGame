@@ -423,3 +423,10 @@ Tiles_Queen_white
   orig: 655, 930
   offset: 0, 0
   index: -1
+back
+  rotate: false
+  xy: 1316, 2
+  size: 655, 930
+  orig: 655, 930
+  offset: 0, 0
+  index: -1

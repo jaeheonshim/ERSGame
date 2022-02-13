@@ -4,7 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
 
@@ -14,6 +18,7 @@ public class CardActor extends Actor {
     private TextureRegion shadowRegion;
 
     private boolean shadow = true;
+    private boolean flipped = false;
 
     private CardType type;
 
@@ -39,7 +44,26 @@ public class CardActor extends Actor {
         }
 
         TextureRegion region = atlas.findRegion(type.filename);
+
+        if(flipped) {
+            region = atlas.findRegion("back");
+        }
+
         batch.draw(region, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+    }
+
+    public void flip() {
+        addAction(
+                new SequenceAction(
+                        ActionUtil.flipOut(getX(), getWidth(), 0.15f),
+                        new Action() {
+                            @Override
+                            public boolean act(float delta) {
+                                flipped = !flipped;
+                                return true;
+                            }
+                        },
+                        ActionUtil.flipIn(getX(), getWidth(), 0.15f)));
     }
 
     public CardType getType() {

@@ -32,6 +32,7 @@ public class PileDisplayActor extends Stack {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
         for(int i = 0; i < cardActors.length; i++) {
             int pileSize = gameState.getPile().size();
             if(pileSize < i + 1) break;
