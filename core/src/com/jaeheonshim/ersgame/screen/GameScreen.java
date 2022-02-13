@@ -3,14 +3,12 @@ package com.jaeheonshim.ersgame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
@@ -25,6 +23,7 @@ public class GameScreen implements Screen {
 
     private PileDisplayActor pileDisplayActor;
     private PlayersList playersList;
+    private CardActor animationCard;
 
     public GameScreen(ERSGame game) {
         this.game = game;
@@ -34,6 +33,18 @@ public class GameScreen implements Screen {
 
         pileDisplayActor = new PileDisplayActor(game, new GameState());
         playersList = new PlayersList(game);
+        animationCard = new CardActor(game);
+        animationCard.setFlipped(true);
+        animationCard.setType(CardType.CLOVER_2);
+        animationCard.setShadow(false);
+        animationCard.setVisible(false);
+
+        stage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false);
+            }
+        });
     }
 
     @Override
@@ -46,6 +57,7 @@ public class GameScreen implements Screen {
         table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(140);
 
         stage.addActor(table);
+        stage.addActor(animationCard);
     }
 
     @Override
