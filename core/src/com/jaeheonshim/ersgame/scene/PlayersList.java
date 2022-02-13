@@ -29,6 +29,18 @@ public class PlayersList extends ScrollPane implements GameStateUpdateListener {
 
         GameState gameState = GameStateManager.getInstance().getGameState();
 
+        setupListElements(gameState);
+
+        setActor(table);
+        setDebug(true);
+
+        GameStateManager.getInstance().addUpdateListener(this);
+    }
+
+    private void setupListElements(GameState gameState) {
+        table.clearChildren();
+        playerListItemList.clear();
+
         List<Player> players = new ArrayList<>(gameState.getPlayers());
         Collections.sort(players);
 
@@ -36,31 +48,16 @@ public class PlayersList extends ScrollPane implements GameStateUpdateListener {
             PlayerListItem listItem = new PlayerListItem(game, player, gameState);
             playerListItemList.add(listItem);
 
-            table.add(listItem).expandX().fillX().height(72);
+            table.top();
+            table.add(listItem).expandX().fillX().height(78);
             table.row();
         }
-
-        setActor(table);
-
-        GameStateManager.getInstance().addUpdateListener(this);
     }
 
     @Override
     public void updateOccurred(GameState gameState) {
         if(gameState.getPlayers().size() != playerListItemList.size()) {
-            table.clearChildren();
-            playerListItemList.clear();
-
-            List<Player> players = new ArrayList<>(gameState.getPlayers());
-            Collections.sort(players);
-
-            for(Player player : players) {
-                PlayerListItem listItem = new PlayerListItem(game, player, gameState);
-                playerListItemList.add(listItem);
-
-                table.add(listItem).expandX().fillX().height(72);
-                table.row();
-            }
+            setupListElements(gameState);
         } else {
             for(PlayerListItem listItem : playerListItemList) {
                 listItem.updateState();

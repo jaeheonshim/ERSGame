@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.game;
 
 import com.jaeheonshim.ersgame.net.packet.GameStateUpdateEvent;
+import com.jaeheonshim.ersgame.util.RandomNameGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,6 +18,12 @@ public class GameStateManager {
 
     private GameStateManager() {
         gameState = new GameState();
+
+//        gameState.addNewPlayer(Player.createNew(RandomNameGenerator.randomName()));
+//        gameState.addNewPlayer(Player.createNew(RandomNameGenerator.randomName()));
+//        gameState.addNewPlayer(Player.createNew(RandomNameGenerator.randomName()));
+//        gameState.addNewPlayer(Player.createNew(RandomNameGenerator.randomName()));
+//        gameState.addNewPlayer(Player.createNew(RandomNameGenerator.randomName()));
     }
 
     public void updateState(GameStateUpdateEvent event) {
