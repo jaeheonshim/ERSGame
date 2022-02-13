@@ -31,11 +31,6 @@ public class PileDisplayActor extends Stack {
     }
 
     @Override
-    public void layout() {
-        moveBy(100, 0);
-    }
-
-    @Override
     public void act(float delta) {
         for(int i = 0; i < cardActors.length; i++) {
             int pileSize = gameState.getPile().size();
