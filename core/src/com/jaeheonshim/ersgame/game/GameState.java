@@ -5,6 +5,7 @@ import java.util.*;
 public class GameState {
     private Deque<CardType> pile = new LinkedList<>();
     private Map<String, Player> playerMap = new HashMap<>();
+    private Player currentTurn;
 
     public GameState() {
         pile.addLast(CardType.SPADE_2);
@@ -26,10 +27,13 @@ public class GameState {
 
     public void initializeNew() {
         List<CardType> newDeck = CardUtil.randomDeck();
-        CardUtil.randomDistribute(newDeck, new ArrayList<>(playerMap.values()));
+        List<Player> players = new ArrayList<>(playerMap.values());
+        CardUtil.randomDistribute(newDeck, players);
+        currentTurn = players.get((int) (Math.random() * players.size()));
     }
 
     public void addNewPlayer(Player player) {
+        player.setOrdinal(playerMap.size());
         playerMap.put(player.getUuid(), player);
     }
 
@@ -56,6 +60,10 @@ public class GameState {
 
     public Collection<Player> getPlayers() {
         return playerMap.values();
+    }
+
+    public Player getCurrentTurn() {
+        return currentTurn;
     }
 
     public static void main(String[] args) {

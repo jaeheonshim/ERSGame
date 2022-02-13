@@ -12,6 +12,7 @@ import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PlayersList extends ScrollPane {
@@ -27,8 +28,11 @@ public class PlayersList extends ScrollPane {
         this.game = game;
         this.gameState = gameState;
 
-        for(Player player : gameState.getPlayers()) {
-            PlayerListItem listItem = new PlayerListItem(game, player);
+        List<Player> players = new ArrayList<>(gameState.getPlayers());
+        Collections.sort(players);
+
+        for(Player player : players) {
+            PlayerListItem listItem = new PlayerListItem(game, player, gameState);
             playerListItemList.add(listItem);
 
             table.add(listItem).expandX().fillX().height(68);
@@ -36,5 +40,11 @@ public class PlayersList extends ScrollPane {
         }
 
         setActor(table);
+    }
+
+    public void updateState() {
+        for(PlayerListItem listItem : playerListItemList) {
+            listItem.updateState();
+        }
     }
 }

@@ -56,7 +56,7 @@ public class GameScreen implements Screen {
         table.setFillParent(true);
         table.add(playersList).expandX().fillX().maxHeight(400).top();
         table.row();
-        table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(140);
+        table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(200);
 
         stage.addActor(table);
         stage.addActor(animationCard);

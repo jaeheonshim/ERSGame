@@ -42,6 +42,7 @@ public class PileDisplayActor extends Stack {
             cardActors[i].setRotation(8 * i);
             cardActors[i].setY(-20 * i);
         }
+        invalidate();
     }
 
     public void setTopFlipped(boolean flipped) {
