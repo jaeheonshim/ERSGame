@@ -32,7 +32,6 @@ public class PlayersList extends ScrollPane implements GameStateUpdateListener {
         setupListElements(gameState);
 
         setActor(table);
-        setDebug(true);
 
         GameStateManager.getInstance().addUpdateListener(this);
     }

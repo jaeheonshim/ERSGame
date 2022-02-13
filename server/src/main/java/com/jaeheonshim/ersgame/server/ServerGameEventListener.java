@@ -1,12 +1,12 @@
 package com.jaeheonshim.ersgame.server;
 
-import com.jaeheonshim.ersgame.game.GameEventListener;
+import com.jaeheonshim.ersgame.game.GameStateEventListener;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.packet.GameStateUpdateEvent;
 import com.jaeheonshim.ersgame.net.packet.JoinGameEvent;
 
-public class ServerGameEventListener extends GameEventListener {
+public class ServerGameEventListener extends GameStateEventListener {
     private ERSServer ersServer;
 
     public ServerGameEventListener(ERSServer server) {

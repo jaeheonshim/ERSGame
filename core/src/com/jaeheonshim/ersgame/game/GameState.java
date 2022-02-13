@@ -8,7 +8,7 @@ public class GameState {
     private Map<String, Player> playerMap = new HashMap<>();
     private Player currentTurn;
     private Player gameAdmin;
-    private GameEventListener gameEventListener = new GameEventListener();
+    private GameStateEventListener gameEventListener = new GameStateEventListener();
 
     public GameState() {
         pile.addLast(CardType.SPADE_2);
@@ -93,11 +93,11 @@ public class GameState {
         return false;
     }
 
-    public void setGameEventListener(GameEventListener gameEventListener) {
+    public void setGameEventListener(GameStateEventListener gameEventListener) {
         this.gameEventListener = gameEventListener;
     }
 
-    public GameEventListener getGameEventListener() {
+    public GameStateEventListener getGameEventListener() {
         return gameEventListener;
     }
 
