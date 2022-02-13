@@ -13,6 +13,7 @@ import com.jaeheonshim.ersgame.screen.GameScreen;
 public class ERSGame extends Game {
 	public final String cardsAtlas = "cards/cards.atlas";
 	public final String poppins64 = "fonts/poppins-64.fnt";
+	public final String poppinsBold64 = "fonts/poppins-bold-64.fnt";
 	public final String uiBorder = "ui/border.png";
 	public final String uiButtonUp = "ui/button_up.png";
 	public final String uiButtonDown = "ui/button_down.png";
@@ -26,6 +27,7 @@ public class ERSGame extends Game {
 		assets.load(uiButtonUp, Texture.class);
 		assets.load(uiButtonDown, Texture.class);
 		assets.load(poppins64, BitmapFont.class, StyleUtil.dstFieldParameter());
+		assets.load(poppinsBold64, BitmapFont.class, StyleUtil.dstFieldParameter());
 		assets.load(fontShader, ShaderProgram.class);
 
 		assets.finishLoading();

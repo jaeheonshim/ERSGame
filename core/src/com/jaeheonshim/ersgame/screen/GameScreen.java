@@ -41,13 +41,6 @@ public class GameScreen implements Screen {
         animationCard.setType(CardType.CLOVER_2);
         animationCard.setShadow(false);
         animationCard.setVisible(false);
-
-        stage.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                onReceiveCard();
-            }
-        });
     }
 
     @Override
@@ -59,7 +52,7 @@ public class GameScreen implements Screen {
         table.row();
         table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(200);
         table.row();
-        table.add(new PlayButton(game));
+        table.add(new PlayButton(game)).width(300).height(150);
 
         stage.addActor(table);
         stage.addActor(animationCard);

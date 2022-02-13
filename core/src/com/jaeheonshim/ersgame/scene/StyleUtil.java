@@ -14,10 +14,10 @@ import com.jaeheonshim.ersgame.ERSGame;
 
 public class StyleUtil {
     public static TextButton.TextButtonStyle textButtonStyle(ERSGame game) {
-        NinePatchDrawable upDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonUp, Texture.class), 1, 3, 1, 1));
-        NinePatchDrawable downDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonDown, Texture.class), 1, 3, 1, 1));
+        NinePatchDrawable upDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonUp, Texture.class), 16, 16, 16, 16));
+        NinePatchDrawable downDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonDown, Texture.class), 16, 16, 16, 16));
 
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle(upDrawable, downDrawable, downDrawable, game.assets.get(game.poppins64, BitmapFont.class));
+        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle(upDrawable, downDrawable, downDrawable, game.assets.get(game.poppinsBold64, BitmapFont.class));
         style.fontColor = Color.BLACK;
         return style;
     }
