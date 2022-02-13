@@ -19,6 +19,11 @@ public class StyleUtil {
         return labelStyle;
     }
 
+    public static Label.LabelStyle labelStyle24(ERSGame game) {
+        Label.LabelStyle labelStyle = new Label.LabelStyle(game.assets.get(game.poppins24, BitmapFont.class), Color.BLACK);
+        return labelStyle;
+    }
+
     public static TextButton.TextButtonStyle textButtonStyle(ERSGame game) {
         NinePatchDrawable upDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonUp, Texture.class), 16, 16, 16, 16));
         NinePatchDrawable downDrawable = new NinePatchDrawable(new NinePatch(game.assets.get(game.uiButtonDown, Texture.class), 16, 16, 16, 16));

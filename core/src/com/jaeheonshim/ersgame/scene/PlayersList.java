@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateManager;
 import com.jaeheonshim.ersgame.game.Player;
 
 import java.util.ArrayList;
@@ -17,16 +18,15 @@ import java.util.List;
 
 public class PlayersList extends ScrollPane {
     private ERSGame game;
-    private GameState gameState;
-
     private Table table = new Table();
 
     private List<PlayerListItem> playerListItemList = new ArrayList<>();
 
-    public PlayersList(ERSGame game, GameState gameState) {
+    public PlayersList(ERSGame game) {
         super(null);
         this.game = game;
-        this.gameState = gameState;
+
+        GameState gameState = GameStateManager.getInstance().getGameState();
 
         List<Player> players = new ArrayList<>(gameState.getPlayers());
         Collections.sort(players);

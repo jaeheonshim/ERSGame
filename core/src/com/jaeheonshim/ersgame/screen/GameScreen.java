@@ -35,7 +35,7 @@ public class GameScreen implements Screen {
         table = new Table();
 
         pileDisplayActor = new PileDisplayActor(game, gameState);
-        playersList = new PlayersList(game, gameState);
+        playersList = new PlayersList(game);
         animationCard = new CardActor(game);
         animationCard.setFlipped(true);
         animationCard.setType(CardType.CLOVER_2);

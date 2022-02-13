@@ -12,13 +12,6 @@ public class GameState {
         pile.addLast(CardType.SPADE_3);
         pile.addLast(CardType.SPADE_4);
         pile.addLast(CardType.CLOVER_2);
-
-        addNewPlayer(Player.createNew("Bob"));
-        addNewPlayer(Player.createNew("John"));
-        addNewPlayer(Player.createNew("Cathy"));
-        addNewPlayer(Player.createNew("Gerald"));
-
-        initializeNew();
     }
 
     public Deque<CardType> getPile() {
