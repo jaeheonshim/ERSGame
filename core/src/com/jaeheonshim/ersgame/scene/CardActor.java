@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.GameState;
 
 public class CardActor extends Actor {
     private ERSGame game;
@@ -66,7 +67,7 @@ public class CardActor extends Actor {
                         ActionUtil.flipIn(getX(), getWidth(), 0.15f)));
     }
 
-    public void flyIn(float destX, float destY, boolean top) {
+    public void flyIn(float destX, float destY, boolean top, Runnable onFinish) {
         float duration = 0.5f;
 
         setVisible(true);
@@ -88,12 +89,17 @@ public class CardActor extends Actor {
         VisibleAction visibleAction = new VisibleAction();
         visibleAction.setVisible(false);
 
+        RunnableAction finishAction = new RunnableAction();
+        finishAction.setRunnable(onFinish);
+
         addAction(new SequenceAction(
                 new ParallelAction(
                         moveToAction,
                         scaleToAction
                 ),
-                visibleAction)
+                finishAction,
+                visibleAction
+                )
         );
     }
 

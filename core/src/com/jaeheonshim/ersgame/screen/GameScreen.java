@@ -25,14 +25,16 @@ public class GameScreen implements Screen {
     private PlayersList playersList;
     private CardActor animationCard;
 
+    private GameState gameState = new GameState();
+
     public GameScreen(ERSGame game) {
         this.game = game;
 
         stage = new Stage(new ExtendViewport(1200, 1700));
         table = new Table();
 
-        pileDisplayActor = new PileDisplayActor(game, new GameState());
-        playersList = new PlayersList(game);
+        pileDisplayActor = new PileDisplayActor(game, gameState);
+        playersList = new PlayersList(game, gameState);
         animationCard = new CardActor(game);
         animationCard.setFlipped(true);
         animationCard.setType(CardType.CLOVER_2);
@@ -42,7 +44,7 @@ public class GameScreen implements Screen {
         stage.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false);
+                onReceiveCard();
             }
         });
     }
@@ -65,6 +67,17 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(new Color(232 / 255f, 232 / 255f, 232 / 255f, 1));
         stage.act(delta);
         stage.draw();
+    }
+
+    public void onReceiveCard() {
+        animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), true, new Runnable() {
+            @Override
+            public void run() {
+                pileDisplayActor.updatePileState();
+                pileDisplayActor.setTopFlipped(true);
+                pileDisplayActor.flipTop();
+            }
+        });
     }
 
     @Override
