@@ -3,10 +3,8 @@ package com.jaeheonshim.ersgame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.CardType;
@@ -15,7 +13,6 @@ import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.scene.CardActor;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.PlayButton;
-import com.jaeheonshim.ersgame.scene.PlayersList;
 
 public class GameScreen implements Screen {
     private ERSGame game;
@@ -23,7 +20,7 @@ public class GameScreen implements Screen {
     private Table table;
 
     private PileDisplayActor pileDisplayActor;
-    private PlayersList playersList;
+//    private PlayersList playersList;
     private CardActor animationCard;
 
     private GameState gameState = new GameState();
@@ -35,7 +32,7 @@ public class GameScreen implements Screen {
         table = new Table();
 
         pileDisplayActor = new PileDisplayActor(game, gameState);
-        playersList = new PlayersList(game);
+//        playersList = new PlayersList(game);
         animationCard = new CardActor(game);
         animationCard.setFlipped(true);
         animationCard.setType(CardType.CLOVER_2);
@@ -48,7 +45,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         table.setFillParent(true);
-        table.add(playersList).expandX().fillX().maxHeight(400).top();
+//        table.add(playersList).expandX().fillX().maxHeight(400).top();
         table.row();
         table.add(pileDisplayActor).padLeft(200).expandY().top().padTop(200);
         table.row();

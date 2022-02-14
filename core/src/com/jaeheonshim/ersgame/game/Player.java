@@ -1,5 +1,7 @@
 package com.jaeheonshim.ersgame.game;
 
+import com.jaeheonshim.ersgame.util.UUIDUtil;
+
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Player implements Comparable<Player> {
     private int ordinal;
 
     private Player(String name) {
-        this.uuid = UUID.randomUUID().toString();
+        this.uuid = UUIDUtil.unique();
         this.name = name;
     }
 
