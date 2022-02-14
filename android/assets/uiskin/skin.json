@@ -5,18 +5,31 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	}
 }
 com.badlogic.gdx.graphics.Color: {
-	RGBA_255_255_255_255: {
-		r: 1
-		g: 1
-		b: 1
+	down-font-color: {
+		r: 0.843333
+		g: 0.843333
+		b: 0.843333
 		a: 1
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: poppins-24
+		downFontColor: down-font-color
 		up: btn-blue
 		down: btn-blue-down
+	}
+	red: {
+		font: poppins-24
+		downFontColor: down-font-color
+		up: btn-red
+		down: btn-red-down
+	}
+	green: {
+		font: poppins-24
+		downFontColor: down-font-color
+		up: btn-green
+		down: btn-green-down
 	}
 }
 }

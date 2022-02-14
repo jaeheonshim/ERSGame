@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +18,7 @@ public class MainScreen implements Screen {
     private Stage stage;
     private Table table;
     private ERSTextButton createGameButton;
+    private ERSTextButton joinGameButton;
 
     public MainScreen(ERSGame game) {
         this.game = game;
@@ -28,11 +30,15 @@ public class MainScreen implements Screen {
 
         createGameButton = new ERSTextButton("Create Game", skin, game);
         table.add(createGameButton);
+        table.row();
+
+        joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
+        table.add(joinGameButton);
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
