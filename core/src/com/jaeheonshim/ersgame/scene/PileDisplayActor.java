@@ -9,34 +9,42 @@ import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.game.GameState;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class PileDisplayActor extends Stack {
     private static final int DISPLAY_COUNT = 3;
 
     private ERSGame game;
-    private GameState gameState;
+    private Supplier<List<CardType>> getCards;
 
-    private CardActor[] cardActors = new CardActor[DISPLAY_COUNT];
+    private CardActor[] cardActors = new CardActor[0];
 
-    public PileDisplayActor(ERSGame game, GameState gameState) {
+    public PileDisplayActor(ERSGame game, Supplier<List<CardType>> getCards) {
         this.game = game;
-        this.gameState = gameState;
+        this.getCards = getCards;
+
+        updatePileState();
+    }
+
+    private void initializeActors() {
+        cardActors = new CardActor[DISPLAY_COUNT];
 
         for(int i = 0; i < cardActors.length; i++) {
             cardActors[i] = new CardActor(game);
         }
 
+        clearChildren();
         for(int i = cardActors.length - 1; i >= 0; i--) {
             add(cardActors[i]);
         }
-
-        updatePileState();
     }
 
     public void updatePileState() {
-        List<CardType> cards = gameState.getTopN(DISPLAY_COUNT);
+        List<CardType> cards = getCards.get();
+        if(cards.size() != cardActors.length) initializeActors();
+
         for(int i = 0; i < cardActors.length; i++) {
-            int pileSize = gameState.getPile().size();
+            int pileSize = cards.size();
             if(pileSize < i + 1) break;
             cardActors[i].setType(cards.get(i));
             cardActors[i].setRotation(8 * i);

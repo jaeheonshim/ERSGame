@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.game;
 
 public enum CardType {
+    BACK("back"),
     CLOVER_A("Clovers_A_white"),
     CLOVER_2("Clovers_2_white"),
     CLOVER_3("Clovers_3_white"),

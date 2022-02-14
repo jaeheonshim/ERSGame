@@ -22,6 +22,7 @@ public class CardActor extends Actor {
     private boolean flipped = false;
 
     private CardType type;
+    private float scale = 0.4f;
 
     public CardActor(ERSGame game) {
         this.game = game;
@@ -30,7 +31,7 @@ public class CardActor extends Actor {
         shadowRegion = atlas.findRegion("shadow");
 
         TextureRegion shadowRegion = atlas.findRegion(CardType.SPADE_A.filename);
-        setBounds(shadowRegion.getRegionX(), shadowRegion.getRegionY(), shadowRegion.getRegionWidth(), shadowRegion.getRegionHeight());
+        setBounds(shadowRegion.getRegionX(), shadowRegion.getRegionY(), shadowRegion.getRegionWidth() * scale, shadowRegion.getRegionHeight() * scale);
     }
 
     @Override

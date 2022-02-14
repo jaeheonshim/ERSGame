@@ -31,7 +31,7 @@ public class GameScreen implements Screen {
         stage = new Stage(new ExtendViewport(1200, 1700));
         table = new Table();
 
-        pileDisplayActor = new PileDisplayActor(game, gameState);
+        pileDisplayActor = new PileDisplayActor(game, null);
 //        playersList = new PlayersList(game);
         animationCard = new CardActor(game);
         animationCard.setFlipped(true);
