@@ -3,13 +3,32 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	poppins-24: {
 		file: poppins-24.fnt
 	}
+	poppins-32-bold: {
+		file: poppins-32-bold.fnt
+	}
 }
 com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
 	down-font-color: {
 		r: 0.843333
 		g: 0.843333
 		b: 0.843333
 		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: poppins-24
+		fontColor: black
+	}
+	bold: {
+		font: poppins-32-bold
+		fontColor: black
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -30,6 +49,11 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		downFontColor: down-font-color
 		up: btn-green
 		down: btn-green-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 }

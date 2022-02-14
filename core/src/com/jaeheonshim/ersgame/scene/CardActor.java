@@ -42,7 +42,7 @@ public class CardActor extends Actor {
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 
         if (shadow) {
-            batch.draw(shadowRegion, getX() - 16, getY() - 16, getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+            batch.draw(shadowRegion, getX() - 16 * scale, getY() - 16 * scale, getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
         }
 
         TextureRegion region = atlas.findRegion(type.filename);

@@ -1,12 +1,12 @@
 
 skin.png
-size: 1024, 1024
+size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
 btn-blue
   rotate: false
-  xy: 1, 229
+  xy: 515, 1111
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -15,7 +15,7 @@ btn-blue
   index: -1
 btn-blue-down
   rotate: false
-  xy: 515, 743
+  xy: 883, 1180
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -24,7 +24,7 @@ btn-blue-down
   index: -1
 btn-green
   rotate: false
-  xy: 1, 298
+  xy: 515, 1180
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -33,7 +33,7 @@ btn-green
   index: -1
 btn-green-down
   rotate: false
-  xy: 515, 812
+  xy: 1, 152
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -42,7 +42,7 @@ btn-green-down
   index: -1
 btn-red
   rotate: false
-  xy: 1, 160
+  xy: 1, 83
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -51,7 +51,7 @@ btn-red
   index: -1
 btn-red-down
   rotate: false
-  xy: 515, 674
+  xy: 515, 1042
   size: 366, 67
   split: 8, 8, 8, 8
   pad: 0, 0, 0, 0
@@ -60,7 +60,14 @@ btn-red-down
   index: -1
 poppins-24
   rotate: false
-  xy: 1, 367
+  xy: 1, 735
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+poppins-32-bold
+  rotate: false
+  xy: 1, 221
   size: 512, 512
   orig: 512, 512
   offset: 0, 0

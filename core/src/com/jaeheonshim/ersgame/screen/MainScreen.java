@@ -4,16 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
+import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
-import com.sun.tools.javac.util.List;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class MainScreen implements Screen {
     private ERSGame game;
@@ -32,14 +37,18 @@ public class MainScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
-        table.setDebug(true);
 
-        sampleDisplay = new PileDisplayActor(game, () -> List.of(CardType.BACK, CardType.BACK, CardType.BACK));
-        table.add(sampleDisplay).top();
+        sampleDisplay = new PileDisplayActor(game, () -> Arrays.asList(CardType.BACK, CardType.BACK, CardType.BACK));
+        table.add(sampleDisplay).top().padBottom(32).padLeft(50);
+        table.row();
+
+        ERSLabel titleLabel = new ERSLabel("Egyptian Ratscrew", skin, "bold", game);
+        titleLabel.setAlignment(Align.center);
+        table.add(titleLabel).expandX().fill().padBottom(20);
         table.row();
 
         createGameButton = new ERSTextButton("Create Game", skin, game);
-        table.add(createGameButton);
+        table.add(createGameButton).padBottom(8);
         table.row();
 
         joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
