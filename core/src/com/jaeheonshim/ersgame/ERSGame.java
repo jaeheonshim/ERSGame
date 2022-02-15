@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -22,6 +23,9 @@ public class ERSGame extends Game {
 
 	public final AssetManager assets = new AssetManager();
 
+	public Screen mainScreen;
+	public Screen joinGameScreen;
+
 	private void loadAssets() {
 		assets.load(cardsAtlas, TextureAtlas.class);
 		assets.load(poppins64, BitmapFont.class, StyleUtil.dstFieldParameter());
@@ -36,9 +40,11 @@ public class ERSGame extends Game {
 	@Override
 	public void create () {
 		loadAssets();
+		mainScreen = new MainScreen(this);
+		joinGameScreen = new JoinGameScreen(this);
 //		NetManager.getInstance().connect();
 		RandomNameGenerator.initialize();
-		setScreen(new JoinGameScreen(this));
+		setScreen(mainScreen);
 	}
 
 	@Override

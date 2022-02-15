@@ -3,11 +3,11 @@ package com.jaeheonshim.ersgame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -16,10 +16,8 @@ import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
-import com.jaeheonshim.ersgame.scene.shaded.ERSTextField;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class MainScreen implements Screen {
     private ERSGame game;
@@ -58,6 +56,13 @@ public class MainScreen implements Screen {
 
         joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
         table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
+
+        joinGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.joinGameScreen);
+            }
+        });
     }
 
     @Override
