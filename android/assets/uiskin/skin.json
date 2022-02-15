@@ -34,24 +34,6 @@ com.badlogic.gdx.graphics.Color: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
-	btn-blue-down: {
-		name: btn-blue
-		color: {
-			r: 0.89666647
-			g: 0.89666647
-			b: 0.89666647
-			a: 1
-		}
-	}
-	btn-green-down: {
-		name: btn-green
-		color: {
-			r: 0.89411765
-			g: 0.89411765
-			b: 0.89411765
-			a: 1
-		}
-	}
 	cursor: {
 		name: white-pixel
 		color: white
@@ -76,20 +58,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: poppins-24
 		fontColor: white
-		downFontColor: white
+		downFontColor: down-font-color
 		up: btn-blue
 		down: btn-blue-down
-	}
-	red: {
-		font: poppins-24
-		downFontColor: down-font-color
-		up: btn-red
-		down: btn-red-down
 	}
 	green: {
 		font: poppins-24
 		fontColor: white
-		downFontColor: white
+		downFontColor: down-font-color
 		up: btn-green
 		down: btn-green-down
 	}

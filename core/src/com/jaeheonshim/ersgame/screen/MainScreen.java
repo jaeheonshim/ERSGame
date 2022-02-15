@@ -53,11 +53,11 @@ public class MainScreen implements Screen {
         table.row();
 
         createGameButton = new ERSTextButton("Create Game", skin, game);
-        table.add(createGameButton).expandX().fill().width(600).center().padBottom(-22);
+        table.add(createGameButton).expandX().fill().center().padBottom(8).padLeft(32).padRight(32);
         table.row();
 
         joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
-        table.add(joinGameButton).expandX().fill().width(600).center().padBottom(20);
+        table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
     }
 
     @Override
