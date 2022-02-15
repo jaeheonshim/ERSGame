@@ -28,7 +28,7 @@ public class NetClient extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        netManager.onMessage(message);
+        netManager.onMessage(this, message);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.jaeheonshim.ersgame.net.listener.JoinGameListener;
 import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
 import com.jaeheonshim.ersgame.net.packet.JoinGameRequest;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
+import org.java_websocket.WebSocket;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -46,10 +47,10 @@ public class NetManager {
         socketPacketListenerList.add(listener);
     }
 
-    public void onMessage(String s) {
+    public void onMessage(WebSocket socket, String s) {
         SocketPacket deserialized = SocketPacket.deserialize(s);
         for(SocketPacketListener listener : socketPacketListenerList) {
-            if(listener.receive(deserialized)) break;
+            if(listener.receive(socket, deserialized)) break;
         }
     }
 

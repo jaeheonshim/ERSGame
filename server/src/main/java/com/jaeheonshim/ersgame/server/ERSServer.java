@@ -25,13 +25,15 @@ public class ERSServer extends WebSocketServer {
     public void onOpen(WebSocket conn, ClientHandshake handshake) {
         UUID clientUUID = UUID.randomUUID();
         connectedClients.put(clientUUID.toString(), conn);
+        conn.setAttachment(clientUUID.toString());
 
         conn.send(new SocketConnectPacket(clientUUID.toString()).serialize());
     }
 
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-
+        System.out.printf("%s disconnected.%n", ((String) conn.getAttachment()));
+        connectedClients.remove(((String) conn.getAttachment()));
     }
 
     @Override
