@@ -115,6 +115,8 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        implementation 'com.owlike:genson:1.6'
+        implementation 'org.java-websocket:Java-WebSocket:1.5.2'
     }
 }
 
@@ -125,6 +127,6 @@ project(":server") {
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        implementation 'org.java-websocket:Java-WebSocket:1.5.2'
     }
 }
