@@ -6,6 +6,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	poppins-32-bold: {
 		file: poppins-32-bold.fnt
 	}
+	poppins-64: {
+		file: poppins-64.fnt
+	}
 }
 com.badlogic.gdx.graphics.Color: {
 	black: {
@@ -44,6 +47,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		color: selection
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	back: {
+		up: blue_sliderLeft
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: poppins-24
@@ -51,6 +59,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	}
 	bold: {
 		font: poppins-32-bold
+		fontColor: black
+	}
+	heading: {
+		font: poppins-64
 		fontColor: black
 	}
 }
