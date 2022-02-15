@@ -20,6 +20,47 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.843333
 		a: 1
 	}
+	selection: {
+		r: 0.3321777
+		g: 0.3394507
+		b: 0.98666644
+		a: 0.6399998
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	btn-blue-down: {
+		name: btn-blue
+		color: {
+			r: 0.89666647
+			g: 0.89666647
+			b: 0.89666647
+			a: 1
+		}
+	}
+	btn-green-down: {
+		name: btn-green
+		color: {
+			r: 0.89411765
+			g: 0.89411765
+			b: 0.89411765
+			a: 1
+		}
+	}
+	cursor: {
+		name: white-pixel
+		color: white
+		minWidth: 2
+	}
+	selection: {
+		name: white-pixel
+		color: selection
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
@@ -34,7 +75,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: poppins-24
-		downFontColor: down-font-color
+		fontColor: white
+		downFontColor: white
 		up: btn-blue
 		down: btn-blue-down
 	}
@@ -46,9 +88,20 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	}
 	green: {
 		font: poppins-24
-		downFontColor: down-font-color
+		fontColor: white
+		downFontColor: white
 		up: btn-green
 		down: btn-green-down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: poppins-24
+		fontColor: down-font-color
+		focusedFontColor: white
+		background: graybox
+		cursor: cursor
+		selection: selection
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
