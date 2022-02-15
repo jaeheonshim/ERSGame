@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.scene.StyleUtil;
+import com.jaeheonshim.ersgame.screen.JoinGameScreen;
 import com.jaeheonshim.ersgame.screen.MainScreen;
 import com.jaeheonshim.ersgame.util.RandomNameGenerator;
 
@@ -37,7 +38,7 @@ public class ERSGame extends Game {
 		loadAssets();
 //		NetManager.getInstance().connect();
 		RandomNameGenerator.initialize();
-		setScreen(new MainScreen(this));
+		setScreen(new JoinGameScreen(this));
 	}
 
 	@Override

@@ -4,60 +4,54 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.CardType;
-import com.jaeheonshim.ersgame.scene.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextField;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class MainScreen implements Screen {
+public class JoinGameScreen implements Screen {
+    private final ERSTextField nameField;
+    private final ERSTextField codeField;
+    private final ERSTextButton joinButton;
     private ERSGame game;
     private Skin skin;
     private Stage stage;
     private Table table;
 
-    private PileDisplayActor sampleDisplay;
-    private ERSTextButton createGameButton;
-    private ERSTextButton joinGameButton;
-
-    public MainScreen(ERSGame game) {
+    public JoinGameScreen(ERSGame game) {
         this.game = game;
-        skin = game.assets.get(game.uiSkin);
+        this.skin = game.assets.get(game.uiSkin);
+
         stage = new Stage(new ExtendViewport(600, 900));
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
-        sampleDisplay = new PileDisplayActor(game, () -> Arrays.asList(CardType.BACK, CardType.BACK, CardType.BACK));
-        table.add(sampleDisplay).top().padBottom(32).padLeft(50).padTop(50);
-        table.row();
-
-        ERSLabel titleLabel = new ERSLabel("Egyptian Ratscrew", skin, "bold", game);
+        ERSLabel titleLabel = new ERSLabel("Join Game", skin, game);
         titleLabel.setAlignment(Align.center);
-        table.add(titleLabel).expandX().fill().padBottom(20);
+        table.top();
+        table.add(titleLabel).top().expand().fillX().padTop(32);
         table.row();
 
-//        ERSTextField nameField = new ERSTextField("Username", skin, game);
-//        table.add(nameField).expandX().width(565).padBottom(8).center();
-//        table.row();
+        table.center();
 
-        createGameButton = new ERSTextButton("Create Game", skin, game);
-        table.add(createGameButton).expandX().fill().center().padBottom(8).padLeft(32).padRight(32);
+        nameField = new ERSTextField("", skin, game);
+        nameField.setMessageText("Username");
+        table.add(nameField).fillX().padLeft(32).padRight(32);
         table.row();
 
-        joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
-        table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
+        codeField = new ERSTextField("", skin, game);
+        codeField.setMessageText("Join Code");
+        table.add(codeField).fillX().padLeft(32).padRight(32);
+        table.row();
+
+        joinButton = new ERSTextButton("Join Game", skin, game);
+        table.add(joinButton).fillX().expandY().top().padLeft(38).padRight(38).padTop(16);
     }
 
     @Override
