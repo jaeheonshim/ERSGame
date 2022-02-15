@@ -63,6 +63,13 @@ public class MainScreen implements Screen {
                 game.setScreen(game.joinGameScreen);
             }
         });
+
+        createGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.createGameScreen);
+            }
+        });
     }
 
     @Override
