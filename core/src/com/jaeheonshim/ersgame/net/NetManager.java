@@ -1,10 +1,7 @@
 package com.jaeheonshim.ersgame.net;
 
 import com.esotericsoftware.kryonet.Client;
-import com.jaeheonshim.ersgame.net.listener.ConnectPacketListener;
-import com.jaeheonshim.ersgame.net.listener.GameEventListener;
-import com.jaeheonshim.ersgame.net.listener.JoinGameListener;
-import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
+import com.jaeheonshim.ersgame.net.listener.*;
 import com.jaeheonshim.ersgame.net.packet.JoinGameRequest;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import org.java_websocket.WebSocket;
@@ -18,7 +15,9 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class NetManager {
     private NetClient client;
+
     private List<SocketPacketListener> socketPacketListenerList = new ArrayList<>();
+    private ConnectStatusListener connectStatusListener;
 
     private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
     private String clientUuid;
@@ -43,8 +42,17 @@ public class NetManager {
         client.connect();
     }
 
+    public void reconnect() {
+        connectionStatus = ConnectionStatus.CONNECTING;
+        client.reconnect();
+    }
+
     public void registerListener(SocketPacketListener listener) {
         socketPacketListenerList.add(listener);
+    }
+
+    public void setConnectStatusListener(ConnectStatusListener connectStatusListener) {
+        this.connectStatusListener = connectStatusListener;
     }
 
     public void onMessage(WebSocket socket, String s) {
@@ -60,6 +68,9 @@ public class NetManager {
 
     public void setConnectionStatus(ConnectionStatus connectionStatus) {
         this.connectionStatus = connectionStatus;
+
+        if(connectStatusListener != null)
+            connectStatusListener.onStatusChange(connectionStatus);
     }
 
     public String getClientUuid() {

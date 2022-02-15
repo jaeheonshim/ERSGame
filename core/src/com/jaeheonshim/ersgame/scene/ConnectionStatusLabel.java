@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.scene;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.net.NetManager;
@@ -10,6 +11,7 @@ import javax.management.MBeanRegistration;
 public class ConnectionStatusLabel extends ERSLabel {
     public ConnectionStatusLabel(Skin skin, ERSGame game) {
         super("Disconnected", skin, "small", game);
+        setColor(Color.BLACK);
     }
 
     @Override
@@ -23,6 +25,9 @@ public class ConnectionStatusLabel extends ERSLabel {
                 setText("Connecting...");
                 break;
             case DISCONNECTED:
+                setText("Disconnected");
+                break;
+            default:
                 setText("Disconnected");
                 break;
         }

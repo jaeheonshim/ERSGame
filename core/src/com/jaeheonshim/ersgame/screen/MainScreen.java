@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -14,14 +17,17 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.net.ConnectionStatus;
+import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.net.listener.ConnectStatusListener;
 import com.jaeheonshim.ersgame.scene.ConnectionStatusLabel;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
+import com.jaeheonshim.ersgame.scene.shaded.ERSWindow;
 
 import java.util.Arrays;
 
-public class MainScreen implements Screen {
+public class MainScreen implements Screen, ConnectStatusListener {
     private ERSGame game;
     private Skin skin;
     private Stage stage;
@@ -32,6 +38,9 @@ public class MainScreen implements Screen {
     private ERSTextButton joinGameButton;
 
     private ConnectionStatusLabel connectionStatus;
+    private ERSWindow connectingWindow;
+
+    private Screen pendingScreen;
 
     public MainScreen(ERSGame game) {
         this.game = game;
@@ -62,27 +71,82 @@ public class MainScreen implements Screen {
         table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
         table.row();
 
-        connectionStatus = new ConnectionStatusLabel( skin, game);
+        connectionStatus = new ConnectionStatusLabel(skin, game);
         table.add(connectionStatus).expandY().bottom().right().pad(8);
 
         joinGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.joinGameScreen);
+                trySwitchScreen(game.joinGameScreen);
             }
         });
 
         createGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.createGameScreen);
+                trySwitchScreen(game.createGameScreen);
             }
         });
+
+        connectingWindow = new ERSWindow("Connecting...", skin, game);
+        connectingWindow.setWidth(500);
+        connectingWindow.setPosition(stage.getWidth() / 2 - connectingWindow.getWidth() / 2, stage.getHeight() / 2 - connectingWindow.getHeight() / 2);
+        connectingWindow.setVisible(false);
+        connectingWindow.setModal(true);
+        stage.addActor(connectingWindow);
+    }
+
+    public void trySwitchScreen(Screen screen) {
+        if (NetManager.getInstance().getConnectionStatus() != ConnectionStatus.CONNECTED) {
+            pendingScreen = screen;
+            displayConnectingWindow("Please wait while we connect to the server...");
+            NetManager.getInstance().reconnect();
+        } else {
+            game.setScreen(screen);
+        }
+    }
+
+    @Override
+    public void onStatusChange(ConnectionStatus newStatus) {
+        if (newStatus == ConnectionStatus.CONNECTING) return;
+
+        if (pendingScreen != null) {
+            Gdx.app.postRunnable(() -> {
+                if (newStatus == ConnectionStatus.CONNECTED) {
+                    game.setScreen(pendingScreen);
+                } else {
+                    displayConnectingWindow("Failed to connect!");
+                    delayHideConnectingWindow();
+                }
+
+                pendingScreen = null;
+            });
+        }
+    }
+
+    public void displayConnectingWindow(String text) {
+        connectingWindow.setPosition(stage.getWidth() / 2 - connectingWindow.getWidth() / 2, stage.getHeight() / 2 - connectingWindow.getHeight() / 2);
+        connectingWindow.clearChildren();
+        ERSLabel connectingWindowText = new ERSLabel(text, skin, "small", game);
+        connectingWindowText.setColor(Color.WHITE);
+        connectingWindow.add(connectingWindowText).center();
+        connectingWindow.setVisible(true);
+    }
+
+    public void delayHideConnectingWindow() {
+        VisibleAction action = new VisibleAction();
+        action.setVisible(false);
+        DelayAction delayAction = new DelayAction();
+        delayAction.setDuration(3);
+
+        SequenceAction sequenceAction = new SequenceAction(delayAction, action);
+        connectingWindow.addAction(sequenceAction);
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        NetManager.getInstance().setConnectStatusListener(this);
     }
 
     @Override

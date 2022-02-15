@@ -20,6 +20,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	darkened: {
+		r: 0.2999998
+		g: 0.2999998
+		b: 0.2999998
+		a: 0.5529412
+	}
 	down-font-color: {
 		r: 0.843333
 		g: 0.843333
@@ -49,6 +55,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: selection
 	}
+	darkened: {
+		name: white-pixel
+		color: darkened
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	back: {
@@ -58,7 +68,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: poppins-24
-		fontColor: black
+		fontColor: white
 	}
 	bold: {
 		font: poppins-32-bold
@@ -70,7 +80,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	}
 	small: {
 		font: poppins-16
-		fontColor: black
+		fontColor: white
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -102,6 +112,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: blue_panel
+		titleFont: poppins-24
+		titleFontColor: white
+		stageBackground: darkened
 	}
 }
 }

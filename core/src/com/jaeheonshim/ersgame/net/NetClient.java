@@ -33,11 +33,11 @@ public class NetClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-
+        netManager.setConnectionStatus(ConnectionStatus.DISCONNECTED);
     }
 
     @Override
     public void onError(Exception ex) {
-
+        netManager.setConnectionStatus(getConnection().isOpen() ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED);
     }
 }
