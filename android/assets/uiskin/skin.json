@@ -1,5 +1,8 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	poppins-16: {
+		file: poppins-16.fnt
+	}
 	poppins-24: {
 		file: poppins-24.fnt
 	}
@@ -63,6 +66,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	}
 	heading: {
 		font: poppins-64
+		fontColor: black
+	}
+	small: {
+		font: poppins-16
 		fontColor: black
 	}
 }

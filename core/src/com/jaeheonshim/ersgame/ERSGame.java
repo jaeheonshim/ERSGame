@@ -45,8 +45,9 @@ public class ERSGame extends Game {
 		mainScreen = new MainScreen(this);
 		joinGameScreen = new JoinGameScreen(this);
 		createGameScreen = new CreateGameScreen(this);
-//		NetManager.getInstance().connect();
 		RandomNameGenerator.initialize();
+
+		NetManager.getInstance().connect();
 		setScreen(mainScreen);
 	}
 

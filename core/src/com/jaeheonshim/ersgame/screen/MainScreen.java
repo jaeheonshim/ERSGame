@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.CardType;
+import com.jaeheonshim.ersgame.net.ConnectionStatus;
+import com.jaeheonshim.ersgame.scene.ConnectionStatusLabel;
 import com.jaeheonshim.ersgame.scene.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
@@ -28,6 +30,8 @@ public class MainScreen implements Screen {
     private PileDisplayActor sampleDisplay;
     private ERSTextButton createGameButton;
     private ERSTextButton joinGameButton;
+
+    private ConnectionStatusLabel connectionStatus;
 
     public MainScreen(ERSGame game) {
         this.game = game;
@@ -56,6 +60,10 @@ public class MainScreen implements Screen {
 
         joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
         table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
+        table.row();
+
+        connectionStatus = new ConnectionStatusLabel( skin, game);
+        table.add(connectionStatus).expandY().bottom().right().pad(8);
 
         joinGameButton.addListener(new ClickListener() {
             @Override

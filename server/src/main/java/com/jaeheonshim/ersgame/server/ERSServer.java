@@ -36,7 +36,7 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-
+        System.out.println(message);
     }
 
     @Override

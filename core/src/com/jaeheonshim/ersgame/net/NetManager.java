@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class NetManager {
     private NetClient client;
@@ -19,7 +21,6 @@ public class NetManager {
 
     private ConnectionStatus connectionStatus = ConnectionStatus.DISCONNECTED;
     private String clientUuid;
-
     private static NetManager instance;
 
     public static NetManager getInstance() {

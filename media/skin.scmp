@@ -213,6 +213,25 @@ atlasData: {
 			type: FONT
 			hidden: false
 		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-16.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: poppins-16
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
 	]
 }
 jsonData: {
@@ -259,6 +278,11 @@ jsonData: {
 		}
 	]
 	fonts: [
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: poppins-16
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-16.fnt
+		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
 			name: poppins-24
@@ -1862,6 +1886,33 @@ jsonData: {
 						name: font
 						optional: false
 						value: poppins-64
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: black
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: null
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: small
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-16
 					}
 					fontColor: {
 						type: com.badlogic.gdx.graphics.Color
