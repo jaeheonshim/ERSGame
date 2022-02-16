@@ -1,43 +1,59 @@
 package com.jaeheonshim.ersgame.net;
 
-import org.java_websocket.WebSocket;
-import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.framing.Framedata;
-import org.java_websocket.handshake.ServerHandshake;
-
+import com.github.czyzby.websocket.WebSocket;
+import com.github.czyzby.websocket.WebSocketListener;
+import com.github.czyzby.websocket.WebSockets;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.ByteBuffer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class NetClient extends WebSocketClient {
+public class NetClient implements WebSocketListener {
     private NetManager netManager;
-
-    private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+    private WebSocket socket;
 
     public NetClient(NetManager netManager) throws URISyntaxException {
-        super(new URI("ws://localhost:8887"));
         this.netManager = netManager;
+
+        socket = WebSockets.newSocket(WebSockets.toWebSocketUrl("localhost", 8887));
+        socket.setSendGracefully(true);
+        socket.addListener(this);
+    }
+
+    public void connect() {
+        netManager.setConnectionStatus(ConnectionStatus.CONNECTING);
+        socket.connect();
     }
 
     @Override
-    public void onOpen(ServerHandshake handshakedata) {
-
+    public boolean onOpen(WebSocket webSocket) {
+        netManager.setConnectionStatus(ConnectionStatus.CONNECTED);
+        return true;
     }
 
     @Override
-    public void onMessage(String message) {
-        netManager.onMessage(this, message);
-    }
-
-    @Override
-    public void onClose(int code, String reason, boolean remote) {
+    public boolean onClose(WebSocket webSocket, int closeCode, String reason) {
         netManager.setConnectionStatus(ConnectionStatus.DISCONNECTED);
+        return true;
     }
 
     @Override
-    public void onError(Exception ex) {
-        netManager.setConnectionStatus(getConnection().isOpen() ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED);
+    public boolean onMessage(WebSocket webSocket, String packet) {
+        netManager.onMessage(webSocket, packet);
+        return true;
+    }
+
+    @Override
+    public boolean onMessage(WebSocket webSocket, byte[] packet) {
+        return false;
+    }
+
+    @Override
+    public boolean onError(WebSocket webSocket, Throwable error) {
+        netManager.setConnectionStatus(webSocket.isOpen() ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED);
+        return true;
     }
 }

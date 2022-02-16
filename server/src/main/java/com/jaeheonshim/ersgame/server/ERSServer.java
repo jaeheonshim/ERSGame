@@ -1,7 +1,6 @@
 package com.jaeheonshim.ersgame.server;
 
 import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.net.NetUtil;
 import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import org.java_websocket.WebSocket;

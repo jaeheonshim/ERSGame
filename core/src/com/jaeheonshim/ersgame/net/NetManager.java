@@ -1,8 +1,8 @@
 package com.jaeheonshim.ersgame.net;
 
+import com.github.czyzby.websocket.WebSocket;
 import com.jaeheonshim.ersgame.net.listener.*;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import org.java_websocket.WebSocket;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class NetManager {
 
     public void reconnect() {
         connectionStatus = ConnectionStatus.CONNECTING;
-        client.reconnect();
+        client.connect();
     }
 
     public void registerListener(SocketPacketListener listener) {

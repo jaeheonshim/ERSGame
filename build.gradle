@@ -37,6 +37,7 @@ allprojects {
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -50,7 +51,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        implementation "com.github.MrStahlfelge.gdx-websockets:common:1.9.10.3"
     }
 }
 
@@ -104,19 +105,19 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
+        implementation 'com.owlike:genson:1.6'
+        implementation 'org.java-websocket:Java-WebSocket:1.5.2'
     }
 }
 
 project(":core") {
     apply plugin: "java-library"
 
-
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        implementation group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
         implementation 'com.owlike:genson:1.6'
-        implementation 'org.java-websocket:Java-WebSocket:1.5.2'
+        implementation "com.github.MrStahlfelge.gdx-websockets:core:1.9.10.3"
     }
 }
 

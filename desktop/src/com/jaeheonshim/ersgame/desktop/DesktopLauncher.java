@@ -3,6 +3,7 @@ package com.jaeheonshim.ersgame.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
+import com.github.czyzby.websocket.CommonWebSockets;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.net.NetManager;
 
@@ -10,6 +11,7 @@ import java.net.URISyntaxException;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) throws URISyntaxException {
+		CommonWebSockets.initiate();
 		NetManager.initialize();
 
 		TexturePacker.Settings settings = new TexturePacker.Settings();
