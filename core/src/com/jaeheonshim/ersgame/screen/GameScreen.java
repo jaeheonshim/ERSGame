@@ -10,9 +10,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.scene.CardActor;
-import com.jaeheonshim.ersgame.scene.PileDisplayActor;
-import com.jaeheonshim.ersgame.scene.PlayButton;
+import com.jaeheonshim.ersgame.scene.game.CardActor;
+import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
+import com.jaeheonshim.ersgame.scene.game.PlayButton;
 
 public class GameScreen implements Screen {
     private ERSGame game;

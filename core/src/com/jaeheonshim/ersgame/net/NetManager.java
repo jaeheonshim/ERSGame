@@ -1,17 +1,12 @@
 package com.jaeheonshim.ersgame.net;
 
-import com.esotericsoftware.kryonet.Client;
 import com.jaeheonshim.ersgame.net.listener.*;
-import com.jaeheonshim.ersgame.net.packet.JoinGameRequest;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import org.java_websocket.WebSocket;
 
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class NetManager {
     private NetClient client;

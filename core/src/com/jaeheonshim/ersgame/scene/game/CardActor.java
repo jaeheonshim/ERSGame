@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.scene;
+package com.jaeheonshim.ersgame.scene.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.scene.ActionUtil;
 
 public class CardActor extends Actor {
     private ERSGame game;

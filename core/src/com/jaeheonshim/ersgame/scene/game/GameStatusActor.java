@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.scene;
+package com.jaeheonshim.ersgame.scene.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 
 public class GameStatusActor extends Table {

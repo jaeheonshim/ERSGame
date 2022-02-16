@@ -20,7 +20,7 @@ import com.jaeheonshim.ersgame.net.ConnectionStatus;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.listener.ConnectStatusListener;
 import com.jaeheonshim.ersgame.scene.ConnectionStatusLabel;
-import com.jaeheonshim.ersgame.scene.PileDisplayActor;
+import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSWindow;

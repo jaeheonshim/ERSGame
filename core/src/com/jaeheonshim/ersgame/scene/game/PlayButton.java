@@ -1,7 +1,8 @@
-package com.jaeheonshim.ersgame.scene;
+package com.jaeheonshim.ersgame.scene.game;
 
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 
 public class PlayButton extends ERSTextButton {
