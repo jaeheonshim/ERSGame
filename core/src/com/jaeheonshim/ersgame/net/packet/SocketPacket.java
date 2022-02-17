@@ -14,13 +14,4 @@ public class SocketPacket {
     public static SocketPacket deserialize(String s) {
         return json.fromJson(SocketPacket.class, s);
     }
-
-    public static void main(String[] args) {
-        SocketConnectPacket packet = new SocketConnectPacket();
-        packet.uuid = "asdf";
-
-        String serialized = packet.serialize();
-        System.out.println(serialized);
-        System.out.println(((SocketConnectPacket) SocketPacket.deserialize(serialized)).uuid);
-    }
 }
