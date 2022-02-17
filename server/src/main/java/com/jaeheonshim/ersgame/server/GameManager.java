@@ -17,7 +17,21 @@ public class GameManager {
 
     private GameManager() {}
 
-    public GameState createNewGame(String uuid, String username) {
+    public GameState getGameOfPlayer(String playerUuid) {
+        for(GameState gameState : gameStates.values()) {
+            for(Player player : gameState.getPlayerList()) {
+                if(player.getUuid().equals(playerUuid)) return gameState;
+            }
+        }
+
+        return null;
+    }
+
+    public GameState createNewGame(String uuid, String username) throws Exception {
+        if(getGameOfPlayer(uuid) != null) {
+            throw new Exception("Player already in game");
+        }
+
         Player player = new Player();
         player.setUuid(uuid);
         player.setUsername(username);

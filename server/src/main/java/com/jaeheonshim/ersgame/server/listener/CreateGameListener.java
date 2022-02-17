@@ -24,10 +24,14 @@ public class CreateGameListener extends ServerPacketListener {
             String uuid = socket.getAttachment();
             String username = createGamePacket.username;
 
-            GameState newGame = GameManager.getInstance().createNewGame(uuid, username);
+            try {
+                GameState newGame = GameManager.getInstance().createNewGame(uuid, username);
 
-            server.send(new UIMessagePacket(UIMessageType.SUCCESS, "New game created"), uuid);
-            server.broadcast(new GameStatePacket(newGame), newGame);
+                server.send(new UIMessagePacket(UIMessageType.SUCCESS, "New game created"), uuid);
+                server.broadcast(new GameStatePacket(newGame), newGame);
+            } catch(Exception e) {
+                server.send(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()), uuid);
+            }
             return true;
         }
 
