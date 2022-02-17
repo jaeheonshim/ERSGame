@@ -15,15 +15,15 @@ public class CardUtil {
         int c = 0;
         Collections.shuffle(deck);
 
-        for(Player p : players) {
-            for(int i = 0; i < n; i++) {
-                p.addCard(deck.get(c++));
-            }
-        }
-
-        Collections.shuffle(players);
-        for(int i = 0; i < deck.size() % players.size(); i++) {
-            players.get(i).addCard(deck.get(c++));
-        }
+//        for(Player p : players) {
+//            for(int i = 0; i < n; i++) {
+//                p.addCard(deck.get(c++));
+//            }
+//        }
+//
+//        Collections.shuffle(players);
+//        for(int i = 0; i < deck.size() % players.size(); i++) {
+//            players.get(i).addCard(deck.get(c++));
+//        }
     }
 }

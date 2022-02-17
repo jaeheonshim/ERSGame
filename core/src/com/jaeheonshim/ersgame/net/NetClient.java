@@ -49,4 +49,8 @@ public class NetClient implements WebSocketListener {
         netManager.setConnectionStatus(webSocket.isOpen() ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED);
         return true;
     }
+
+    public void sendMessage(String packet) {
+        socket.send(packet);
+    }
 }

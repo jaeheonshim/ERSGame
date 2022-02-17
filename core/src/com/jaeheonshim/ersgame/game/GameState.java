@@ -18,4 +18,8 @@ public class GameState {
 
         return gameState;
     }
+
+    public String getGameCode() {
+        return gameCode;
+    }
 }

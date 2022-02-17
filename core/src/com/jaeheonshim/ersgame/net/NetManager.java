@@ -56,6 +56,10 @@ public class NetManager {
         }
     }
 
+    public void send(SocketPacket socketPacket) {
+        client.sendMessage(socketPacket.serialize());
+    }
+
     public ConnectionStatus getConnectionStatus() {
         return connectionStatus;
     }

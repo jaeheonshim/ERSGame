@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.net.packet.CreateGamePacket;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextField;
@@ -65,6 +67,18 @@ public class CreateGameScreen implements Screen {
 
         createButton = new ERSTextButton("Create Game", skin, game);
         table.add(createButton).fillX().expandY().top().padLeft(38).padRight(38).padTop(16).colspan(2);
+
+        createButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                String username = nameField.getText();
+                if(username.trim().isEmpty()) return;
+
+                CreateGamePacket packet = new CreateGamePacket(username);
+
+                NetManager.getInstance().send(packet);
+            }
+        });
     }
 
     @Override
