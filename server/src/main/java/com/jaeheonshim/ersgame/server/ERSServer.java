@@ -1,8 +1,10 @@
 package com.jaeheonshim.ersgame.server;
 
+import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
 import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
+import com.jaeheonshim.ersgame.net.packet.UIMessagePacket;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -29,6 +31,7 @@ public class ERSServer extends WebSocketServer {
         conn.setAttachment(clientUUID.toString());
 
         conn.send(new SocketConnectPacket(clientUUID.toString()).serialize());
+        conn.send(new UIMessagePacket(UIMessageType.SUCCESS, "Connected to server!").serialize());
     }
 
     @Override

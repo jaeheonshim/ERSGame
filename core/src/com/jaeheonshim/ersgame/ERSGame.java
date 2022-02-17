@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.scene.OverlayStage;
 import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.screen.CreateGameScreen;
 import com.jaeheonshim.ersgame.screen.JoinGameScreen;
@@ -41,6 +42,7 @@ public class ERSGame extends Game {
 	@Override
 	public void create () {
 		loadAssets();
+		OverlayStage.initialize(this);
 		mainScreen = new MainScreen(this);
 		joinGameScreen = new JoinGameScreen(this);
 		createGameScreen = new CreateGameScreen(this);

@@ -192,6 +192,25 @@ atlasData: {
 			type: PIXEL
 			hidden: false
 		}
+		{
+			file: null
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: success
+			name: success
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: PIXEL
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -313,6 +332,16 @@ jsonData: {
 				a: 0.6399998
 			}
 			name: selection
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 0.29411766
+				g: 0.70980394
+				b: 0.2627451
+				a: 1
+			}
+			name: success
 		}
 		{
 			class: com.ray3k.skincomposer.data.ColorData
@@ -1978,6 +2007,33 @@ jsonData: {
 				deletable: true
 				parent: null
 			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: success
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-24
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: success
+					}
+				}
+				deletable: true
+				parent: null
+			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextField: [
 			{
@@ -2277,6 +2333,13 @@ preferences: {
 	id: {
 		class: java.lang.Integer
 		value: 410428652
+	}
+	preview-bg-color: {
+		class: com.badlogic.gdx.graphics.Color
+		r: 0
+		g: 0
+		b: 0
+		a: 1
 	}
 	last-import-export-path: {
 		class: java.lang.String

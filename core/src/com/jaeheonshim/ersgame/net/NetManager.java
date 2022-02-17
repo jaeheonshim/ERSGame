@@ -25,6 +25,7 @@ public class NetManager {
         instance = new NetManager();
 
         instance.registerListener(new ConnectPacketListener());
+        instance.registerListener(new UIMessagePacketListener());
     }
 
     private NetManager() {

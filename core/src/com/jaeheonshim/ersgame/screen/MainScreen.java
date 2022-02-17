@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -19,11 +20,13 @@ import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.net.ConnectionStatus;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.listener.ConnectStatusListener;
-import com.jaeheonshim.ersgame.scene.ConnectionStatusLabel;
+import com.jaeheonshim.ersgame.scene.OverlayStage;
+import com.jaeheonshim.ersgame.scene.ui.ConnectionStatusLabel;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSWindow;
+import com.jaeheonshim.ersgame.scene.ui.UIMessageLabel;
 
 import java.util.Arrays;
 
@@ -41,6 +44,8 @@ public class MainScreen implements Screen, ConnectStatusListener {
     private ERSWindow connectingWindow;
 
     private Screen pendingScreen;
+
+    private OverlayStage overlayStage = OverlayStage.getInstance();
 
     public MainScreen(ERSGame game) {
         this.game = game;
@@ -73,6 +78,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
 
         connectionStatus = new ConnectionStatusLabel(skin, game);
         table.add(connectionStatus).expandY().bottom().right().pad(8);
+        table.row();
 
         joinGameButton.addListener(new ClickListener() {
             @Override
@@ -154,7 +160,9 @@ public class MainScreen implements Screen, ConnectStatusListener {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
         stage.act(delta);
+        overlayStage.act(delta);
         stage.draw();
+        overlayStage.draw();
     }
 
     @Override

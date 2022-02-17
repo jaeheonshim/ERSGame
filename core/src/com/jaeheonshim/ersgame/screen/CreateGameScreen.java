@@ -62,6 +62,13 @@ public class CreateGameScreen implements Screen {
 
         nameField = new ERSTextField("", skin, game);
         nameField.setMessageText("Username");
+        nameField.setTextFieldFilter(new TextField.TextFieldFilter() {
+            @Override
+            public boolean acceptChar(TextField textField, char c) {
+                return Character.toLowerCase(c) >= 'a' && Character.toLowerCase(c) <= 'z' || Character.isDigit(c);
+            }
+        });
+
         table.add(nameField).expandY().fillX().padLeft(32).padRight(32).colspan(2).bottom();
         table.row();
 
