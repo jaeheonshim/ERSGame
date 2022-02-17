@@ -268,6 +268,44 @@ atlasData: {
 			type: PIXEL
 			hidden: false
 		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/blue_text_panel.9.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: blue_text_panel
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: NINE_PATCH
+			hidden: false
+		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/grey_panel.9.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: grey_panel
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: NINE_PATCH
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -2197,6 +2235,33 @@ jsonData: {
 						name: background
 						optional: true
 						value: warning
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: bluepanel
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-32-bold
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: blue_text_panel
 					}
 				}
 				deletable: true

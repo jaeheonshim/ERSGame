@@ -12,6 +12,7 @@ import com.jaeheonshim.ersgame.scene.OverlayStage;
 import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.screen.CreateGameScreen;
 import com.jaeheonshim.ersgame.screen.JoinGameScreen;
+import com.jaeheonshim.ersgame.screen.LobbyScreen;
 import com.jaeheonshim.ersgame.screen.MainScreen;
 
 public class ERSGame extends Game {
@@ -27,6 +28,7 @@ public class ERSGame extends Game {
 	public Screen mainScreen;
 	public Screen joinGameScreen;
 	public Screen createGameScreen;
+	public Screen lobbyScreen;
 
 	private void loadAssets() {
 		assets.load(cardsAtlas, TextureAtlas.class);
@@ -46,9 +48,11 @@ public class ERSGame extends Game {
 		mainScreen = new MainScreen(this);
 		joinGameScreen = new JoinGameScreen(this);
 		createGameScreen = new CreateGameScreen(this);
+		lobbyScreen = new LobbyScreen(this);
 
 		NetManager.getInstance().connect();
-		setScreen(mainScreen);
+//		setScreen(mainScreen);
+		setScreen(lobbyScreen);
 	}
 
 	@Override
@@ -60,6 +64,7 @@ public class ERSGame extends Game {
 
 	@Override
 	public void resize(int width, int height) {
+		super.resize(width, height);
 		OverlayStage.getInstance().getViewport().update(width, height, true);
 	}
 

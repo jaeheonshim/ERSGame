@@ -6,30 +6,39 @@ filter: Linear, Linear
 repeat: none
 white-pixel
   rotate: false
-  xy: 1, 1
+  xy: 193, 151
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 blue_sliderLeft
   rotate: false
-  xy: 1221, 1564
+  xy: 1221, 1663
   size: 39, 31
   orig: 39, 31
   offset: 0, 0
   index: -1
 blue_panel
   rotate: false
-  xy: 1029, 1448
+  xy: 1029, 1547
   size: 100, 100
   split: 7, 7, 7, 7
   pad: 25, 25, 60, 25
   orig: 100, 100
   offset: 0, 0
   index: -1
+blue_text_panel
+  rotate: false
+  xy: 1029, 1547
+  size: 100, 100
+  split: 7, 7, 7, 7
+  pad: 8, 8, 8, 8
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
 btn-blue
   rotate: false
-  xy: 515, 1032
+  xy: 515, 1131
   size: 190, 49
   split: 6, 6, 6, 10
   pad: 12, 12, 10, 14
@@ -38,7 +47,7 @@ btn-blue
   index: -1
 btn-blue-down
   rotate: false
-  xy: 1029, 1550
+  xy: 1029, 1649
   size: 190, 45
   split: 6, 6, 6, 10
   pad: 12, 12, 10, 14
@@ -47,7 +56,7 @@ btn-blue-down
   index: -1
 btn-green
   rotate: false
-  xy: 1, 4
+  xy: 1, 103
   size: 190, 49
   split: 6, 6, 6, 10
   pad: 12, 12, 10, 14
@@ -56,7 +65,7 @@ btn-green
   index: -1
 btn-green-down
   rotate: false
-  xy: 515, 985
+  xy: 515, 1084
   size: 190, 45
   split: 6, 6, 6, 10
   pad: 12, 12, 10, 14
@@ -65,38 +74,47 @@ btn-green-down
   index: -1
 poppins-16
   rotate: false
-  xy: 1, 55
+  xy: 1, 154
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 poppins-24
   rotate: false
-  xy: 1, 1083
+  xy: 1, 1182
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 poppins-32-bold
   rotate: false
-  xy: 1, 569
+  xy: 1, 668
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 poppins-64
   rotate: false
-  xy: 515, 1083
+  xy: 515, 1182
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 graybox
   rotate: false
-  xy: 707, 991
+  xy: 707, 1090
   size: 100, 90
   split: 25, 25, 25, 25
   pad: 30, 25, 25, 25
   orig: 100, 90
+  offset: 0, 0
+  index: -1
+grey_panel
+  rotate: false
+  xy: 1, 1
+  size: 100, 100
+  split: 8, 8, 8, 8
+  pad: 0, 0, 0, 0
+  orig: 100, 100
   offset: 0, 0
   index: -1

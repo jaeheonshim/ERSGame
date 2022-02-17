@@ -142,6 +142,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: white
 		background: warning
 	}
+	bluepanel: {
+		font: poppins-32-bold
+		fontColor: white
+		background: blue_text_panel
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
