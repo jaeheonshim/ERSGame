@@ -12,7 +12,7 @@ public class UIMessagePacketListener extends SocketPacketListener {
         if(packet instanceof UIMessagePacket) {
             UIMessagePacket uiMessagePacket = ((UIMessagePacket) packet);
 
-            OverlayStage.getInstance().onMessageUpdate(uiMessagePacket.message);
+            OverlayStage.getInstance().onMessageUpdate(uiMessagePacket.type, uiMessagePacket.message);
         }
 
         return false;

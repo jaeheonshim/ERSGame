@@ -211,6 +211,63 @@ atlasData: {
 			type: PIXEL
 			hidden: false
 		}
+		{
+			file: null
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: info
+			name: info
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: PIXEL
+			hidden: false
+		}
+		{
+			file: null
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: error
+			name: error
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: PIXEL
+			hidden: false
+		}
+		{
+			file: null
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: warning
+			name: warning
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: PIXEL
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -326,6 +383,26 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
+				r: 1
+				g: 0.5803922
+				b: 0.5803922
+				a: 1
+			}
+			name: error
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 0.11764706
+				g: 0.57254905
+				b: 0.95686275
+				a: 1
+			}
+			name: info
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
 				r: 0.3321777
 				g: 0.3394507
 				b: 0.98666644
@@ -342,6 +419,16 @@ jsonData: {
 				a: 1
 			}
 			name: success
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
+				r: 1
+				g: 0.4745098
+				b: 0
+				a: 1
+			}
+			name: warning
 		}
 		{
 			class: com.ray3k.skincomposer.data.ColorData
@@ -2029,6 +2116,87 @@ jsonData: {
 						name: background
 						optional: true
 						value: success
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: info
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-24
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: info
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: error
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-24
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: error
+					}
+				}
+				deletable: true
+				parent: null
+			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: warning
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-24
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: warning
 					}
 				}
 				deletable: true

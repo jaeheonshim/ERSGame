@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.scene.action.DisappearAction;
 import com.jaeheonshim.ersgame.scene.ui.UIMessageLabel;
 
@@ -40,8 +41,8 @@ public class OverlayStage extends Stage {
         addActor(table);
     }
 
-    public void onMessageUpdate(String message) {
-        uiMessageLabel.onMessageUpdate(message);
+    public void onMessageUpdate(UIMessageType type, String message) {
+        uiMessageLabel.onMessageUpdate(type, message);
         uiMessageLabel.addAction(new DisappearAction(3));
     }
 }

@@ -32,6 +32,18 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.843333
 		a: 1
 	}
+	error: {
+		r: 1
+		g: 0.5803922
+		b: 0.5803922
+		a: 1
+	}
+	info: {
+		r: 0.11764706
+		g: 0.57254905
+		b: 0.95686275
+		a: 1
+	}
 	selection: {
 		r: 0.3321777
 		g: 0.3394507
@@ -42,6 +54,12 @@ com.badlogic.gdx.graphics.Color: {
 		r: 0.29411766
 		g: 0.70980394
 		b: 0.2627451
+		a: 1
+	}
+	warning: {
+		r: 1
+		g: 0.4745098
+		b: 0
 		a: 1
 	}
 	white: {
@@ -68,6 +86,18 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	success: {
 		name: white-pixel
 		color: success
+	}
+	info: {
+		name: white-pixel
+		color: info
+	}
+	error: {
+		name: white-pixel
+		color: error
+	}
+	warning: {
+		name: white-pixel
+		color: warning
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
@@ -96,6 +126,21 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: poppins-24
 		fontColor: white
 		background: success
+	}
+	info: {
+		font: poppins-24
+		fontColor: white
+		background: info
+	}
+	error: {
+		font: poppins-24
+		fontColor: white
+		background: error
+	}
+	warning: {
+		font: poppins-24
+		fontColor: white
+		background: warning
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
