@@ -1,5 +1,7 @@
 package com.jaeheonshim.ersgame.server;
 
+import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
 import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
@@ -50,7 +52,7 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
-
+        ex.printStackTrace();
     }
 
     @Override
@@ -66,6 +68,17 @@ public class ERSServer extends WebSocketServer {
         WebSocket client = connectedClients.get(uuid);
         if(client != null) {
             client.send(packet.serialize());
+        }
+    }
+
+    public void broadcast(SocketPacket packet, GameState game) {
+        for(Player player : game.getPlayerList()) {
+            WebSocket socket = connectedClients.get(player.getUuid());
+
+            if(socket != null) {
+                System.out.println(packet.serialize());
+                socket.send(packet.serialize());
+            }
         }
     }
 

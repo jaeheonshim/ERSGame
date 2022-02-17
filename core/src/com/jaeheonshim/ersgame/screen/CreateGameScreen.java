@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateManager;
+import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.packet.CreateGamePacket;
 import com.jaeheonshim.ersgame.scene.OverlayStage;
@@ -22,7 +25,7 @@ import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextField;
 
-public class CreateGameScreen implements Screen {
+public class CreateGameScreen implements Screen, GameStateUpdateListener {
     private final ERSTextField nameField;
     private final ERSTextButton createButton;
     private final Button backButton;
@@ -87,6 +90,15 @@ public class CreateGameScreen implements Screen {
                 NetManager.getInstance().send(packet);
             }
         });
+
+        GameStateManager.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onUpdate(GameState newGameState) {
+        if(newGameState != null) {
+            game.setScreen(game.lobbyScreen);
+        }
     }
 
     @Override

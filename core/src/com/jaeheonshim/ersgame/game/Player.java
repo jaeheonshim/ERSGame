@@ -1,14 +1,8 @@
 package com.jaeheonshim.ersgame.game;
 
 public class Player {
-    private GameState gameState;
-
     private String uuid;
     private String username;
-
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
 
     public String getUuid() {
         return uuid;

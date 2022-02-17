@@ -16,6 +16,5 @@ public class PlayersPane extends Table {
 
         setFillParent(true);
         pad(8);
-        add(new PlayerElement(game)).top().expandX().expandY().fillX().height(60);
     }
 }

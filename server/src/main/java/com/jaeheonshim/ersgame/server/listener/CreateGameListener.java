@@ -3,6 +3,7 @@ package com.jaeheonshim.ersgame.server.listener;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.CreateGamePacket;
+import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import com.jaeheonshim.ersgame.net.packet.UIMessagePacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
@@ -24,9 +25,9 @@ public class CreateGameListener extends ServerPacketListener {
             String username = createGamePacket.username;
 
             GameState newGame = GameManager.getInstance().createNewGame(uuid, username);
-            System.out.println(newGame.getGameCode());
 
             server.send(new UIMessagePacket(UIMessageType.SUCCESS, "New game created"), uuid);
+            server.broadcast(new GameStatePacket(newGame), newGame);
             return true;
         }
 

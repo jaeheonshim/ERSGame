@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,11 +11,15 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateManager;
+import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
+import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.ui.PlayerElement;
 import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
-public class LobbyScreen implements Screen {
+public class LobbyScreen implements Screen, GameStateUpdateListener {
     private ERSGame game;
     private Stage stage;
     private Table table;
@@ -40,11 +45,24 @@ public class LobbyScreen implements Screen {
 
         playersPane = new PlayersPane(game);
         table.add(new ScrollPane(playersPane)).expandY().expandX().fill().padTop(16);
+
+        GameStateManager.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onUpdate(GameState newGameState) {
+        if(newGameState == null) return;
+
+        playersPane.clearChildren();
+        for(Player player : newGameState.getPlayerList()) {
+            playersPane.add(new PlayerElement(game, player.getUsername())).top().expandX().expandY().fillX().height(60);
+        }
     }
 
     @Override
     public void show() {
-
+        onUpdate(GameStateManager.getInstance().getGameState());
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

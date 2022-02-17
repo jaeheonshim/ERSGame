@@ -51,8 +51,8 @@ public class ERSGame extends Game {
 		lobbyScreen = new LobbyScreen(this);
 
 		NetManager.getInstance().connect();
-//		setScreen(mainScreen);
-		setScreen(lobbyScreen);
+		setScreen(mainScreen);
+//		setScreen(lobbyScreen);
 	}
 
 	@Override

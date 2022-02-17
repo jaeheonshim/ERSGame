@@ -13,14 +13,14 @@ public class PlayerElement extends Table {
 
     private ERSLabel nameLabel;
 
-    public PlayerElement(ERSGame game) {
+    public PlayerElement(ERSGame game, String name) {
         this.game = game;
         this.skin = game.assets.get(game.uiSkin);
 
         NinePatchDrawable backgroundDrawable = new NinePatchDrawable(skin.getPatch("grey_panel"));
         setBackground(backgroundDrawable);
 
-        nameLabel = new ERSLabel("Jaeheon", skin, game);
+        nameLabel = new ERSLabel(name, skin, game);
         nameLabel.setColor(Color.BLACK);
         add(nameLabel);
     }
