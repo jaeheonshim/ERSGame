@@ -12,7 +12,6 @@ import com.jaeheonshim.ersgame.scene.StyleUtil;
 import com.jaeheonshim.ersgame.screen.CreateGameScreen;
 import com.jaeheonshim.ersgame.screen.JoinGameScreen;
 import com.jaeheonshim.ersgame.screen.MainScreen;
-import com.jaeheonshim.ersgame.util.RandomNameGenerator;
 
 public class ERSGame extends Game {
 	public final String cardsAtlas = "cards/cards.atlas";
@@ -45,7 +44,6 @@ public class ERSGame extends Game {
 		mainScreen = new MainScreen(this);
 		joinGameScreen = new JoinGameScreen(this);
 		createGameScreen = new CreateGameScreen(this);
-		RandomNameGenerator.initialize();
 
 		NetManager.getInstance().connect();
 		setScreen(mainScreen);

@@ -4,7 +4,6 @@ import com.github.czyzby.websocket.WebSocket;
 import com.jaeheonshim.ersgame.net.listener.*;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,13 +21,13 @@ public class NetManager {
         return instance;
     }
 
-    public static void initialize() throws URISyntaxException {
+    public static void initialize() {
         instance = new NetManager();
 
         instance.registerListener(new ConnectPacketListener());
     }
 
-    private NetManager() throws URISyntaxException {
+    private NetManager() {
         client = new NetClient(this);
     }
 
@@ -74,10 +73,5 @@ public class NetManager {
 
     public void setClientUuid(String clientUuid) {
         this.clientUuid = clientUuid;
-    }
-
-    public static void main(String[] args) throws URISyntaxException {
-        NetManager.initialize();
-        NetManager.getInstance().connect();
     }
 }

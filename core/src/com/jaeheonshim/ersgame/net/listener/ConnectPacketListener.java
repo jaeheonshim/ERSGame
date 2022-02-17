@@ -16,8 +16,6 @@ public class ConnectPacketListener extends SocketPacketListener {
             NetManager.getInstance().setConnectionStatus(ConnectionStatus.CONNECTED);
             NetManager.getInstance().setClientUuid(((SocketConnectPacket) packet).uuid);
 
-            Gdx.app.log("NET", String.format("Connected to server! UUID: %s", NetManager.getInstance().getClientUuid()));
-
             return true;
         }
 

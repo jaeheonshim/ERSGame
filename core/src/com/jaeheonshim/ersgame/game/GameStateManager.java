@@ -1,7 +1,6 @@
 package com.jaeheonshim.ersgame.game;
 
 import com.jaeheonshim.ersgame.net.packet.GameStateUpdateEvent;
-import com.jaeheonshim.ersgame.util.RandomNameGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;

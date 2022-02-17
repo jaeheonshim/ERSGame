@@ -3,19 +3,12 @@ package com.jaeheonshim.ersgame.net;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
-import java.net.InetSocketAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.ByteBuffer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class NetClient implements WebSocketListener {
     private NetManager netManager;
     private WebSocket socket;
 
-    public NetClient(NetManager netManager) throws URISyntaxException {
+    public NetClient(NetManager netManager) {
         this.netManager = netManager;
 
         socket = WebSockets.newSocket(WebSockets.toWebSocketUrl("localhost", 8887));
