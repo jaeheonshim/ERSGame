@@ -8,6 +8,7 @@ import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import com.jaeheonshim.ersgame.net.packet.UIMessagePacket;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
+import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -85,6 +86,7 @@ public class ERSServer extends WebSocketServer {
     public static void main(String[] args) {
         ERSServer server = new ERSServer(new InetSocketAddress("localhost", 8887));
         server.registerListener(new CreateGameListener(server));
+        server.registerListener(new JoinGameListener(server));
         server.run();
     }
 }

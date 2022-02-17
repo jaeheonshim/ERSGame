@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 
 public class PlayerElement extends Table {
@@ -13,14 +14,14 @@ public class PlayerElement extends Table {
 
     private ERSLabel nameLabel;
 
-    public PlayerElement(ERSGame game, String name) {
+    public PlayerElement(ERSGame game, Player player) {
         this.game = game;
         this.skin = game.assets.get(game.uiSkin);
 
         NinePatchDrawable backgroundDrawable = new NinePatchDrawable(skin.getPatch("grey_panel"));
         setBackground(backgroundDrawable);
 
-        nameLabel = new ERSLabel(name, skin, game);
+        nameLabel = new ERSLabel(player.getUsername(), skin, game);
         nameLabel.setColor(Color.BLACK);
         add(nameLabel);
     }

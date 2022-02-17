@@ -15,11 +15,16 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateManager;
+import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
+import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.net.packet.JoinGamePacket;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextField;
 
-public class JoinGameScreen implements Screen {
+public class JoinGameScreen implements Screen, GameStateUpdateListener {
     private final ERSTextField nameField;
     private final ERSTextField codeField;
     private final ERSTextButton joinButton;
@@ -73,6 +78,25 @@ public class JoinGameScreen implements Screen {
 
         joinButton = new ERSTextButton("Join Game", skin, game);
         table.add(joinButton).fillX().expandY().top().padLeft(38).padRight(38).padTop(16).colspan(2);
+
+        joinButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(nameField.getText().isEmpty() || codeField.getText().isEmpty()) return;
+
+                JoinGamePacket packet = new JoinGamePacket(codeField.getText(), nameField.getText());
+                NetManager.getInstance().send(packet);
+            }
+        });
+
+        GameStateManager.getInstance().registerListener(this);
+    }
+
+    @Override
+    public void onUpdate(GameState newGameState) {
+        if(newGameState != null) {
+            game.setScreen(game.lobbyScreen);
+        }
     }
 
     @Override

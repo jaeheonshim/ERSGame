@@ -38,13 +38,13 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
 
         skin = game.assets.get(game.uiSkin);
 
-        gameCodeLabel = new ERSLabel("129323", skin, "bluepanel", game);
+        gameCodeLabel = new ERSLabel("000000", skin, "bluepanel", game);
         gameCodeLabel.setAlignment(Align.center);
         table.add(gameCodeLabel).width(150).height(60).expandX();
         table.row();
 
         playersPane = new PlayersPane(game);
-        table.add(new ScrollPane(playersPane)).expandY().expandX().fill().padTop(16);
+        table.add(new ScrollPane(playersPane)).expandY().expandX().fill().padTop(16).top();
 
         GameStateManager.getInstance().registerListener(this);
     }
@@ -55,8 +55,11 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
 
         playersPane.clearChildren();
         for(Player player : newGameState.getPlayerList()) {
-            playersPane.add(new PlayerElement(game, player.getUsername())).top().expandX().expandY().fillX().height(60);
+            playersPane.add(new PlayerElement(game, player)).top().expandX().fillX().height(60);
+            playersPane.row();
         }
+
+        gameCodeLabel.setText(newGameState.getGameCode());
     }
 
     @Override

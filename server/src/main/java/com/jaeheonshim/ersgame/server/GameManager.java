@@ -27,6 +27,10 @@ public class GameManager {
         return null;
     }
 
+    public GameState getGame(String joinCode) {
+        return gameStates.get(joinCode);
+    }
+
     public GameState createNewGame(String uuid, String username) throws Exception {
         if(getGameOfPlayer(uuid) != null) {
             throw new Exception("Player already in game");
@@ -36,8 +40,20 @@ public class GameManager {
         player.setUuid(uuid);
         player.setUsername(username);
 
-        GameState gameState = GameState.createGame(player);
+        GameState gameState = GameState.createGame(player, getUnusedGameCode());
         gameStates.put(gameState.getGameCode(), gameState);
         return gameState;
+    }
+
+    public String getUnusedGameCode() {
+        if(gameStates.size() >= 1000000 / 2) return null;
+
+        String code;
+
+        do {
+            code = Integer.toString((int) (Math.random() * (1000000 - 100000)) + 100000);
+        } while(getGame(code) != null);
+
+        return code;
     }
 }

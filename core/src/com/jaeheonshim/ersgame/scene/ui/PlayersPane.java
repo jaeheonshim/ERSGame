@@ -16,5 +16,6 @@ public class PlayersPane extends Table {
 
         setFillParent(true);
         pad(8);
+        top();
     }
 }
