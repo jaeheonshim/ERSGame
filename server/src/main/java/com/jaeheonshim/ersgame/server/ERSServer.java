@@ -1,17 +1,13 @@
 package com.jaeheonshim.ersgame.server;
 
-import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
-import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ERSServer extends WebSocketServer {
     private final ConcurrentHashMap<String, WebSocket> connectedClients = new ConcurrentHashMap<>();

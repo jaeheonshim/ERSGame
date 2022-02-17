@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.game.PlayButton;
@@ -22,8 +21,6 @@ public class GameScreen implements Screen {
     private PileDisplayActor pileDisplayActor;
 //    private PlayersList playersList;
     private CardActor animationCard;
-
-    private GameState gameState = new GameState();
 
     public GameScreen(ERSGame game) {
         this.game = game;
