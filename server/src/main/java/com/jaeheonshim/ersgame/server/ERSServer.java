@@ -62,9 +62,16 @@ public class ERSServer extends WebSocketServer {
         socketPacketListenerList.add(listener);
     }
 
+    public void send(SocketPacket packet, String uuid) {
+        WebSocket client = connectedClients.get(uuid);
+        if(client != null) {
+            client.send(packet.serialize());
+        }
+    }
+
     public static void main(String[] args) {
         ERSServer server = new ERSServer(new InetSocketAddress("localhost", 8887));
-        server.registerListener(new CreateGameListener());
+        server.registerListener(new CreateGameListener(server));
         server.run();
     }
 }

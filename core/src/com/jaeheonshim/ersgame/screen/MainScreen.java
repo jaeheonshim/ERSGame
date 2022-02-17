@@ -45,8 +45,6 @@ public class MainScreen implements Screen, ConnectStatusListener {
 
     private Screen pendingScreen;
 
-    private OverlayStage overlayStage = OverlayStage.getInstance();
-
     public MainScreen(ERSGame game) {
         this.game = game;
         skin = game.assets.get(game.uiSkin);
@@ -160,9 +158,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
     public void render(float delta) {
         ScreenUtils.clear(Color.WHITE);
         stage.act(delta);
-        overlayStage.act(delta);
         stage.draw();
-        overlayStage.draw();
     }
 
     @Override

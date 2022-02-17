@@ -23,6 +23,8 @@ public class UIMessageLabel extends ERSLabel {
     public void onMessageUpdate(UIMessageType type, String message) {
         setStyle(skin.get(type.styleName, LabelStyle.class));
 
+        Color color = getColor();
+        setColor(color.r, color.g, color.b, 1);
         setVisible(true);
         setText(message);
     }

@@ -38,7 +38,7 @@ public class ERSGame extends Game {
 
 		assets.finishLoading();
 	}
-	
+
 	@Override
 	public void create () {
 		loadAssets();
@@ -54,8 +54,15 @@ public class ERSGame extends Game {
 	@Override
 	public void render () {
 		super.render();
+		OverlayStage.getInstance().act();
+		OverlayStage.getInstance().draw();
 	}
-	
+
+	@Override
+	public void resize(int width, int height) {
+		OverlayStage.getInstance().getViewport().update(width, height, true);
+	}
+
 	@Override
 	public void dispose () {
 	}

@@ -6,10 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 
 public class DisappearAction extends SequenceAction {
-    private float duration;
-
     public DisappearAction(float duration) {
-        this.duration = duration;
         DelayAction delayAction = new DelayAction(duration * 0.8f);
 
         AlphaAction alphaAction = new AlphaAction();

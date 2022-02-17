@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.scene;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -42,7 +43,10 @@ public class OverlayStage extends Stage {
     }
 
     public void onMessageUpdate(UIMessageType type, String message) {
-        uiMessageLabel.onMessageUpdate(type, message);
-        uiMessageLabel.addAction(new DisappearAction(3));
+        Gdx.app.postRunnable(() -> {
+            uiMessageLabel.onMessageUpdate(type, message);
+            uiMessageLabel.clearActions();
+            uiMessageLabel.addAction(new DisappearAction(3));
+        });
     }
 }
