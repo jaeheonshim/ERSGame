@@ -3,6 +3,12 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	poppins-16: {
 		file: poppins-16.fnt
 	}
+	poppins-18-shadow: {
+		file: poppins-18-shadow.fnt
+	}
+	poppins-22-medium: {
+		file: poppins-22-medium.fnt
+	}
 	poppins-24: {
 		file: poppins-24.fnt
 	}
@@ -43,6 +49,12 @@ com.badlogic.gdx.graphics.Color: {
 		g: 0.57254905
 		b: 0.95686275
 		a: 1
+	}
+	overlaybg: {
+		r: 0.08999979
+		g: 0.08999979
+		b: 0.08999979
+		a: 0.38431373
 	}
 	selection: {
 		r: 0.3321777
@@ -99,6 +111,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: white-pixel
 		color: warning
 	}
+	overlaybg: {
+		name: white-pixel
+		color: overlaybg
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	back: {
@@ -146,6 +162,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: poppins-32-bold
 		fontColor: white
 		background: blue_text_panel
+	}
+	overlay: {
+		font: poppins-22-medium
+		fontColor: white
+		background: overlaybg
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {

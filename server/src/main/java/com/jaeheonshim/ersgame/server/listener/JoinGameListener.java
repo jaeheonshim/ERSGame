@@ -3,10 +3,7 @@ package com.jaeheonshim.ersgame.server.listener;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
-import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
-import com.jaeheonshim.ersgame.net.packet.JoinGamePacket;
-import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.net.packet.UIMessagePacket;
+import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
@@ -46,6 +43,7 @@ public class JoinGameListener extends ServerPacketListener {
             gameState.addPlayer(player);
             server.send(new UIMessagePacket(UIMessageType.SUCCESS, "Successfully joined game"), uuid);
             server.broadcast(new GameStatePacket(gameState), gameState);
+            server.broadcast(new OverlayMessagePacket(joinGamePacket.username + " joined"), gameState);
 
             return true;
         }

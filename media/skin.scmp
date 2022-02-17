@@ -306,6 +306,25 @@ atlasData: {
 			type: NINE_PATCH
 			hidden: false
 		}
+		{
+			file: null
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: overlaybg
+			name: overlaybg
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: PIXEL
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -384,6 +403,44 @@ atlasData: {
 			type: FONT
 			hidden: false
 		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-18-shadow.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: poppins-18-shadow
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-22-medium.png
+			bgColor: {
+				r: 0
+				g: 0
+				b: 0
+				a: 1
+			}
+			tint: null
+			tintName: null
+			name: poppins-22-medium
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: FONT
+			hidden: false
+		}
 	]
 }
 jsonData: {
@@ -441,6 +498,16 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
+				r: 0.08999979
+				g: 0.08999979
+				b: 0.08999979
+				a: 0.38431373
+			}
+			name: overlaybg
+		}
+		{
+			class: com.ray3k.skincomposer.data.ColorData
+			color: {
 				r: 0.3321777
 				g: 0.3394507
 				b: 0.98666644
@@ -484,6 +551,16 @@ jsonData: {
 			class: com.ray3k.skincomposer.data.FontData
 			name: poppins-16
 			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-16.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: poppins-18-shadow
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-18-shadow.fnt
+		}
+		{
+			class: com.ray3k.skincomposer.data.FontData
+			name: poppins-22-medium
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/fonts/poppins-22-medium.fnt
 		}
 		{
 			class: com.ray3k.skincomposer.data.FontData
@@ -2267,6 +2344,33 @@ jsonData: {
 				deletable: true
 				parent: null
 			}
+			{
+				class: com.ray3k.skincomposer.data.StyleData
+				name: overlay
+				clazz: com.badlogic.gdx.scenes.scene2d.ui.Label
+				properties: {
+					font: {
+						type: com.badlogic.gdx.graphics.g2d.BitmapFont
+						name: font
+						optional: false
+						value: poppins-22-medium
+					}
+					fontColor: {
+						type: com.badlogic.gdx.graphics.Color
+						name: fontColor
+						optional: true
+						value: white
+					}
+					background: {
+						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
+						name: background
+						optional: true
+						value: overlaybg
+					}
+				}
+				deletable: true
+				parent: null
+			}
 		]
 		com.badlogic.gdx.scenes.scene2d.ui.TextField: [
 			{
@@ -2569,9 +2673,9 @@ preferences: {
 	}
 	preview-bg-color: {
 		class: com.badlogic.gdx.graphics.Color
-		r: 0
-		g: 0
-		b: 0
+		r: 1
+		g: 1
+		b: 1
 		a: 1
 	}
 	last-import-export-path: {
