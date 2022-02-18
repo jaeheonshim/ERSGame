@@ -5,6 +5,7 @@ import com.jaeheonshim.ersgame.game.GameStateUtil;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
+import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import com.jaeheonshim.ersgame.ERSException;
 import com.jaeheonshim.ersgame.server.ERSServer;
@@ -33,6 +34,9 @@ public class StartGameListener extends ServerPacketListener {
 
                 GameActionPacket startGamePacket = new GameActionPacket(GameAction.START);
                 server.broadcast(startGamePacket, gameState);
+
+                GameStatePacket gameStatePacket = new GameStatePacket(gameState);
+                server.broadcast(gameStatePacket, gameState);
                 return true;
             }
         }

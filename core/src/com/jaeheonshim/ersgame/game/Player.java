@@ -2,6 +2,7 @@ package com.jaeheonshim.ersgame.game;
 
 import com.badlogic.gdx.utils.Queue;
 
+import java.beans.Transient;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -9,7 +10,11 @@ public class Player {
     private String uuid;
     private String username;
 
-    private Queue<CardType> cardStack = new Queue<>();
+    private transient Queue<CardType> cardStack = new Queue<>();
+    private int cardCount;
+
+    public Player() {
+    }
 
     public String getUuid() {
         return uuid;
@@ -44,15 +49,27 @@ public class Player {
         return cardStack.iterator();
     }
 
+    public int getCardCount() {
+        return cardCount;
+    }
+
     public void addCardToBottom(CardType cardType) {
         cardStack.addLast(cardType);
+        cardCount++;
     }
 
     public void addCardToTop(CardType cardType) {
         cardStack.addFirst(cardType);
+        cardCount++;
     }
 
     public CardType removeTopCard() {
+        if(cardStack.isEmpty()) return null;
+        cardCount--;
         return cardStack.removeFirst();
+    }
+
+    public void removeCardStack() {
+        cardStack = null;
     }
 }
