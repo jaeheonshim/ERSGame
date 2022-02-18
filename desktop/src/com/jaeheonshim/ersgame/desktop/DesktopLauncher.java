@@ -18,6 +18,7 @@ public class DesktopLauncher {
 		settings.maxWidth = 2048;
 		settings.maxHeight = 2048;
 //		TexturePacker.process(settings, "cards_unpacked", "cards", "cards");
+		TexturePacker.process(settings, "images", ".", "images");
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 768;
