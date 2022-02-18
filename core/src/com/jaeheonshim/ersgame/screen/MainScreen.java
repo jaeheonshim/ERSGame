@@ -40,6 +40,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
     private PileDisplayActor sampleDisplay;
     private ERSTextButton createGameButton;
     private ERSTextButton joinGameButton;
+    private ERSTextButton creditsButton;
 
     private ConnectionStatusLabel connectionStatus;
     private ERSWindow connectingWindow;
@@ -72,7 +73,11 @@ public class MainScreen implements Screen, ConnectStatusListener {
         table.row();
 
         joinGameButton = new ERSTextButton("Join Game", skin, "green", game);
-        table.add(joinGameButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32);
+        table.add(joinGameButton).expandX().fill().center().padBottom(8).padLeft(32).padRight(32);
+        table.row();
+
+        creditsButton = new ERSTextButton("Credits", skin, "yellow-outline", game);
+        table.add(creditsButton).expandX().fill().center().padBottom(20).padLeft(32).padRight(32).height(60);
         table.row();
 
         connectionStatus = new ConnectionStatusLabel(skin, game);
@@ -90,6 +95,13 @@ public class MainScreen implements Screen, ConnectStatusListener {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 trySwitchScreen(game.createGameScreen);
+            }
+        });
+
+        creditsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.creditsScreen);
             }
         });
 

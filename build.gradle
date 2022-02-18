@@ -106,7 +106,6 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
-        implementation 'com.owlike:genson:1.6'
         compile "com.github.MrStahlfelge.gdx-websockets:core:$wsVersion:sources"
         compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion"
         compile "com.github.MrStahlfelge.gdx-websockets:html:$wsVersion:sources"

@@ -6,8 +6,15 @@ filter: Nearest, Nearest
 repeat: none
 crown
   rotate: false
-  xy: 2, 2
+  xy: 2, 110
   size: 512, 512
   orig: 512, 512
+  offset: 0, 0
+  index: -1
+libgdx
+  rotate: false
+  xy: 2, 2
+  size: 586, 106
+  orig: 586, 106
   offset: 0, 0
   index: -1
