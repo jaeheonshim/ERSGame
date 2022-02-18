@@ -12,6 +12,6 @@ public class SocketPacket {
     }
 
     public static SocketPacket deserialize(String s) {
-        return json.fromJson(SocketPacket.class, s);
+        return (SocketPacket) json.fromJson(Object.class, s);
     }
 }

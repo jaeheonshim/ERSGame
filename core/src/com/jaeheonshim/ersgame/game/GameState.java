@@ -1,12 +1,15 @@
 package com.jaeheonshim.ersgame.game;
 
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
+
 import java.util.*;
 
 public class GameState {
-    private final String gameCode;
+    private String gameCode;
 
-    private Map<String, Player> playerMap = new HashMap<>();
-    private List<Player> playerList = new ArrayList<>();
+    private ObjectMap<String, Player> playerMap = new ObjectMap<>();
+    private Array<Player> playerList = new Array<>();
     private Player adminPlayer;
 
     public static GameState createGame(Player player, String gameCode) {
@@ -25,9 +28,21 @@ public class GameState {
         this.gameCode = gameCode;
     }
 
+    public Player getPlayer(String uuid) {
+        return playerMap.get(uuid);
+    }
+
     public void addPlayer(Player player) {
         playerList.add(player);
         playerMap.put(player.getUuid(), player);
+    }
+
+    public void removePlayer(String uuid) {
+        Player player = getPlayer(uuid);
+        if(player != null) {
+            playerList.removeValue(player, true);
+            playerMap.remove(uuid);
+        }
     }
 
     public boolean hasPlayer(String uuid) {
@@ -50,7 +65,15 @@ public class GameState {
         return gameCode;
     }
 
-    public List<Player> getPlayerList() {
+    public Array<Player> getPlayerList() {
         return playerList;
+    }
+
+    public Player getAdminPlayer() {
+        return adminPlayer;
+    }
+
+    public void setAdminPlayer(Player adminPlayer) {
+        this.adminPlayer = adminPlayer;
     }
 }

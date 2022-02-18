@@ -4,9 +4,7 @@ import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
-import com.jaeheonshim.ersgame.net.packet.SocketConnectPacket;
-import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.net.packet.UIMessagePacket;
+import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
 import org.java_websocket.WebSocket;
@@ -40,6 +38,28 @@ public class ERSServer extends WebSocketServer {
     @Override
     public void onClose(WebSocket conn, int code, String reason, boolean remote) {
         System.out.printf("%s disconnected.%n", ((String) conn.getAttachment()));
+
+        GameState gameState = GameManager.getInstance().getGameOfPlayer(conn.getAttachment());
+        if(gameState != null) {
+            Player player = gameState.getPlayer(conn.getAttachment());
+            gameState.removePlayer(conn.getAttachment());
+
+            if(gameState.getPlayerList().size == 0) {
+                GameManager.getInstance().removeGame(gameState.getGameCode());
+                return;
+            }
+
+            if(gameState.getAdminPlayer() == player) {
+                gameState.setAdminPlayer(gameState.getPlayerList().get(0));
+            }
+
+            OverlayMessagePacket messagePacket = new OverlayMessagePacket(player.getUsername() + " left");
+            GameStatePacket gameStatePacket = new GameStatePacket(gameState);
+
+            broadcast(messagePacket, gameState);
+            broadcast(gameStatePacket, gameState);
+        }
+
         connectedClients.remove(((String) conn.getAttachment()));
     }
 

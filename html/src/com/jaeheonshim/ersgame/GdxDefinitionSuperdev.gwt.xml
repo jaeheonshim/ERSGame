@@ -4,10 +4,11 @@
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 
     <inherits name='com.jaeheonshim.ersgame.GdxDefinition' />
-    
     <collapse-all-properties />
     
 	<add-linker name="xsiframe"/>	
 	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.net.packet" />
 </module>

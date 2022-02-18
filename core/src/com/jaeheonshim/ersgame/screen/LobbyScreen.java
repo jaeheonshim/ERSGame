@@ -40,7 +40,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
 
         gameCodeLabel = new ERSLabel("000000", skin, "bluepanel", game);
         gameCodeLabel.setAlignment(Align.center);
-        table.add(gameCodeLabel).width(150).height(60).expandX();
+        table.add(gameCodeLabel).width(150).height(60).expandX().padTop(8);
         table.row();
 
         playersPane = new PlayersPane(game);

@@ -27,6 +27,10 @@ public class GameManager {
         return null;
     }
 
+    public void removeGame(String joinCode) {
+        gameStates.remove(joinCode);
+    }
+
     public GameState getGame(String joinCode) {
         return gameStates.get(joinCode);
     }
