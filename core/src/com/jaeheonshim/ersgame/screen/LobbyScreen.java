@@ -13,10 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.game.GameStateManager;
-import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
-import com.jaeheonshim.ersgame.game.Player;
+import com.jaeheonshim.ersgame.game.*;
 import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
@@ -25,7 +22,7 @@ import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.ui.PlayerElement;
 import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
-public class LobbyScreen implements Screen, GameStateUpdateListener {
+public class LobbyScreen implements Screen, GameStateUpdateListener, GameActionListener {
     private ERSGame game;
     private Stage stage;
     private Table table;
@@ -66,6 +63,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         });
 
         GameStateManager.getInstance().registerListener(this);
+        GameStateManager.getInstance().registerActionListener(this);
     }
 
     @Override
@@ -85,6 +83,12 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         if(GameStateManager.getInstance().isAdmin()) {
             startButton.setVisible(true);
         }
+    }
+
+    @Override
+    public void onGameStart() {
+        if(!game.getScreen().equals(this)) return;
+        game.setScreen(game.gameScreen);
     }
 
     @Override

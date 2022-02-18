@@ -2,8 +2,7 @@ package com.jaeheonshim.ersgame.game;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-
-import java.util.*;
+import com.badlogic.gdx.utils.Queue;
 
 public class GameState {
     private String gameCode;
@@ -11,6 +10,8 @@ public class GameState {
     private ObjectMap<String, Player> playerMap = new ObjectMap<>();
     private Array<String> playerList = new Array<>();
     private String adminPlayer;
+
+    private Queue<CardType> deck = new Queue<>();
 
     private GameStatePhase gamePhase = GameStatePhase.PLAYER_JOIN;
 
@@ -89,5 +90,19 @@ public class GameState {
 
     public ObjectMap<String, Player> getPlayerMap() {
         return playerMap;
+    }
+
+    public int getPileCount() {
+        return deck.size;
+    }
+
+    public Array<CardType> getTopNCards(int n) {
+        Array<CardType> array = new Array<>();
+
+        for(int i = 0; i < n && i < deck.size; i++) {
+            array.add(deck.get(i));
+        }
+
+        return array;
     }
 }

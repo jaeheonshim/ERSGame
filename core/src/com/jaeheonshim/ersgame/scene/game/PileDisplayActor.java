@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.scene.game;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.badlogic.gdx.utils.Array;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
@@ -12,14 +13,14 @@ public class PileDisplayActor extends Stack {
     private static final int DISPLAY_COUNT = 3;
 
     private ERSGame game;
-    private Supplier<List<CardType>> getCards;
+    private Supplier<Array<CardType>> getCards;
 
     private CardActor[] cardActors = new CardActor[0];
 
-    public PileDisplayActor(ERSGame game, Supplier<List<CardType>> getCards) {
+    public PileDisplayActor(ERSGame game, Supplier<Array<CardType>> getCards) {
         this.game = game;
         this.getCards = getCards;
-
+        initializeActors();
         updatePileState();
     }
 
@@ -37,11 +38,12 @@ public class PileDisplayActor extends Stack {
     }
 
     public void updatePileState() {
-        List<CardType> cards = getCards.get();
-        if(cards.size() != cardActors.length) initializeActors();
+        Array<CardType> cards = getCards.get();
+        if(cards == null) return;
+        if(cards.size != cardActors.length) initializeActors();
 
         for(int i = 0; i < cardActors.length; i++) {
-            int pileSize = cards.size();
+            int pileSize = cards.size;
             if(pileSize < i + 1) break;
             cardActors[i].setType(cards.get(i));
             cardActors[i].setRotation(8 * i);

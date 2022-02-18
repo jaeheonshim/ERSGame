@@ -22,6 +22,7 @@ public class ERSGame extends Game {
 	public Screen joinGameScreen;
 	public Screen createGameScreen;
 	public Screen lobbyScreen;
+	public Screen gameScreen;
 
 	private void loadAssets() {
 		assets.load(cardsAtlas, TextureAtlas.class);
@@ -40,9 +41,10 @@ public class ERSGame extends Game {
 		joinGameScreen = new JoinGameScreen(this);
 		createGameScreen = new CreateGameScreen(this);
 		lobbyScreen = new LobbyScreen(this);
+		gameScreen = new GameScreen(this);
 
-//		NetManager.getInstance().connect();
-		setScreen(new GameScreen(this));
+		NetManager.getInstance().connect();
+		setScreen(mainScreen);
 //		setScreen(lobbyScreen);
 	}
 

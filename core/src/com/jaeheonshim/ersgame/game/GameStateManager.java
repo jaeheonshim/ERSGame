@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.game;
 
+import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.NetManager;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ public class GameStateManager {
     private GameState gameState;
 
     private List<GameStateUpdateListener> updateListenerList = new ArrayList<>();
+    private List<GameActionListener> gameActionListeners = new ArrayList<>();
 
     private static GameStateManager instance = new GameStateManager();
 
@@ -27,6 +29,20 @@ public class GameStateManager {
 
     public void registerListener(GameStateUpdateListener listener) {
         updateListenerList.add(listener);
+    }
+
+    public void registerActionListener(GameActionListener listener) {
+        gameActionListeners.add(listener);
+    }
+
+    public void onGameAction(GameAction gameAction) {
+        for(GameActionListener listener : gameActionListeners) {
+            switch (gameAction) {
+                case START:
+                    listener.onGameStart();
+                    break;
+            }
+        }
     }
 
     public GameState getGameState() {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -12,6 +13,8 @@ import com.jaeheonshim.ersgame.game.*;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
+import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
+import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.ui.PlayerElement;
 import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
@@ -27,13 +30,21 @@ public class GameScreen implements Screen, GameStateUpdateListener {
     private CardActor animationCard;
     private ScrollPane playerScrollPane;
 
+    private ERSLabel pileCount;
+    private ERSLabel selfCount;
+    private ERSTextButton playButton;
+
     public GameScreen(ERSGame game) {
         this.game = game;
+        Skin skin = game.assets.get(game.uiSkin);
 
         stage = new Stage(new ExtendViewport(600, 900));
         table = new Table();
 
-        pileDisplayActor = new PileDisplayActor(game, () -> Arrays.asList(CardType.CLOVER_A, CardType.CLOVER_4, CardType.DIAMOND_A));
+        pileDisplayActor = new PileDisplayActor(game, () -> {
+            if(GameStateManager.getInstance().getGameState() == null) return null;
+            return GameStateManager.getInstance().getGameState().getTopNCards(3);
+        });
         playersPane = new PlayersPane(game);
         playerScrollPane = new ScrollPane(playersPane);
 
@@ -43,11 +54,24 @@ public class GameScreen implements Screen, GameStateUpdateListener {
         animationCard.setShadow(false);
         animationCard.setVisible(false);
 
+        pileCount = new ERSLabel("0", skin, game);
+        pileCount.setColor(Color.BLACK);
+
+        selfCount = new ERSLabel("You have 0 cards", skin, game);
+        selfCount.setColor(Color.BLACK);
+
+        playButton = new ERSTextButton("Play", skin, game);
+
         table.setFillParent(true);
         table.add(playerScrollPane).expandX().height(200).fill().top();
         table.row();
-        table.add(pileDisplayActor).top().expandY().padBottom(32).padLeft(50).padTop(100);
+        table.add(pileDisplayActor).top().padBottom(8).padLeft(50).padTop(70);
         table.row();
+        table.add(pileCount).top();
+        table.row();
+        table.add(selfCount).bottom().padTop(20);
+        table.row();
+        table.add(playButton).expandY().top().padTop(2);
 
         stage.addActor(table);
         stage.addActor(animationCard);
@@ -58,8 +82,7 @@ public class GameScreen implements Screen, GameStateUpdateListener {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-
-        GameStateManager.getInstance().update(DummyGame.gameState);
+        onUpdate(GameStateManager.getInstance().getGameState());
     }
 
     @Override
@@ -78,6 +101,12 @@ public class GameScreen implements Screen, GameStateUpdateListener {
             Player player = newGameState.getPlayer(playerUuid);
             playersPane.addElement(new PlayerElement(game, player, true));
         }
+
+        pileCount.setText(Integer.toString(newGameState.getPileCount()));
+
+        Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
+        selfCount.setText("You have " + selfPlayer.getCardCount() + " cards");
+        pileDisplayActor.updatePileState();
     }
 
     public void onReceiveCard() {

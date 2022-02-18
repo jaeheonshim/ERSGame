@@ -14,6 +14,8 @@ public class DummyGame {
         gameState.addPlayer(new Player("Alex"));
         gameState.addPlayer(new Player("Jerry"));
 
+        GameStateUtil.startGame(gameState);
+
         NetManager.getInstance().setClientUuid(adminPlayer.getUuid());
     }
 }

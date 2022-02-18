@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
@@ -53,7 +54,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
         table.setFillParent(true);
         stage.addActor(table);
 
-        sampleDisplay = new PileDisplayActor(game, () -> Arrays.asList(CardType.BACK, CardType.BACK, CardType.BACK));
+        sampleDisplay = new PileDisplayActor(game, () -> Array.with(CardType.BACK, CardType.BACK, CardType.BACK));
         table.add(sampleDisplay).top().padBottom(32).padLeft(50).padTop(50);
         table.row();
 
