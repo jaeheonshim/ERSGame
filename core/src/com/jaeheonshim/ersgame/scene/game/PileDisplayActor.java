@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class PileDisplayActor extends Stack {
-    private static final int DISPLAY_COUNT = 3;
+    public static final int DISPLAY_COUNT = 4;
 
     private ERSGame game;
     private Supplier<Array<CardType>> getCards;

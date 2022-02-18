@@ -3,14 +3,19 @@ package com.jaeheonshim.ersgame.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.*;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.net.GameAction;
+import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
@@ -20,7 +25,7 @@ import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
 import java.util.Arrays;
 
-public class GameScreen implements Screen, GameStateUpdateListener {
+public class GameScreen implements Screen, GameStateUpdateListener, GameActionListener {
     private ERSGame game;
     private Stage stage;
     private Table table;
@@ -34,6 +39,9 @@ public class GameScreen implements Screen, GameStateUpdateListener {
     private ERSLabel selfCount;
     private ERSTextButton playButton;
 
+    private boolean awaitGameUpdatePile;
+    private boolean pendingPileUpdate;
+
     public GameScreen(ERSGame game) {
         this.game = game;
         Skin skin = game.assets.get(game.uiSkin);
@@ -43,7 +51,7 @@ public class GameScreen implements Screen, GameStateUpdateListener {
 
         pileDisplayActor = new PileDisplayActor(game, () -> {
             if(GameStateManager.getInstance().getGameState() == null) return null;
-            return GameStateManager.getInstance().getGameState().getTopNCards(3);
+            return GameStateManager.getInstance().getGameState().getTopNCards(PileDisplayActor.DISPLAY_COUNT);
         });
         playersPane = new PlayersPane(game);
         playerScrollPane = new ScrollPane(playersPane);
@@ -76,7 +84,19 @@ public class GameScreen implements Screen, GameStateUpdateListener {
         stage.addActor(table);
         stage.addActor(animationCard);
 
+        playButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(animationCard.hasActions()) return;
+
+                NetManager.getInstance().send(new GameActionPacket(GameAction.PLAY_CARD));
+                awaitGameUpdatePile = true;
+                animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false, () -> {});
+            }
+        });
+
         GameStateManager.getInstance().registerListener(this);
+        GameStateManager.getInstance().registerActionListener(this);
     }
 
     @Override
@@ -90,6 +110,14 @@ public class GameScreen implements Screen, GameStateUpdateListener {
         ScreenUtils.clear(new Color(232 / 255f, 232 / 255f, 232 / 255f, 1));
         stage.act(delta);
         stage.draw();
+
+        if(pendingPileUpdate && !animationCard.hasActions()) {
+            pendingPileUpdate = false;
+
+            pileDisplayActor.updatePileState();
+            pileDisplayActor.setTopFlipped(true);
+            pileDisplayActor.flipTop();
+        }
     }
 
     @Override
@@ -106,9 +134,14 @@ public class GameScreen implements Screen, GameStateUpdateListener {
 
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
         selfCount.setText("You have " + selfPlayer.getCardCount() + " cards");
-        pileDisplayActor.updatePileState();
+
+        if(awaitGameUpdatePile) {
+            awaitGameUpdatePile = false;
+            pendingPileUpdate = true;
+        }
     }
 
+    @Override
     public void onReceiveCard() {
         animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), true, new Runnable() {
             @Override

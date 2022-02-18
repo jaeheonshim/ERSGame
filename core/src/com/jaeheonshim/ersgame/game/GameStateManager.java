@@ -41,6 +41,9 @@ public class GameStateManager {
                 case START:
                     listener.onGameStart();
                     break;
+                case RECEIVE_CARD:
+                    listener.onReceiveCard();
+                    break;
             }
         }
     }

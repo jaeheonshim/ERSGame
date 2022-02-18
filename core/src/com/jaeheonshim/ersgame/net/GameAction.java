@@ -1,5 +1,7 @@
 package com.jaeheonshim.ersgame.net;
 
 public enum GameAction {
-    START
+    START,
+    PLAY_CARD,
+    RECEIVE_CARD
 }

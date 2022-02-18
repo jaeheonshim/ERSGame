@@ -5,6 +5,7 @@ import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
+import com.jaeheonshim.ersgame.server.listener.CardActionListener;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
 import com.jaeheonshim.ersgame.server.listener.StartGameListener;
@@ -109,11 +110,23 @@ public class ERSServer extends WebSocketServer {
         }
     }
 
+    public void broadcastExcept(SocketPacket packet, GameState game, String except) {
+        for(String uuid : game.getPlayerList()) {
+            if(uuid.equals(except)) continue;
+            WebSocket socket = connectedClients.get(uuid);
+
+            if(socket != null) {
+                socket.send(packet.serialize());
+            }
+        }
+    }
+
     public static void main(String[] args) {
         ERSServer server = new ERSServer(new InetSocketAddress("localhost", 8887));
         server.registerListener(new CreateGameListener(server));
         server.registerListener(new JoinGameListener(server));
         server.registerListener(new StartGameListener(server));
+        server.registerListener(new CardActionListener(server));
         server.run();
     }
 }

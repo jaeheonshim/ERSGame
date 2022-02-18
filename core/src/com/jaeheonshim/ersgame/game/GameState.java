@@ -105,4 +105,8 @@ public class GameState {
 
         return array;
     }
+
+    public void addCardToTop(CardType type) {
+        deck.addFirst(type);
+    }
 }
