@@ -5,6 +5,7 @@ import java.util.*;
 public class CardUtil {
     public static List<CardType> randomDeck() {
         List<CardType> deck = Arrays.asList(CardType.values());
+        deck.remove(CardType.BACK);
         Collections.shuffle(deck);
 
         return deck;

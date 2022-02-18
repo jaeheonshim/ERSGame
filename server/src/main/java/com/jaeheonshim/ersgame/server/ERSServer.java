@@ -7,6 +7,7 @@ import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
+import com.jaeheonshim.ersgame.server.listener.StartGameListener;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -65,9 +66,13 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        SocketPacket deserialized = SocketPacket.deserialize(message);
-        for(ServerPacketListener listener : socketPacketListenerList) {
-            if(listener.receive(conn, deserialized)) break;
+        try {
+            SocketPacket deserialized = SocketPacket.deserialize(message);
+            for (ServerPacketListener listener : socketPacketListenerList) {
+                if (listener.receive(conn, deserialized)) break;
+            }
+        } catch (ERSException e) {
+            conn.send(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize());
         }
     }
 
@@ -97,7 +102,6 @@ public class ERSServer extends WebSocketServer {
             WebSocket socket = connectedClients.get(player.getUuid());
 
             if(socket != null) {
-                System.out.println(packet.serialize());
                 socket.send(packet.serialize());
             }
         }
@@ -107,6 +111,7 @@ public class ERSServer extends WebSocketServer {
         ERSServer server = new ERSServer(new InetSocketAddress("localhost", 8887));
         server.registerListener(new CreateGameListener(server));
         server.registerListener(new JoinGameListener(server));
+        server.registerListener(new StartGameListener(server));
         server.run();
     }
 }
