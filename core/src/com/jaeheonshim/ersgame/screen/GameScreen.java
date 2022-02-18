@@ -101,6 +101,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
     @Override
     public void show() {
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         onUpdate(GameStateManager.getInstance().getGameState());
     }
