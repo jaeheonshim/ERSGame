@@ -1,9 +1,9 @@
 package com.jaeheonshim.ersgame.server;
 
+import com.jaeheonshim.ersgame.ERSException;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
-import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
@@ -73,6 +73,8 @@ public class ERSServer extends WebSocketServer {
             }
         } catch (ERSException e) {
             conn.send(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize());
+        } catch (Exception e) {
+            conn.send(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize());
         }
     }
 

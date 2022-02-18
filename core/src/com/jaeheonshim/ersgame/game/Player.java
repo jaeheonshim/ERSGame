@@ -1,10 +1,15 @@
 package com.jaeheonshim.ersgame.game;
 
+import com.badlogic.gdx.utils.Queue;
+
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Player {
     private String uuid;
     private String username;
+
+    private Queue<CardType> cardStack = new Queue<>();
 
     public String getUuid() {
         return uuid;
@@ -33,5 +38,21 @@ public class Player {
     @Override
     public int hashCode() {
         return Objects.hash(uuid);
+    }
+
+    public Iterator<CardType> getCards() {
+        return cardStack.iterator();
+    }
+
+    public void addCardToBottom(CardType cardType) {
+        cardStack.addLast(cardType);
+    }
+
+    public void addCardToTop(CardType cardType) {
+        cardStack.addFirst(cardType);
+    }
+
+    public CardType removeTopCard() {
+        return cardStack.removeFirst();
     }
 }

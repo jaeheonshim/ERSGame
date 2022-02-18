@@ -12,6 +12,8 @@ public class GameState {
     private Array<String> playerList = new Array<>();
     private String adminPlayer;
 
+    private GameStatePhase gamePhase = GameStatePhase.PLAYER_JOIN;
+
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
         gameState.addPlayer(player);
@@ -75,5 +77,17 @@ public class GameState {
 
     public void setAdminPlayer(String adminPlayer) {
         this.adminPlayer = adminPlayer;
+    }
+
+    public GameStatePhase getGamePhase() {
+        return gamePhase;
+    }
+
+    public void setGamePhase(GameStatePhase gamePhase) {
+        this.gamePhase = gamePhase;
+    }
+
+    public ObjectMap<String, Player> getPlayerMap() {
+        return playerMap;
     }
 }

@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.server;
+package com.jaeheonshim.ersgame;
 
 public class ERSException extends RuntimeException {
     public ERSException(String message) {

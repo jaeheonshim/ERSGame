@@ -1,11 +1,12 @@
 package com.jaeheonshim.ersgame.server.listener;
 
 import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.GameStateUtil;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.server.ERSException;
+import com.jaeheonshim.ersgame.ERSException;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
@@ -27,6 +28,8 @@ public class StartGameListener extends ServerPacketListener {
                 if(gameState == null) throw new ERSException("Not in game");
                 Player player = gameState.getPlayer(uuid);
                 if(!gameState.getAdminPlayer().equals(player.getUuid())) throw new ERSException("Player not admin");
+
+                GameStateUtil.startGame(gameState);
 
                 GameActionPacket startGamePacket = new GameActionPacket(GameAction.START);
                 server.broadcast(startGamePacket, gameState);
