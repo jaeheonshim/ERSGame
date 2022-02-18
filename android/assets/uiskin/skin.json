@@ -82,6 +82,19 @@ com.badlogic.gdx.graphics.Color: {
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	btn-blue-disabled: {
+		name: btn-blue
+		color: {
+			r: 0.5199998
+			g: 0.5199998
+			b: 0.5199998
+			a: 1
+		}
+	}
+	btn-blue-blocked: {
+		name: btn-blue-down
+		color: darkened
+	}
 	cursor: {
 		name: white-pixel
 		color: white
@@ -174,8 +187,10 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: poppins-24
 		fontColor: white
 		downFontColor: down-font-color
+		disabledFontColor: down-font-color
 		up: btn-blue
 		down: btn-blue-down
+		disabled: btn-blue-blocked
 	}
 	green: {
 		font: poppins-24

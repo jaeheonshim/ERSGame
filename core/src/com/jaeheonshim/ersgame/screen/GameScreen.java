@@ -16,6 +16,7 @@ import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
+import com.jaeheonshim.ersgame.scene.OverlayStage;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
@@ -88,6 +89,10 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(animationCard.hasActions()) return;
+                if(playButton.isDisabled()) {
+                    OverlayStage.getInstance().postOverlayMessage("You don't have any cards!");
+                    return;
+                }
 
                 NetManager.getInstance().send(new GameActionPacket(GameAction.PLAY_CARD));
                 awaitGameUpdatePile = true;
@@ -140,6 +145,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
         }
+
+        playButton.setDisabled(selfPlayer.getCardCount() <= 0);
     }
 
     @Override

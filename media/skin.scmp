@@ -325,6 +325,49 @@ atlasData: {
 			type: PIXEL
 			hidden: false
 		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/btn-blue.9.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: {
+				r: 0.5199998
+				g: 0.5199998
+				b: 0.5199998
+				a: 1
+			}
+			tintName: null
+			name: btn-blue-disabled
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TINTED
+			hidden: true
+		}
+		{
+			file: C:/Users/jaehe/OneDrive/Documents/Projects/Java/ERS/media/btn-blue-down.9.png
+			bgColor: {
+				r: 1
+				g: 1
+				b: 1
+				a: 1
+			}
+			tint: null
+			tintName: darkened
+			name: btn-blue-blocked
+			tiled: false
+			minWidth: -1
+			minHeight: -1
+			customized: false
+			tenPatchData: null
+			type: TINTED_FROM_COLOR_DATA
+			hidden: false
+		}
 	]
 	fontDrawables: [
 		{
@@ -1704,7 +1747,7 @@ jsonData: {
 						type: com.badlogic.gdx.graphics.Color
 						name: disabledFontColor
 						optional: true
-						value: null
+						value: down-font-color
 					}
 					checkedFontColor: {
 						type: com.badlogic.gdx.graphics.Color
@@ -1758,7 +1801,7 @@ jsonData: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
 						name: disabled
 						optional: true
-						value: null
+						value: btn-blue-blocked
 					}
 					checked: {
 						type: com.badlogic.gdx.scenes.scene2d.utils.Drawable
