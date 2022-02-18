@@ -10,6 +10,7 @@ public class GameState {
     private ObjectMap<String, Player> playerMap = new ObjectMap<>();
     private Array<String> playerList = new Array<>();
     private String adminPlayer;
+    private int currentTurnIndex;
 
     private Queue<CardType> deck = new Queue<>();
 
@@ -108,5 +109,13 @@ public class GameState {
 
     public void addCardToTop(CardType type) {
         deck.addFirst(type);
+    }
+
+    public void setCurrentTurnIndex(int currentTurnIndex) {
+        this.currentTurnIndex = currentTurnIndex;
+    }
+
+    public int getCurrentTurnIndex() {
+        return currentTurnIndex;
     }
 }

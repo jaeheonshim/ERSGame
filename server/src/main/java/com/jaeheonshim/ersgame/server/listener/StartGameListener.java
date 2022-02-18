@@ -37,6 +37,8 @@ public class StartGameListener extends ServerPacketListener {
 
                 GameStatePacket gameStatePacket = new GameStatePacket(gameState);
                 server.broadcast(gameStatePacket, gameState);
+
+                server.broadcast(new GameActionPacket(GameAction.TURN_UPDATE), gameState);
                 return true;
             }
         }

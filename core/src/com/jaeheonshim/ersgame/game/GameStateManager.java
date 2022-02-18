@@ -44,6 +44,9 @@ public class GameStateManager {
                 case RECEIVE_CARD:
                     listener.onReceiveCard();
                     break;
+                case TURN_UPDATE:
+                    listener.onTurnUpdate();
+                    break;
             }
         }
     }
@@ -65,5 +68,9 @@ public class GameStateManager {
     public boolean isAdmin() {
         if(gameState == null) return false;
         return gameState.getAdminPlayer().equals(getSelfPlayer().getUuid());
+    }
+
+    public boolean isTurn() {
+        return gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(getSelfPlayer().getUuid());
     }
 }

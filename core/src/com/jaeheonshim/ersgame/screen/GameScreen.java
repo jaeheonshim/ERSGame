@@ -90,7 +90,11 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             public void clicked(InputEvent event, float x, float y) {
                 if(animationCard.hasActions()) return;
                 if(playButton.isDisabled()) {
-                    OverlayStage.getInstance().postOverlayMessage("You don't have any cards!");
+                    if(!GameStateManager.getInstance().isTurn()) {
+                        OverlayStage.getInstance().postOverlayMessage("It's not your turn yet!");
+                    } else {
+                        OverlayStage.getInstance().postOverlayMessage("You don't have any cards!");
+                    }
                     return;
                 }
 
@@ -146,7 +150,28 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             pendingPileUpdate = true;
         }
 
-        playButton.setDisabled(selfPlayer.getCardCount() <= 0);
+        updatePlayButtonDisableState();
+    }
+
+    public void updatePlayButtonDisableState() {
+        Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
+
+        playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn());
+    }
+
+    @Override
+    public void onTurnUpdate() {
+        GameState gameState = GameStateManager.getInstance().getGameState();
+        String currentTurnUUID = gameState.getPlayerList().get(gameState.getCurrentTurnIndex());
+        Player currentTurn = gameState.getPlayer(currentTurnUUID);
+
+        if(currentTurn.equals(GameStateManager.getInstance().getSelfPlayer())) {
+            OverlayStage.getInstance().postOverlayMessage("It's your turn!");
+        } else {
+            OverlayStage.getInstance().postOverlayMessage(currentTurn.getUsername() + "'s turn");
+        }
+
+        updatePlayButtonDisableState();
     }
 
     @Override
