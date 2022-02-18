@@ -5,6 +5,7 @@ import com.badlogic.gdx.utils.Queue;
 import java.beans.Transient;
 import java.util.Iterator;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Player {
     private String uuid;
@@ -14,6 +15,11 @@ public class Player {
     private int cardCount;
 
     public Player() {
+    }
+
+    public Player(String username) {
+        this.uuid = UUID.randomUUID().toString();
+        this.username = username;
     }
 
     public String getUuid() {

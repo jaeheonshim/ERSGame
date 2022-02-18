@@ -71,6 +71,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
     @Override
     public void onUpdate(GameState newGameState) {
         if(newGameState == null) return;
+        if(!game.getScreen().equals(this)) return;
 
         playersPane.clearChildren();
         for(String uuid : newGameState.getPlayerList()) {

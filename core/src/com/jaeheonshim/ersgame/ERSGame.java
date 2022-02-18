@@ -8,10 +8,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.scene.OverlayStage;
-import com.jaeheonshim.ersgame.screen.CreateGameScreen;
-import com.jaeheonshim.ersgame.screen.JoinGameScreen;
-import com.jaeheonshim.ersgame.screen.LobbyScreen;
-import com.jaeheonshim.ersgame.screen.MainScreen;
+import com.jaeheonshim.ersgame.screen.*;
 
 public class ERSGame extends Game {
 	public final String defaultAtlas = "images.atlas";
@@ -44,8 +41,8 @@ public class ERSGame extends Game {
 		createGameScreen = new CreateGameScreen(this);
 		lobbyScreen = new LobbyScreen(this);
 
-		NetManager.getInstance().connect();
-		setScreen(mainScreen);
+//		NetManager.getInstance().connect();
+		setScreen(new GameScreen(this));
 //		setScreen(lobbyScreen);
 	}
 

@@ -17,9 +17,10 @@ public class PlayerElement extends Table {
     private Skin skin;
 
     private ERSLabel nameLabel;
+    private ERSLabel cardCount;
     private Image adminImage;
 
-    public PlayerElement(ERSGame game, Player player) {
+    public PlayerElement(ERSGame game, Player player, boolean displayCards) {
         this.game = game;
         this.skin = game.assets.get(game.uiSkin);
 
@@ -35,5 +36,14 @@ public class PlayerElement extends Table {
         adminImage = new Image(game.assets.get(game.defaultAtlas, TextureAtlas.class).findRegion("crown"));
         add(adminImage).size(50, 50).padLeft(8);
         adminImage.setVisible(GameStateManager.getInstance().isAdmin(player));
+
+        cardCount = new ERSLabel(Integer.toString(player.getCardCount()), skin, game);
+        cardCount.setColor(Color.BLACK);
+        add(cardCount).expandX().right().padRight(16);
+        cardCount.setVisible(displayCards);
+    }
+
+    public PlayerElement(ERSGame game, Player player) {
+        this(game, player, false);
     }
 }

@@ -96,6 +96,8 @@ public class CreateGameScreen implements Screen, GameStateUpdateListener {
 
     @Override
     public void onUpdate(GameState newGameState) {
+        if(!game.getScreen().equals(this)) return;
+
         if(newGameState != null) {
             game.setScreen(game.lobbyScreen);
         }
