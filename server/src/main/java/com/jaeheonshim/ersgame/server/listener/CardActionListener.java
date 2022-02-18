@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server.listener;
 
 import com.jaeheonshim.ersgame.ERSException;
+import com.jaeheonshim.ersgame.game.CardType;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.GameStateUtil;
 import com.jaeheonshim.ersgame.game.Player;
@@ -42,9 +43,19 @@ public class CardActionListener extends ServerPacketListener {
 
                 if(isValid) {
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: +" + gameState.getPileCount() + " cards"), gameState);
+
+                    CardType c;
+                    while((c = gameState.removeCardFromTop()) != null) {
+                        player.addCardToBottom(c);
+                    }
                 } else {
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
+                    if(player.getCardCount() > 0) {
+                        gameState.addCardToBottom(player.removeTopCard());
+                    }
                 }
+
+                server.broadcast(new GameStatePacket(gameState), gameState);
             }
         }
 

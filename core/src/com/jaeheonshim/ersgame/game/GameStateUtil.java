@@ -25,7 +25,7 @@ public class GameStateUtil {
     }
 
     public static boolean isValidSlap(GameState gameState) {
-        return isDouble(gameState);
+        return isDouble(gameState) || isSandwich(gameState);
     }
 
     private static boolean isDouble(GameState gameState) {
@@ -33,5 +33,12 @@ public class GameStateUtil {
         if(cardTypeArray.size < 2) return false;
 
         return cardTypeArray.get(0).number == cardTypeArray.get(1).number;
+    }
+
+    private static boolean isSandwich(GameState gameState) {
+        Array<CardType> cardTypeArray = gameState.getTopNCards(3);
+        if(cardTypeArray.size < 3) return false;
+
+        return cardTypeArray.get(0).number == cardTypeArray.get(2).number;
     }
 }

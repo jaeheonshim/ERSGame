@@ -161,6 +161,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         if(awaitGameUpdatePile) {
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
+        } else {
+            pileDisplayActor.updatePileState();
         }
 
         updatePlayButtonDisableState();

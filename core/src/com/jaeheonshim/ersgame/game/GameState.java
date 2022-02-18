@@ -111,11 +111,20 @@ public class GameState {
         deck.addFirst(type);
     }
 
+    public void addCardToBottom(CardType type) {
+        deck.addLast(type);
+    }
+
     public void setCurrentTurnIndex(int currentTurnIndex) {
         this.currentTurnIndex = currentTurnIndex;
     }
 
     public int getCurrentTurnIndex() {
         return currentTurnIndex;
+    }
+
+    public CardType removeCardFromTop() {
+        if(deck.size == 0) return null;
+        return deck.removeFirst();
     }
 }
