@@ -17,11 +17,6 @@ public class Player {
     public Player() {
     }
 
-    public Player(String username) {
-        this.uuid = UUID.randomUUID().toString();
-        this.username = username;
-    }
-
     public String getUuid() {
         return uuid;
     }
