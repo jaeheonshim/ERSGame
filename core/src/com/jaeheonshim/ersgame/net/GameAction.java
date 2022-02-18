@@ -5,5 +5,7 @@ public enum GameAction {
     PLAY_CARD,
     RECEIVE_CARD,
     TURN_UPDATE,
-    SLAP
+    SLAP,
+    YOU_DISCARD,
+    OTHERS_DISCARD
 }

@@ -33,8 +33,8 @@ public class CardActionListener extends ServerPacketListener {
             if(gameActionPacket.gameAction == GameAction.PLAY_CARD) {
                 GameStateUtil.playCard(gameState, uuid);
 
-                server.broadcast(new GameStatePacket(gameState), gameState);
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
+                server.broadcast(new GameStatePacket(gameState), gameState);
 
                 return true;
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
@@ -50,6 +50,8 @@ public class CardActionListener extends ServerPacketListener {
                     }
                 } else {
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
+                    server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
+                    server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
                     if(player.getCardCount() > 0) {
                         gameState.addCardToBottom(player.removeTopCard());
                     }

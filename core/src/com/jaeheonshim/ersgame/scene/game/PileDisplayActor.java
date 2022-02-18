@@ -60,6 +60,11 @@ public class PileDisplayActor extends Stack {
         cardActors[0].flip();
     }
 
+    public CardType getTopCard() {
+        if(cardActors.length < 1) return null;
+        return cardActors[0].getType();
+    }
+
     @Override
     public void act(float delta) {
         super.act(delta);

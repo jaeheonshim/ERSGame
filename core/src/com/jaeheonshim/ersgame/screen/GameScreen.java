@@ -51,7 +51,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         table = new Table();
 
         pileDisplayActor = new PileDisplayActor(game, () -> {
-            if(GameStateManager.getInstance().getGameState() == null) return null;
+            if (GameStateManager.getInstance().getGameState() == null) return null;
             return GameStateManager.getInstance().getGameState().getTopNCards(PileDisplayActor.DISPLAY_COUNT);
         });
         playersPane = new PlayersPane(game);
@@ -88,9 +88,9 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(animationCard.hasActions()) return;
-                if(playButton.isDisabled()) {
-                    if(!GameStateManager.getInstance().isTurn()) {
+                if (animationCard.hasActions()) return;
+                if (playButton.isDisabled()) {
+                    if (!GameStateManager.getInstance().isTurn()) {
                         OverlayStage.getInstance().postOverlayMessage("It's not your turn yet!");
                     } else {
                         OverlayStage.getInstance().postOverlayMessage("You don't have any cards!");
@@ -100,7 +100,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
                 NetManager.getInstance().send(new GameActionPacket(GameAction.PLAY_CARD));
                 awaitGameUpdatePile = true;
-                animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false, () -> {});
+                playCard();
             }
         });
 
@@ -119,6 +119,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         GameStateManager.getInstance().registerListener(this);
         GameStateManager.getInstance().registerActionListener(this);
+
+        pileDisplayActor.setZIndex(3);
     }
 
     @Override
@@ -134,21 +136,26 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         stage.act(delta);
         stage.draw();
 
-        if(pendingPileUpdate && !animationCard.hasActions()) {
+        if (pendingPileUpdate && !animationCard.hasActions()) {
             pendingPileUpdate = false;
 
+            CardType oldTop = pileDisplayActor.getTopCard();
             pileDisplayActor.updatePileState();
-            pileDisplayActor.setTopFlipped(true);
-            pileDisplayActor.flipTop();
+
+            GameState gameState = GameStateManager.getInstance().getGameState();
+            if(pileDisplayActor.getTopCard() != null && gameState.getTopCard() != null && oldTop != gameState.getTopCard()) {
+                pileDisplayActor.setTopFlipped(true);
+                pileDisplayActor.flipTop();
+            }
         }
     }
 
     @Override
     public void onUpdate(GameState newGameState) {
-        if(!game.getScreen().equals(this)) return;
+        if (!game.getScreen().equals(this)) return;
 
         playersPane.clearChildren();
-        for(String playerUuid : newGameState.getPlayerList()) {
+        for (String playerUuid : newGameState.getPlayerList()) {
             Player player = newGameState.getPlayer(playerUuid);
             playersPane.addElement(new PlayerElement(game, player, true));
         }
@@ -158,7 +165,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
         selfCount.setText("You have " + selfPlayer.getCardCount() + " cards");
 
-        if(awaitGameUpdatePile) {
+        if (awaitGameUpdatePile) {
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
         } else {
@@ -180,7 +187,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         String currentTurnUUID = gameState.getPlayerList().get(gameState.getCurrentTurnIndex());
         Player currentTurn = gameState.getPlayer(currentTurnUUID);
 
-        if(currentTurn.equals(GameStateManager.getInstance().getSelfPlayer())) {
+        if (currentTurn.equals(GameStateManager.getInstance().getSelfPlayer())) {
             OverlayStage.getInstance().postOverlayMessage("It's your turn!");
         } else {
             OverlayStage.getInstance().postOverlayMessage(currentTurn.getUsername() + "'s turn");
@@ -191,6 +198,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
     @Override
     public void onReceiveCard() {
+        awaitGameUpdatePile = true;
+        animationCard.setZIndex(pileDisplayActor.getZIndex() + 1);
         animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), true, new Runnable() {
             @Override
             public void run() {
@@ -199,6 +208,19 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
                 pileDisplayActor.flipTop();
             }
         });
+    }
+
+    public void playCard() {
+        animationCard.setZIndex(pileDisplayActor.getZIndex() + 1);
+        animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false, () -> {
+        });
+    }
+
+    @Override
+    public void onDiscard(boolean you) {
+        animationCard.setZIndex(0);
+        awaitGameUpdatePile = true;
+        animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), !you, () -> {});
     }
 
     @Override

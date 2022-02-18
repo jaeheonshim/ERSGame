@@ -47,6 +47,12 @@ public class GameStateManager {
                 case TURN_UPDATE:
                     listener.onTurnUpdate();
                     break;
+                case YOU_DISCARD:
+                    listener.onDiscard(true);
+                    break;
+                case OTHERS_DISCARD:
+                    listener.onDiscard(false);
+                    break;
             }
         }
     }

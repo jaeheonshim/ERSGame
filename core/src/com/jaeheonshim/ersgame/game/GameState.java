@@ -107,6 +107,11 @@ public class GameState {
         return array;
     }
 
+    public CardType getTopCard() {
+        if(deck.size < 1) return null;
+        return deck.get(0);
+    }
+
     public void addCardToTop(CardType type) {
         deck.addFirst(type);
     }

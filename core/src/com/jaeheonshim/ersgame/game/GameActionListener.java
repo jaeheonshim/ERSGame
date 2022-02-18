@@ -4,4 +4,5 @@ public interface GameActionListener {
     default void onGameStart() {}
     default void onReceiveCard() {}
     default void onTurnUpdate() {}
+    default void onDiscard(boolean you) {}
 }
