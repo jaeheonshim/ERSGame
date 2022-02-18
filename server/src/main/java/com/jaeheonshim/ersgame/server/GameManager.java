@@ -19,8 +19,8 @@ public class GameManager {
 
     public GameState getGameOfPlayer(String playerUuid) {
         for(GameState gameState : gameStates.values()) {
-            for(Player player : gameState.getPlayerList()) {
-                if(player.getUuid().equals(playerUuid)) return gameState;
+            for(String player : gameState.getPlayerList()) {
+                if(player.equals(playerUuid)) return gameState;
             }
         }
 

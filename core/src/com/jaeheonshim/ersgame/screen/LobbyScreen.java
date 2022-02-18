@@ -73,7 +73,8 @@ public class LobbyScreen implements Screen, GameStateUpdateListener {
         if(newGameState == null) return;
 
         playersPane.clearChildren();
-        for(Player player : newGameState.getPlayerList()) {
+        for(String uuid : newGameState.getPlayerList()) {
+            Player player = newGameState.getPlayer(uuid);
             playersPane.add(new PlayerElement(game, player)).top().expandX().fillX().height(60);
             playersPane.row();
         }

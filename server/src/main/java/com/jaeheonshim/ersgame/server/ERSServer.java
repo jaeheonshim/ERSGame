@@ -50,7 +50,7 @@ public class ERSServer extends WebSocketServer {
                 return;
             }
 
-            if(gameState.getAdminPlayer() == player) {
+            if(gameState.getAdminPlayer().equals(player.getUuid())) {
                 gameState.setAdminPlayer(gameState.getPlayerList().get(0));
             }
 
@@ -98,8 +98,8 @@ public class ERSServer extends WebSocketServer {
     }
 
     public void broadcast(SocketPacket packet, GameState game) {
-        for(Player player : game.getPlayerList()) {
-            WebSocket socket = connectedClients.get(player.getUuid());
+        for(String uuid : game.getPlayerList()) {
+            WebSocket socket = connectedClients.get(uuid);
 
             if(socket != null) {
                 socket.send(packet.serialize());

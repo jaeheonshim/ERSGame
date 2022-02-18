@@ -40,11 +40,11 @@ public class GameStateManager {
 
     public boolean isAdmin(Player player) {
         if(gameState == null) return false;
-        return gameState.getAdminPlayer().equals(player);
+        return gameState.getAdminPlayer().equals(player.getUuid());
     }
 
     public boolean isAdmin() {
         if(gameState == null) return false;
-        return gameState.getAdminPlayer().equals(getSelfPlayer());
+        return gameState.getAdminPlayer().equals(getSelfPlayer().getUuid());
     }
 }

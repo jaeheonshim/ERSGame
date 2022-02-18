@@ -9,13 +9,13 @@ public class GameState {
     private String gameCode;
 
     private ObjectMap<String, Player> playerMap = new ObjectMap<>();
-    private Array<Player> playerList = new Array<>();
-    private Player adminPlayer;
+    private Array<String> playerList = new Array<>();
+    private String adminPlayer;
 
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
         gameState.addPlayer(player);
-        gameState.adminPlayer = player;
+        gameState.adminPlayer = player.getUuid();
 
         return gameState;
     }
@@ -33,29 +33,29 @@ public class GameState {
     }
 
     public void addPlayer(Player player) {
-        playerList.add(player);
+        playerList.add(player.getUuid());
         playerMap.put(player.getUuid(), player);
     }
 
     public void removePlayer(String uuid) {
         Player player = getPlayer(uuid);
         if(player != null) {
-            playerList.removeValue(player, true);
+            playerList.removeValue(uuid, true);
             playerMap.remove(uuid);
         }
     }
 
     public boolean hasPlayer(String uuid) {
-        for(Player player : playerList) {
-            if(player.getUuid().equals(uuid)) return true;
+        for(String player : playerList) {
+            if(player.equals(uuid)) return true;
         }
 
         return false;
     }
 
     public boolean hasUsername(String username) {
-        for(Player player : playerList) {
-            if(player.getUsername().trim().equalsIgnoreCase(username.trim())) return true;
+        for(String player : playerList) {
+            if(playerMap.get(player).getUsername().trim().equalsIgnoreCase(username.trim())) return true;
         }
 
         return false;
@@ -65,15 +65,15 @@ public class GameState {
         return gameCode;
     }
 
-    public Array<Player> getPlayerList() {
+    public Array<String> getPlayerList() {
         return playerList;
     }
 
-    public Player getAdminPlayer() {
+    public String getAdminPlayer() {
         return adminPlayer;
     }
 
-    public void setAdminPlayer(Player adminPlayer) {
+    public void setAdminPlayer(String adminPlayer) {
         this.adminPlayer = adminPlayer;
     }
 }

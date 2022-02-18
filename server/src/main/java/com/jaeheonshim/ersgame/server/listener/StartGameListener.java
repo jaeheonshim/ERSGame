@@ -26,7 +26,7 @@ public class StartGameListener extends ServerPacketListener {
 
                 if(gameState == null) throw new ERSException("Not in game");
                 Player player = gameState.getPlayer(uuid);
-                if(!gameState.getAdminPlayer().equals(player)) throw new ERSException("Player not admin");
+                if(!gameState.getAdminPlayer().equals(player.getUuid())) throw new ERSException("Player not admin");
 
                 GameActionPacket startGamePacket = new GameActionPacket(GameAction.START);
                 server.broadcast(startGamePacket, gameState);
