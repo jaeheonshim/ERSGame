@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.game;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.jaeheonshim.ersgame.ERSException;
 
 public class GameStateUtil {
@@ -21,5 +22,16 @@ public class GameStateUtil {
         if(type == null) throw new ERSException("Tried to play card while empty hand");
 
         gameState.addCardToTop(type);
+    }
+
+    public static boolean isValidSlap(GameState gameState) {
+        return isDouble(gameState);
+    }
+
+    private static boolean isDouble(GameState gameState) {
+        Array<CardType> cardTypeArray = gameState.getTopNCards(2);
+        if(cardTypeArray.size < 2) return false;
+
+        return cardTypeArray.get(0).number == cardTypeArray.get(1).number;
     }
 }

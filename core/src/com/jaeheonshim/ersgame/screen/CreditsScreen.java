@@ -67,7 +67,7 @@ public class CreditsScreen implements Screen {
         creditsTable.add(creditsTitleLabel);
         creditsTable.row();
 
-        ERSLabel developerLabel = new ERSLabel("Digital game by Jaeheon Shim", skin, "default", game);
+        ERSLabel developerLabel = new ERSLabel("Online game by Jaeheon Shim", skin, "default", game);
         developerLabel.setColor(Color.BLACK);
         creditsTable.add(developerLabel).padTop(40);
         creditsTable.row();

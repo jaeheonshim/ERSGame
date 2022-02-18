@@ -104,6 +104,19 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             }
         });
 
+        pileDisplayActor.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(GameStateManager.getInstance().getGameState().getPileCount() <= 0) {
+                    OverlayStage.getInstance().postOverlayMessage("There aren't any cards to slap!");
+                    return;
+                }
+
+                NetManager.getInstance().send(new GameActionPacket(GameAction.SLAP));
+                OverlayStage.getInstance().postOverlayMessage("You slapped!");
+            }
+        });
+
         GameStateManager.getInstance().registerListener(this);
         GameStateManager.getInstance().registerActionListener(this);
     }
