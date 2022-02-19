@@ -19,6 +19,7 @@ public class PlayerElement extends Table {
     private ERSLabel nameLabel;
     private ERSLabel cardCount;
     private Image adminImage;
+    private Image currentTurnImage;
 
     public PlayerElement(ERSGame game, Player player, boolean displayCards) {
         this.game = game;
@@ -37,6 +38,10 @@ public class PlayerElement extends Table {
         add(adminImage).size(50, 50).padLeft(8);
         adminImage.setVisible(GameStateManager.getInstance().isAdmin(player));
 
+        currentTurnImage = new Image(game.assets.get(game.defaultAtlas, TextureAtlas.class).findRegion("green_circle"));
+        add(currentTurnImage).size(15, 15).padLeft(12);
+        currentTurnImage.setVisible(false);
+
         cardCount = new ERSLabel(Integer.toString(player.getCardCount()), skin, game);
         cardCount.setColor(Color.BLACK);
         add(cardCount).expandX().right().padRight(16);
@@ -45,5 +50,9 @@ public class PlayerElement extends Table {
 
     public PlayerElement(ERSGame game, Player player) {
         this(game, player, false);
+    }
+
+    public void setCurrentTurn(boolean b) {
+        currentTurnImage.setVisible(b);
     }
 }

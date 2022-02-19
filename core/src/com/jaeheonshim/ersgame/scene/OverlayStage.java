@@ -34,10 +34,7 @@ public class OverlayStage extends Stage {
 
     private UIMessageLabel uiMessageLabel;
 
-    private ERSLabel overlayLabel;
-    private float overlayTimer = 0;
-    private final float OVERLAY_TIME = 2;
-    private final float MAX_MESSAGES = 5;
+    private final float OVERLAY_TIME = 3;
 
     private Queue<String> overlayMessageQueue = new Queue<>();
 
@@ -73,7 +70,7 @@ public class OverlayStage extends Stage {
     public void onMessageUpdate(UIMessageType type, String message) {
         uiMessageLabel.onMessageUpdate(type, message);
         uiMessageLabel.clearActions();
-        uiMessageLabel.addAction(new DisappearAction(3));
+        uiMessageLabel.addAction(new DisappearAction(2.5f));
     }
 
     public void postOverlayMessage(String message) {
@@ -88,7 +85,7 @@ public class OverlayStage extends Stage {
     private Action overlayMessageAction(Actor actor) {
         SequenceAction action = new SequenceAction();
         AlphaAction alphaAction = new AlphaAction();
-        alphaAction.setAlpha(0.3f);
+        alphaAction.setAlpha(0.5f);
         alphaAction.setDuration(OVERLAY_TIME);
         alphaAction.setInterpolation(Interpolation.fastSlow);
         RunnableAction removeAction = new RunnableAction();

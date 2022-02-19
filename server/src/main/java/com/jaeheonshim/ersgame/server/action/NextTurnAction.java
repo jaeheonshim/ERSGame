@@ -26,6 +26,6 @@ public class NextTurnAction implements com.jaeheonshim.ersgame.server.action.Gam
 
     @Override
     public long getDelay() {
-        return 1000;
+        return 1500;
     }
 }

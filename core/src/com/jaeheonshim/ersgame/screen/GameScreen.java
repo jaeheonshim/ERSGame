@@ -154,9 +154,15 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         if (!game.getScreen().equals(this)) return;
 
         playersPane.clearChildren();
-        for (String playerUuid : newGameState.getPlayerList()) {
+        for(int i = 0; i < newGameState.getPlayerList().size; i++) {
+            String playerUuid = newGameState.getPlayerList().get(i);
             Player player = newGameState.getPlayer(playerUuid);
-            playersPane.addElement(new PlayerElement(game, player, true));
+            PlayerElement element = new PlayerElement(game, player, true);
+            playersPane.addElement(element);
+
+            if(i == newGameState.getCurrentTurnIndex()) {
+                element.setCurrentTurn(true);
+            }
         }
 
         pileCount.setText(Integer.toString(newGameState.getPileCount()));
