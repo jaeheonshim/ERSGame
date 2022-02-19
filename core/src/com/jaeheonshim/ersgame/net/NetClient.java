@@ -21,6 +21,10 @@ public class NetClient implements WebSocketListener {
         socket.connect();
     }
 
+    public void disconnect() {
+        socket.close();
+    }
+
     @Override
     public boolean onOpen(WebSocket webSocket) {
         netManager.setConnectionStatus(ConnectionStatus.CONNECTED);

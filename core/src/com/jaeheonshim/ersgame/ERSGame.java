@@ -26,6 +26,8 @@ public class ERSGame extends Game {
 	public Screen lobbyScreen;
 	public Screen gameScreen;
 	public Screen creditsScreen;
+	public Screen gameResultsScreen;
+	public Screen gameOverScreen;
 
 	public ERSGame() {
 		this.natives = null;
@@ -54,10 +56,10 @@ public class ERSGame extends Game {
 		lobbyScreen = new LobbyScreen(this);
 		gameScreen = new GameScreen(this);
 		creditsScreen = new CreditsScreen(this);
+		gameResultsScreen = new GameResultsScreen(this);
+		gameOverScreen = new GameOverScreen(this, gameResultsScreen);
 
-		NetManager.getInstance().connect();
 		setScreen(mainScreen);
-//		setScreen(lobbyScreen);
 	}
 
 	@Override

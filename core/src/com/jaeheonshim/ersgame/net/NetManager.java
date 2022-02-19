@@ -37,13 +37,18 @@ public class NetManager {
     }
 
     public void connect() {
-        connectionStatus = ConnectionStatus.CONNECTING;
-        client.connect();
+        if(connectionStatus != ConnectionStatus.CONNECTED) {
+            connectionStatus = ConnectionStatus.CONNECTING;
+            client.connect();
+        }
+    }
+
+    public void disconnect() {
+        client.disconnect();
     }
 
     public void reconnect() {
-        connectionStatus = ConnectionStatus.CONNECTING;
-        client.connect();
+        connect();
     }
 
     public void registerListener(SocketPacketListener listener) {

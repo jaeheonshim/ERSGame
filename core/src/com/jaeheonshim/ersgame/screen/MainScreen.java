@@ -165,6 +165,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
         Gdx.input.setInputProcessor(stage);
         NetManager.getInstance().setConnectStatusListener(this);
         connectingWindow.setVisible(false);
+        NetManager.getInstance().connect();
     }
 
     @Override
