@@ -57,6 +57,12 @@ public class GameStateManager {
         }
     }
 
+    public void onPointUpdate(String uuid, int amount) {
+        for(GameActionListener listener : gameActionListeners) {
+            listener.onPointUpdate(uuid, amount);
+        }
+    }
+
     public GameState getGameState() {
         return gameState;
     }

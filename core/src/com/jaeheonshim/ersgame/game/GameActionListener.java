@@ -5,4 +5,5 @@ public interface GameActionListener {
     default void onReceiveCard() {}
     default void onTurnUpdate() {}
     default void onDiscard(boolean you) {}
+    default void onPointUpdate(String uuid, int amount) {}
 }

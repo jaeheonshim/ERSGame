@@ -29,6 +29,7 @@ public class NetManager {
         instance.registerListener(new GameStatePacketListener());
         instance.registerListener(new OverlayMessageListener());
         instance.registerListener(new GameActionPacketListener());
+        instance.registerListener(new PointChangePacketListener());
     }
 
     private NetManager() {

@@ -25,6 +25,7 @@ import com.jaeheonshim.ersgame.scene.ui.PlayerElement;
 import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
 import java.util.Arrays;
+import java.util.Map;
 
 public class GameScreen implements Screen, GameStateUpdateListener, GameActionListener {
     private ERSGame game;
@@ -153,15 +154,22 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     public void onUpdate(GameState newGameState) {
         if (!game.getScreen().equals(this)) return;
 
-        playersPane.clearChildren();
-        for(int i = 0; i < newGameState.getPlayerList().size; i++) {
-            String playerUuid = newGameState.getPlayerList().get(i);
-            Player player = newGameState.getPlayer(playerUuid);
-            PlayerElement element = new PlayerElement(game, player, true);
-            playersPane.addElement(element);
+        Map<String, PlayerElement> elementMap = playersPane.getPlayerElementMap();
 
-            if(i == newGameState.getCurrentTurnIndex()) {
-                element.setCurrentTurn(true);
+        if(newGameState.getPlayerList().size != elementMap.size()) {
+            playersPane.clearChildren();
+            for(int i = 0; i < newGameState.getPlayerList().size; i++) {
+                String playerUuid = newGameState.getPlayerList().get(i);
+                Player player = newGameState.getPlayer(playerUuid);
+                PlayerElement element = new PlayerElement(game, player, true);
+                playersPane.addElement(element);
+            }
+        } else {
+            Player currentTurn = newGameState.getPlayer(newGameState.getPlayerList().get(newGameState.getCurrentTurnIndex()));
+            for(PlayerElement element : elementMap.values()) {
+                Player player = newGameState.getPlayer(element.getPlayer().getUuid());
+                element.setCurrentTurn(element.getPlayer().equals(currentTurn));
+                element.setCardCount(player.getCardCount());
             }
         }
 
@@ -213,6 +221,12 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
                 pileDisplayActor.flipTop();
             }
         });
+    }
+
+    @Override
+    public void onPointUpdate(String uuid, int amount) {
+        PlayerElement element = playersPane.getElement(uuid);
+        element.setPointChange(amount);
     }
 
     public void playCard() {

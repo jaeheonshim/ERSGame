@@ -7,10 +7,7 @@ import com.jaeheonshim.ersgame.game.GameStateUtil;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.GameAction;
 import com.jaeheonshim.ersgame.net.listener.SocketPacketListener;
-import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
-import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
-import com.jaeheonshim.ersgame.net.packet.OverlayMessagePacket;
-import com.jaeheonshim.ersgame.net.packet.SocketPacket;
+import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
@@ -48,18 +45,22 @@ public class CardActionListener extends ServerPacketListener {
                 Player player = gameState.getPlayer(uuid);
 
                 if(isValid) {
-                    server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: +" + gameState.getPileCount() + " cards"), gameState);
+                    int incrementAmount = gameState.getPileCount();
+                    server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: +" + incrementAmount + " cards"), gameState);
 
                     CardType c;
                     while((c = gameState.removeCardFromTop()) != null) {
                         player.addCardToBottom(c);
                     }
+
+                    server.broadcast(new PointChangePacket(player.getUuid(), incrementAmount), gameState);
                 } else {
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
                     server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
                     server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
                     if(player.getCardCount() > 0) {
                         gameState.addCardToBottom(player.removeTopCard());
+                        server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
                     }
                 }
 
