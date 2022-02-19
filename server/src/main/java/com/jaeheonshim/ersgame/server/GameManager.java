@@ -50,12 +50,12 @@ public class GameManager {
     }
 
     public String getUnusedGameCode() {
-        if(gameStates.size() >= 1000000 / 2) return null;
+        if(gameStates.size() >= 10000 / 2) return null;
 
         String code;
 
         do {
-            code = Integer.toString((int) (Math.random() * (1000000 - 100000)) + 100000);
+            code = Integer.toString((int) (Math.random() * (10000 - 1000)) + 1000);
         } while(getGame(code) != null);
 
         return code;
