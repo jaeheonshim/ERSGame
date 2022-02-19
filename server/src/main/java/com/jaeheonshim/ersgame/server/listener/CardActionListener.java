@@ -15,6 +15,7 @@ import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
 import com.jaeheonshim.ersgame.server.action.NextTurnAction;
+import com.jaeheonshim.ersgame.server.action.ReenableSlapsAction;
 import org.java_websocket.WebSocket;
 
 public class CardActionListener extends ServerPacketListener {
@@ -41,6 +42,8 @@ public class CardActionListener extends ServerPacketListener {
 
                 return true;
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
+                if(gameState.isIgnoreSlap()) return true;
+
                 boolean isValid = GameStateUtil.isValidSlap(gameState);
                 Player player = gameState.getPlayer(uuid);
 
@@ -59,6 +62,9 @@ public class CardActionListener extends ServerPacketListener {
                         gameState.addCardToBottom(player.removeTopCard());
                     }
                 }
+
+                gameState.setIgnoreSlap(true);
+                server.schedule(new ReenableSlapsAction(server, gameState));
 
                 server.broadcast(new GameStatePacket(gameState), gameState);
             }

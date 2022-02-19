@@ -16,6 +16,7 @@ public class GameState {
 
     private GameStatePhase gamePhase = GameStatePhase.PLAYER_JOIN;
     private boolean canPlay;
+    private boolean ignoreSlap;
 
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
@@ -140,5 +141,13 @@ public class GameState {
 
     public void setCanPlay(boolean canPlay) {
         this.canPlay = canPlay;
+    }
+
+    public boolean isIgnoreSlap() {
+        return ignoreSlap;
+    }
+
+    public void setIgnoreSlap(boolean ignoreSlap) {
+        this.ignoreSlap = ignoreSlap;
     }
 }
