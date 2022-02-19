@@ -7,5 +7,5 @@ public enum GameAction {
     TURN_UPDATE,
     SLAP,
     YOU_DISCARD,
-    OTHERS_DISCARD
+    OTHERS_DISCARD,
 }

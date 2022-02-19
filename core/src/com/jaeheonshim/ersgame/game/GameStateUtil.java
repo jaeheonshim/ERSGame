@@ -26,6 +26,18 @@ public class GameStateUtil {
         gameState.setCanPlay(false);
     }
 
+    public static boolean isGameOver(GameState gameState) {
+        int count = 0;
+
+        for(Player player : gameState.getPlayerMap().values()) {
+            if(player.getCardCount() > 0) {
+                count++;
+            }
+        }
+
+        return count <= 1 && !isValidSlap(gameState);
+    }
+
     public static void nextTurn(GameState gameState) {
         int i = gameState.getCurrentTurnIndex();
 

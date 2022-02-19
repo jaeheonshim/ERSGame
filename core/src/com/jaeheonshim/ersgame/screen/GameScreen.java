@@ -153,6 +153,9 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     @Override
     public void onUpdate(GameState newGameState) {
         if (!game.getScreen().equals(this)) return;
+        if(newGameState.isGameOver()) {
+            game.setScreen(game.gameOverScreen);
+        }
 
         Map<String, PlayerElement> elementMap = playersPane.getPlayerElementMap();
 
@@ -193,6 +196,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn() || !GameStateManager.getInstance().getGameState().isCanPlay() || GameStateManager.getInstance().getGameState().isIgnoreSlap());
     }
+
 
     @Override
     public void onTurnUpdate() {

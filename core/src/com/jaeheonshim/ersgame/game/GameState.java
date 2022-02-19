@@ -18,6 +18,8 @@ public class GameState {
     private boolean canPlay;
     private boolean ignoreSlap;
 
+    private boolean isGameOver;
+
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
         gameState.addPlayer(player);
@@ -149,5 +151,13 @@ public class GameState {
 
     public void setIgnoreSlap(boolean ignoreSlap) {
         this.ignoreSlap = ignoreSlap;
+    }
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        isGameOver = gameOver;
     }
 }

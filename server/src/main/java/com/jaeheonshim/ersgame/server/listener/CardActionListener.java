@@ -36,8 +36,6 @@ public class CardActionListener extends ServerPacketListener {
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
                 server.broadcast(new GameStatePacket(gameState), gameState);
                 server.schedule(new NextTurnAction(server, gameState));
-
-                return true;
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
                 if(gameState.isIgnoreSlap()) return true;
 
@@ -65,10 +63,17 @@ public class CardActionListener extends ServerPacketListener {
                 }
 
                 gameState.setIgnoreSlap(true);
-                server.schedule(new ReenableSlapsAction(server, gameState));
 
+                server.schedule(new ReenableSlapsAction(server, gameState));
                 server.broadcast(new GameStatePacket(gameState), gameState);
             }
+
+            if(GameStateUtil.isGameOver(gameState)) {
+                gameState.setGameOver(true);
+                server.broadcast(new GameStatePacket(gameState), gameState);
+            }
+
+            return true;
         }
 
         return false;
