@@ -1,11 +1,13 @@
 package com.jaeheonshim.ersgame.scene.shaded;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.UniversalOnscreenKeyboard;
 
 public class ERSTextField extends TextField {
     private ShaderProgram fontShader;
@@ -17,6 +19,7 @@ public class ERSTextField extends TextField {
     public ERSTextField(String text, Skin skin, String styleName, ERSGame game) {
         super(text, skin, styleName);
         this.fontShader = game.assets.get(game.fontShader);
+        setOnscreenKeyboard(new UniversalOnscreenKeyboard(game, this));
     }
 
     @Override
@@ -32,4 +35,6 @@ public class ERSTextField extends TextField {
         super.drawMessageText(batch, font, x, y, maxWidth);
         batch.setShader(null);
     }
+
+
 }

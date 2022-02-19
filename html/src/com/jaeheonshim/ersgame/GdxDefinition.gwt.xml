@@ -5,6 +5,7 @@
 
 	<inherits name='ERSGame' />
 	<inherits name='com.github.czyzby.websocket.GdxWebSocket' />
+
 	<entry-point class='com.jaeheonshim.ersgame.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
@@ -12,4 +13,5 @@
 	<collapse-property name="user.agent" values="*" />
 
 	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.game.CardType" />
 </module>

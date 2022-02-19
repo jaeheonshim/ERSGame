@@ -11,7 +11,7 @@ public class NetClient implements WebSocketListener {
     public NetClient(NetManager netManager) {
         this.netManager = netManager;
 
-        socket = WebSockets.newSocket(WebSockets.toWebSocketUrl("localhost", 8887));
+        socket = WebSockets.newSocket(WebSockets.toWebSocketUrl("10.0.0.101", 8887));
         socket.setSendGracefully(true);
         socket.addListener(this);
     }

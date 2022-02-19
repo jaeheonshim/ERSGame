@@ -11,6 +11,8 @@ import com.jaeheonshim.ersgame.scene.OverlayStage;
 import com.jaeheonshim.ersgame.screen.*;
 
 public class ERSGame extends Game {
+	public final INatives natives;
+
 	public final String defaultAtlas = "images.atlas";
 	public final String cardsAtlas = "cards/cards.atlas";
 	public final String uiSkin = "uiskin/skin.json";
@@ -24,6 +26,14 @@ public class ERSGame extends Game {
 	public Screen lobbyScreen;
 	public Screen gameScreen;
 	public Screen creditsScreen;
+
+	public ERSGame() {
+		this.natives = null;
+	}
+
+	public ERSGame(INatives natives) {
+		this.natives = natives;
+	}
 
 	private void loadAssets() {
 		assets.load(cardsAtlas, TextureAtlas.class);

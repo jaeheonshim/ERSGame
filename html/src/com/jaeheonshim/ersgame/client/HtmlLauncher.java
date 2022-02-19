@@ -21,6 +21,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new ERSGame();
+                return new ERSGame(new GwtNatives());
         }
 }

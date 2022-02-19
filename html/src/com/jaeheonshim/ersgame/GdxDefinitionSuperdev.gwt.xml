@@ -3,12 +3,19 @@
 <module rename-to="html">
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 
-    <inherits name='com.jaeheonshim.ersgame.GdxDefinition' />
-    <collapse-all-properties />
-    
-	<add-linker name="xsiframe"/>	
+	<inherits name='ERSGame' />
+	<inherits name='com.github.czyzby.websocket.GdxWebSocket' />
+
+	<add-linker name="xsiframe"/>
 	<set-configuration-property name="devModeRedirectEnabled" value="true"/>
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 
-	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.net.packet" />
+	<entry-point class='com.jaeheonshim.ersgame.client.HtmlLauncher' />
+	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
+	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<set-property name="user.agent" value="gecko1_8, safari"/>
+	<collapse-property name="user.agent" values="*" />
+
+	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.game.CardType" />
 </module>

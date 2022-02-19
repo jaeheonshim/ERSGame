@@ -122,7 +122,7 @@ public class ERSServer extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-        ERSServer server = new ERSServer(new InetSocketAddress("localhost", 8887));
+        ERSServer server = new ERSServer(new InetSocketAddress("10.0.0.101", 8887));
         server.registerListener(new CreateGameListener(server));
         server.registerListener(new JoinGameListener(server));
         server.registerListener(new StartGameListener(server));

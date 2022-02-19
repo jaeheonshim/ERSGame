@@ -1,7 +1,6 @@
 package com.jaeheonshim.ersgame.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.UniversalOnscreenKeyboard;
 import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.GameStateManager;
 import com.jaeheonshim.ersgame.game.GameStateUpdateListener;
@@ -72,6 +71,7 @@ public class JoinGameScreen implements Screen, GameStateUpdateListener {
                 return Character.toLowerCase(c) >= 'a' && Character.toLowerCase(c) <= 'z' || Character.isDigit(c);
             }
         });
+
         table.add(nameField).expandY().fillX().padLeft(32).padRight(32).colspan(2).bottom();
         table.row();
 
