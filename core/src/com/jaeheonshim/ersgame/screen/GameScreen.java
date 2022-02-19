@@ -177,7 +177,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     public void updatePlayButtonDisableState() {
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
 
-        playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn());
+        playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn() || !GameStateManager.getInstance().getGameState().isCanPlay());
     }
 
     @Override

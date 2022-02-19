@@ -13,6 +13,7 @@ public class GameStateUtil {
         CardUtil.randomDistribute(CardUtil.randomDeck(), gameState.getPlayerMap().values().toArray());
         gameState.setGamePhase(GameStatePhase.STARTED);
         gameState.setCurrentTurnIndex(MathUtils.random(gameState.getPlayerList().size - 1));
+        gameState.setCanPlay(true);
     }
 
     public static void playCard(GameState gameState, String uuid) {
@@ -22,6 +23,7 @@ public class GameStateUtil {
         if(type == null) throw new ERSException("Tried to play card while empty hand");
 
         gameState.addCardToTop(type);
+        gameState.setCanPlay(false);
     }
 
     public static void nextTurn(GameState gameState) {
@@ -33,6 +35,7 @@ public class GameStateUtil {
         } while(gameState.getPlayer(gameState.getPlayerList().get(i)).getCardCount() <= 0);
 
         gameState.setCurrentTurnIndex(i);
+        gameState.setCanPlay(true);
     }
 
     public static boolean isValidSlap(GameState gameState) {

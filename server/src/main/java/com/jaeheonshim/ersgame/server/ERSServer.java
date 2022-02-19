@@ -5,6 +5,7 @@ import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.Player;
 import com.jaeheonshim.ersgame.net.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
+import com.jaeheonshim.ersgame.server.action.GameAction;
 import com.jaeheonshim.ersgame.server.listener.CardActionListener;
 import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
 import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
@@ -17,11 +18,13 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.*;
 
 public class ERSServer extends WebSocketServer {
     private final ConcurrentHashMap<String, WebSocket> connectedClients = new ConcurrentHashMap<>();
     private List<ServerPacketListener> socketPacketListenerList = new ArrayList<>();
+
+    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
     public ERSServer(InetSocketAddress address) {
         super(address);
@@ -119,6 +122,10 @@ public class ERSServer extends WebSocketServer {
                 socket.send(packet.serialize());
             }
         }
+    }
+
+    public void schedule(GameAction gameAction) {
+        scheduler.schedule(gameAction, gameAction.getDelay(), TimeUnit.MILLISECONDS);
     }
 
     public static void main(String[] args) {

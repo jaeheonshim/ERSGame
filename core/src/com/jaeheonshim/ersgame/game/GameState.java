@@ -15,6 +15,7 @@ public class GameState {
     private Queue<CardType> deck = new Queue<>();
 
     private GameStatePhase gamePhase = GameStatePhase.PLAYER_JOIN;
+    private boolean canPlay;
 
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
@@ -131,5 +132,13 @@ public class GameState {
     public CardType removeCardFromTop() {
         if(deck.size == 0) return null;
         return deck.removeFirst();
+    }
+
+    public boolean isCanPlay() {
+        return canPlay;
+    }
+
+    public void setCanPlay(boolean canPlay) {
+        this.canPlay = canPlay;
     }
 }

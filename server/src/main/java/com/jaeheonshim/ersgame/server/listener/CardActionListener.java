@@ -14,6 +14,7 @@ import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
+import com.jaeheonshim.ersgame.server.action.NextTurnAction;
 import org.java_websocket.WebSocket;
 
 public class CardActionListener extends ServerPacketListener {
@@ -31,16 +32,12 @@ public class CardActionListener extends ServerPacketListener {
             if(gameState == null) throw new ERSException("Player not in game");
 
             if(gameActionPacket.gameAction == GameAction.PLAY_CARD) {
-                int oldTurn = gameState.getCurrentTurnIndex();
+                if(!gameState.isCanPlay()) throw new ERSException("Can't play right now");
                 GameStateUtil.playCard(gameState, uuid);
-                GameStateUtil.nextTurn(gameState);
 
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
                 server.broadcast(new GameStatePacket(gameState), gameState);
-
-                if(gameState.getCurrentTurnIndex() != oldTurn) {
-                    server.broadcast(new GameActionPacket(GameAction.TURN_UPDATE), gameState);
-                }
+                server.schedule(new NextTurnAction(server, gameState));
 
                 return true;
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
