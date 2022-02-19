@@ -113,7 +113,6 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
                 }
 
                 NetManager.getInstance().send(new GameActionPacket(GameAction.SLAP));
-                OverlayStage.getInstance().postOverlayMessage("You slapped!");
             }
         });
 

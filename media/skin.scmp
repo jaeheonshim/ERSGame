@@ -560,10 +560,10 @@ jsonData: {
 		{
 			class: com.ray3k.skincomposer.data.ColorData
 			color: {
-				r: 0.08999979
-				g: 0.08999979
-				b: 0.08999979
-				a: 0.38431373
+				r: 0.08627451
+				g: 0.08627451
+				b: 0.08627451
+				a: 0.5699998
 			}
 			name: overlaybg
 		}

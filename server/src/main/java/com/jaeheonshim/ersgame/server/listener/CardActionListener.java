@@ -31,10 +31,16 @@ public class CardActionListener extends ServerPacketListener {
             if(gameState == null) throw new ERSException("Player not in game");
 
             if(gameActionPacket.gameAction == GameAction.PLAY_CARD) {
+                int oldTurn = gameState.getCurrentTurnIndex();
                 GameStateUtil.playCard(gameState, uuid);
+                GameStateUtil.nextTurn(gameState);
 
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
                 server.broadcast(new GameStatePacket(gameState), gameState);
+
+                if(gameState.getCurrentTurnIndex() != oldTurn) {
+                    server.broadcast(new GameActionPacket(GameAction.TURN_UPDATE), gameState);
+                }
 
                 return true;
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {

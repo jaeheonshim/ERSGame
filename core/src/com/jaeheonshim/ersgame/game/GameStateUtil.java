@@ -24,6 +24,17 @@ public class GameStateUtil {
         gameState.addCardToTop(type);
     }
 
+    public static void nextTurn(GameState gameState) {
+        int i = gameState.getCurrentTurnIndex();
+
+        do {
+            i++;
+            i %= gameState.getPlayerList().size;
+        } while(gameState.getPlayer(gameState.getPlayerList().get(i)).getCardCount() <= 0);
+
+        gameState.setCurrentTurnIndex(i);
+    }
+
     public static boolean isValidSlap(GameState gameState) {
         return isDouble(gameState) || isSandwich(gameState);
     }
