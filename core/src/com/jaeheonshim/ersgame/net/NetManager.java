@@ -86,4 +86,8 @@ public class NetManager {
     public void setClientUuid(String clientUuid) {
         this.clientUuid = clientUuid;
     }
+
+    public long getRoundTripTime() {
+        return client.getRoundTripTime();
+    }
 }

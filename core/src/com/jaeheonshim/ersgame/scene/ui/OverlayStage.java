@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.scene.ui;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -7,14 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.scene.action.DisappearAction;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
@@ -22,6 +21,7 @@ import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import java.util.StringJoiner;
 
 public class OverlayStage extends Stage {
+    private final ERSLabel pingLabel;
     private ERSGame game;
 
     private final Cell<UIMessageLabel> uiMessageLabelCell;
@@ -53,6 +53,10 @@ public class OverlayStage extends Stage {
         overlayMessageGroup.grow();
 
         skin = game.assets.get(game.uiSkin);
+
+        pingLabel = new ERSLabel("Ping: -1", skin, "small", game);
+        pingLabel.setColor(Color.BLACK);
+        table.add(pingLabel).top().left().padTop(2).padLeft(2).row();
 
         table.add(overlayMessageGroup).growX().top().padTop(150);
         table.row();
@@ -108,5 +112,6 @@ public class OverlayStage extends Stage {
     @Override
     public void act(float delta) {
         super.act(delta);
+        pingLabel.setText("Ping: " + NetManager.getInstance().getRoundTripTime() + "ms");
     }
 }

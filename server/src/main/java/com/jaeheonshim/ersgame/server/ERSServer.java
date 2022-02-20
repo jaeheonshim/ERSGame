@@ -64,6 +64,11 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        if(message.equals("PING")) {
+            conn.send("PONG");
+            return;
+        }
+
         try {
             SocketPacket deserialized = SocketPacket.deserialize(message);
             for (ServerPacketListener listener : socketPacketListenerList) {
@@ -72,6 +77,7 @@ public class ERSServer extends WebSocketServer {
         } catch (ERSException e) {
             conn.send(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize());
         } catch (Exception e) {
+            e.printStackTrace();
             conn.send(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize());
         }
     }

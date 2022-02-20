@@ -16,7 +16,7 @@ public class UniversalOnscreenKeyboard implements TextField.OnscreenKeyboard {
 
     @Override
     public void show(boolean visible) {
-        if(Gdx.app.getType() == Application.ApplicationType.WebGL && game.natives.isMobileDevice()) {
+        if (Gdx.app.getType() == Application.ApplicationType.WebGL && game.natives.isMobileDevice()) {
             game.natives.showPrompt(textField.getMessageText(), textField.getText(), (result) -> {
                 textField.setText(result);
             });

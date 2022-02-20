@@ -1,13 +1,19 @@
 package com.jaeheonshim.ersgame.net;
 
+import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.jaeheonshim.ersgame.net.model.ConnectionStatus;
 
 public class NetClient implements WebSocketListener {
+    public static final int PING_INTERVAL = 3;
     private NetManager netManager;
     private WebSocket socket;
+
+    private long roundTripTime;
+    private long lastPingTime;
 
     public NetClient(NetManager netManager) {
         this.netManager = netManager;
@@ -29,6 +35,17 @@ public class NetClient implements WebSocketListener {
     @Override
     public boolean onOpen(WebSocket webSocket) {
         netManager.setConnectionStatus(ConnectionStatus.CONNECTED);
+
+        Timer timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                if(socket.isOpen()) {
+                    ping();
+                }
+            }
+        }, 0, PING_INTERVAL);
+
         return true;
     }
 
@@ -40,6 +57,11 @@ public class NetClient implements WebSocketListener {
 
     @Override
     public boolean onMessage(WebSocket webSocket, String packet) {
+        if(packet.equals("PONG")) {
+            onPong();
+            return true;
+        }
+
         netManager.onMessage(webSocket, packet);
         return true;
     }
@@ -53,6 +75,20 @@ public class NetClient implements WebSocketListener {
     public boolean onError(WebSocket webSocket, Throwable error) {
         netManager.setConnectionStatus(webSocket.isOpen() ? ConnectionStatus.CONNECTED : ConnectionStatus.DISCONNECTED);
         return true;
+    }
+
+    public void ping() {
+        lastPingTime = TimeUtils.millis();
+        sendMessage("PING");
+    }
+
+    public void onPong() {
+        long currentTime = TimeUtils.millis();
+        this.roundTripTime = currentTime - lastPingTime;
+    }
+
+    public long getRoundTripTime() {
+        return roundTripTime;
     }
 
     public void sendMessage(String packet) {
