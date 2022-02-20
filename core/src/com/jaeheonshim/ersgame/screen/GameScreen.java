@@ -1,15 +1,18 @@
 package com.jaeheonshim.ersgame.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -35,7 +38,10 @@ import java.util.Map;
 public class GameScreen implements Screen, GameStateUpdateListener, GameActionListener {
     private ERSGame game;
     private Stage stage;
+
     private Table table;
+    private Table overlayTable;
+    private Stack stack;
 
     private PileDisplayActor pileDisplayActor;
     private PlayersPane playersPane;
@@ -44,10 +50,13 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
     private ERSLabel pileCount;
     private ERSLabel selfCount;
+    private ERSLabel timeoutLabel;
     private ERSTextButton playButton;
 
     private boolean awaitGameUpdatePile;
     private boolean pendingPileUpdate;
+
+    private float timeoutTimer = 0;
 
     public GameScreen(ERSGame game) {
         this.game = game;
@@ -77,6 +86,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         playButton = new ERSTextButton("Play", skin, game);
 
+        timeoutLabel = new ERSLabel("0:00", skin, "timeout", game);
+
         table.setFillParent(true);
         table.add(playerScrollPane).expandX().height(200).fill().top();
         table.row();
@@ -88,7 +99,17 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         table.row();
         table.add(playButton).expandY().top().padTop(2);
 
-        stage.addActor(table);
+        overlayTable = new Table();
+        table.setFillParent(true);
+        overlayTable.add(timeoutLabel).center().padLeft(50);
+        timeoutLabel.setVisible(false);
+
+        stack = new Stack();
+        stack.setFillParent(true);
+        stack.add(table);
+        stack.add(overlayTable);
+
+        stage.addActor(stack);
         stage.addActor(animationCard);
 
         playButton.addListener(new ClickListener() {
@@ -113,6 +134,8 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         pileDisplayActor.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(timeoutTimer > 0) return;
+
                 if(GameStateManager.getInstance().getGameState().getPileCount() <= 0) {
                     OverlayStage.getInstance().postOverlayMessage("There aren't any cards to slap!");
                     return;
@@ -215,6 +238,11 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), !you, () -> {});
     }
 
+    @Override
+    public void onGameTimeout(float time) {
+        this.timeoutTimer = time;
+    }
+
     public void updatePlayButtonDisableState() {
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
 
@@ -248,6 +276,14 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
         onUpdate(GameStateManager.getInstance().getGameState());
+
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                timeoutTimer = 30;
+                return true;
+            }
+        });
     }
 
     @Override
@@ -267,6 +303,15 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
                 pileDisplayActor.setTopFlipped(true);
                 pileDisplayActor.flipTop();
             }
+        }
+
+        if(timeoutTimer > 0) {
+            timeoutTimer -= delta;
+            timeoutLabel.setVisible(true);
+            timeoutLabel.setText(getTimeoutTimerString(timeoutTimer));
+        } else {
+            timeoutTimer = 0;
+            timeoutLabel.setVisible(false);
         }
     }
 
@@ -293,5 +338,14 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     @Override
     public void dispose() {
 
+    }
+
+    public static String getTimeoutTimerString(float timeoutTimer) {
+        int mins = (int) (timeoutTimer / 60);
+        int secs = (int) (timeoutTimer % 60);
+
+        String secsString = secs < 10 ? "0" + secs : Integer.toString(secs);
+
+        return mins + ":" + secsString;
     }
 }

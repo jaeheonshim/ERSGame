@@ -6,4 +6,5 @@ public interface GameActionListener {
     default void onTurnUpdate() {}
     default void onDiscard(boolean you) {}
     default void onPointUpdate(String uuid, int amount) {}
+    default void onGameTimeout(float time) {}
 }

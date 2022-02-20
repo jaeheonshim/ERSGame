@@ -181,6 +181,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		fontColor: white
 		background: overlaybg
 	}
+	timeout: {
+		font: poppins-64
+		fontColor: black
+		background: timeoutlabel
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {

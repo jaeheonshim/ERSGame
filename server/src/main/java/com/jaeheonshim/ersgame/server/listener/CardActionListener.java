@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server.listener;
 
 import com.jaeheonshim.ersgame.server.action.ReenablePlayAction;
+import com.jaeheonshim.ersgame.server.action.ReleaseTimeoutAction;
 import com.jaeheonshim.ersgame.util.ERSException;
 import com.jaeheonshim.ersgame.game.model.CardType;
 import com.jaeheonshim.ersgame.game.model.GameState;
@@ -44,6 +45,8 @@ public class CardActionListener extends ServerPacketListener {
                 boolean isValid = GameStateUtil.isValidSlap(gameState);
                 Player player = gameState.getPlayer(uuid);
 
+                if(player.isTimedOut()) throw new ERSException("You aren't allowed to slap right now!");
+
                 if(isValid) {
                     int incrementAmount = gameState.getPileCount();
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: +" + incrementAmount + " cards"), gameState);
@@ -59,12 +62,18 @@ public class CardActionListener extends ServerPacketListener {
 
                     server.broadcast(new PointChangePacket(player.getUuid(), incrementAmount), gameState);
                 } else {
-                    server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
-                    server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
-                    server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
                     if(player.getCardCount() > 0) {
+                        server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
+                        server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
+                        server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
                         gameState.addCardToBottom(player.removeTopCard());
                         server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
+                    } else {
+                        float timeAmount = 10;
+                        server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: " + ((int) timeAmount) + " sec penalty!"), gameState);
+                        server.send(new SlapTimeoutPacket(timeAmount), player.getUuid());
+                        player.setTimedOut(true);
+                        server.schedule(new ReleaseTimeoutAction(timeAmount, player));
                     }
                 }
 

@@ -67,6 +67,12 @@ public class GameStateManager {
         }
     }
 
+    public void onGameTimeout(float time) {
+        for(GameActionListener listener : gameActionListeners) {
+            listener.onGameTimeout(time);
+        }
+    }
+
     public Player getSelfPlayer() {
         if(gameState == null) return null;
         return gameState.getPlayer(NetManager.getInstance().getClientUuid());

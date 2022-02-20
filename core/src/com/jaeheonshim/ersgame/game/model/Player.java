@@ -12,6 +12,8 @@ public class Player {
     private transient Queue<CardType> cardStack = new Queue<>();
     private int cardCount;
 
+    private boolean isTimedOut;
+
     public Player() {
     }
 
@@ -57,6 +59,14 @@ public class Player {
 
     public int getCardCount() {
         return cardCount;
+    }
+
+    public boolean isTimedOut() {
+        return isTimedOut;
+    }
+
+    public void setTimedOut(boolean timedOut) {
+        isTimedOut = timedOut;
     }
 
     @Override
