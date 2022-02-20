@@ -67,7 +67,6 @@ public class GameOverScreen implements Screen {
 
         if(timer >= FADE_TIMER + 0.5f) {
             game.setScreen(nextScreen);
-            dispose();
         }
     }
 

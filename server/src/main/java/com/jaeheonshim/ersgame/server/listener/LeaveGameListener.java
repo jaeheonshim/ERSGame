@@ -32,6 +32,8 @@ public class LeaveGameListener extends ServerPacketListener {
 
                 boolean isEmpty = GameStateUtil.removePlayer(gameState, uuid);
 
+                server.send(new GameActionPacket(GameAction.LEAVE_GAME), uuid);
+
                 if(isEmpty) {
                     GameManager.getInstance().removeGame(gameState.getGameCode());
                     return true;
@@ -39,8 +41,6 @@ public class LeaveGameListener extends ServerPacketListener {
 
                 OverlayMessagePacket messagePacket = new OverlayMessagePacket(player.getUsername() + " left");
                 GameStatePacket gameStatePacket = new GameStatePacket(gameState);
-
-                server.send(new GameActionPacket(GameAction.LEAVE_GAME), uuid);
 
                 server.broadcast(messagePacket, gameState);
                 server.broadcast(gameStatePacket, gameState);

@@ -275,15 +275,13 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     public void show() {
         resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(stage);
-        onUpdate(GameStateManager.getInstance().getGameState());
 
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                timeoutTimer = 30;
-                return true;
-            }
-        });
+        awaitGameUpdatePile = false;
+        pendingPileUpdate = false;
+        animationCard.setVisible(false);
+        playersPane.clearChildren();
+
+        onUpdate(GameStateManager.getInstance().getGameState());
     }
 
     @Override

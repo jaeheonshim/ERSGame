@@ -14,13 +14,16 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
+import com.jaeheonshim.ersgame.game.GameActionListener;
 import com.jaeheonshim.ersgame.game.GameStateManager;
 import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.net.model.GameAction;
+import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 
-public class GameResultsScreen implements Screen {
+public class GameResultsScreen implements Screen, GameActionListener {
     private final ERSLabel winnerLabel;
     private ERSGame game;
 
@@ -57,9 +60,17 @@ public class GameResultsScreen implements Screen {
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                NetManager.getInstance().disconnect();
+                NetManager.getInstance().send(new GameActionPacket(GameAction.LEAVE_GAME));
             }
         });
+
+        GameStateManager.getInstance().registerActionListener(this);
+    }
+
+    @Override
+    public void onLeaveGame() {
+        GameStateManager.getInstance().setGameState(null);
+        game.setScreen(game.mainScreen);
     }
 
     @Override
