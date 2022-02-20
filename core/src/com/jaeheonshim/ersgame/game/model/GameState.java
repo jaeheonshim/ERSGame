@@ -5,19 +5,18 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Queue;
 
 public class GameState {
-    private String gameCode;
+    private final String gameCode;
 
     private ObjectMap<String, Player> playerMap = new ObjectMap<>();
     private Array<String> playerList = new Array<>();
-    private String adminPlayer;
-    private int currentTurnIndex;
-
     private Queue<CardType> deck = new Queue<>();
 
     private GameStatePhase gamePhase = GameStatePhase.PLAYER_JOIN;
+    private String adminPlayer;
+    private int currentTurnIndex;
+
     private boolean canPlay;
     private boolean ignoreSlap;
-
     private boolean isGameOver;
 
     public static GameState createGame(Player player, String gameCode) {
@@ -69,6 +68,26 @@ public class GameState {
         return false;
     }
 
+    public Array<CardType> getTopNCards(int n) {
+        Array<CardType> array = new Array<>();
+
+        for(int i = 0; i < n && i < deck.size; i++) {
+            array.add(deck.get(i));
+        }
+
+        return array;
+    }
+
+    public CardType getTopCard() {
+        if(deck.size < 1) return null;
+        return deck.get(0);
+    }
+
+    public CardType removeCardFromTop() {
+        if(deck.size == 0) return null;
+        return deck.removeFirst();
+    }
+
     public String getGameCode() {
         return gameCode;
     }
@@ -101,21 +120,6 @@ public class GameState {
         return deck.size;
     }
 
-    public Array<CardType> getTopNCards(int n) {
-        Array<CardType> array = new Array<>();
-
-        for(int i = 0; i < n && i < deck.size; i++) {
-            array.add(deck.get(i));
-        }
-
-        return array;
-    }
-
-    public CardType getTopCard() {
-        if(deck.size < 1) return null;
-        return deck.get(0);
-    }
-
     public void addCardToTop(CardType type) {
         deck.addFirst(type);
     }
@@ -130,11 +134,6 @@ public class GameState {
 
     public int getCurrentTurnIndex() {
         return currentTurnIndex;
-    }
-
-    public CardType removeCardFromTop() {
-        if(deck.size == 0) return null;
-        return deck.removeFirst();
     }
 
     public boolean isCanPlay() {
