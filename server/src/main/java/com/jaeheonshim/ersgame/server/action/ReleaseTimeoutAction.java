@@ -2,7 +2,7 @@ package com.jaeheonshim.ersgame.server.action;
 
 import com.jaeheonshim.ersgame.game.model.Player;
 
-public class ReleaseTimeoutAction implements GameAction {
+public class ReleaseTimeoutAction extends ScheduleGameAction {
     private float timer;
     private Player player;
 

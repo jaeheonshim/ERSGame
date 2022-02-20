@@ -17,6 +17,12 @@ public class Player {
     public Player() {
     }
 
+    public void reset() {
+        cardStack.clear();
+        cardCount = 0;
+        isTimedOut = false;
+    }
+
     public void addCardToBottom(CardType cardType) {
         cardStack.addLast(cardType);
         cardCount++;

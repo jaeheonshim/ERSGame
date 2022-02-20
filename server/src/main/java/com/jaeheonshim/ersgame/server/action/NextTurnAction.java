@@ -7,7 +7,7 @@ import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
 
-public class NextTurnAction implements com.jaeheonshim.ersgame.server.action.GameAction {
+public class NextTurnAction extends ScheduleGameAction {
     private ERSServer server;
     private GameState gameState;
 

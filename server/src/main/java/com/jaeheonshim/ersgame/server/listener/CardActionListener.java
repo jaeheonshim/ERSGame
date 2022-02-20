@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.server.listener;
 
+import com.jaeheonshim.ersgame.game.GameStateManager;
 import com.jaeheonshim.ersgame.server.action.ReenablePlayAction;
 import com.jaeheonshim.ersgame.server.action.ReleaseTimeoutAction;
 import com.jaeheonshim.ersgame.util.ERSException;
@@ -37,7 +38,7 @@ public class CardActionListener extends ServerPacketListener {
 
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
                 server.broadcast(new GameStatePacket(gameState), gameState);
-                server.schedule(new NextTurnAction(server, gameState));
+                GameManager.getInstance().schedule(new NextTurnAction(server, gameState));
 
                 // after play, next turn is delayed so that players have a chance to slap
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
@@ -59,7 +60,7 @@ public class CardActionListener extends ServerPacketListener {
 
                     // After someone slaps, stop play for a few seconds to avoid confusion
                     gameState.setCanPlay(false);
-                    server.schedule(new ReenablePlayAction(server, gameState));
+                    GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
 
                     server.broadcast(new PointChangePacket(player.getUuid(), incrementAmount), gameState);
                 } else {
@@ -72,27 +73,28 @@ public class CardActionListener extends ServerPacketListener {
 
                         if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
                             gameState.setCanPlay(false);
-                            server.schedule(new NextTurnAction(server, gameState));
+                            GameManager.getInstance().schedule(new NextTurnAction(server, gameState));
                         }
                     } else {
                         float timeAmount = 10;
                         server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: " + ((int) timeAmount) + " sec penalty!"), gameState);
                         server.send(new SlapTimeoutPacket(timeAmount), player.getUuid());
                         player.setTimedOut(true);
-                        server.schedule(new ReleaseTimeoutAction(timeAmount, player));
+                        GameManager.getInstance().schedule(new ReleaseTimeoutAction(timeAmount, player));
                     }
                 }
 
                 // after a slap happens, disable slap for a short amount of time to avoid multiple slaps unfairly penalizing players
                 gameState.setIgnoreSlap(true);
 
-                server.schedule(new ReenableSlapsAction(server, gameState));
+                GameManager.getInstance().schedule(new ReenableSlapsAction(server, gameState));
                 server.broadcast(new GameStatePacket(gameState), gameState);
             }
 
             if(GameStateUtil.isGameOver(gameState)) {
                 gameState.setGameOver(true);
                 server.broadcast(new GameStatePacket(gameState), gameState);
+                gameState.reset();
             }
 
             return true;

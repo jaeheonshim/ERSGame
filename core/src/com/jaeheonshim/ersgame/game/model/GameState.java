@@ -19,6 +19,19 @@ public class GameState {
     private boolean ignoreSlap;
     private boolean isGameOver;
 
+    public void reset() {
+        deck.clear();
+        gamePhase = GameStatePhase.PLAYER_JOIN;
+        currentTurnIndex = 0;
+        canPlay = false;
+        ignoreSlap = false;
+        isGameOver = false;
+
+        for(Player player : playerMap.values()) {
+            player.reset();
+        }
+    }
+
     public static GameState createGame(Player player, String gameCode) {
         GameState gameState = new GameState(gameCode);
         gameState.addPlayer(player);

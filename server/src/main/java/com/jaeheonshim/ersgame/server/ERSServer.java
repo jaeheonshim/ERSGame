@@ -8,23 +8,21 @@ import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
-import com.jaeheonshim.ersgame.server.action.GameAction;
+import com.jaeheonshim.ersgame.server.action.ScheduleGameAction;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class ERSServer extends WebSocketServer {
     private final ConcurrentHashMap<String, WebSocket> connectedClients = new ConcurrentHashMap<>();
     private List<ServerPacketListener> socketPacketListenerList = new ArrayList<>();
 
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+    private ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+
     private CommandParser parser = new CommandParser(this);
 
     public ERSServer(InetSocketAddress address) {
@@ -75,6 +73,7 @@ public class ERSServer extends WebSocketServer {
             return;
         }
 
+        System.out.println("PACKET RECEIVE");
         try {
             SocketPacket deserialized = SocketPacket.deserialize(message);
             for (ServerPacketListener listener : socketPacketListenerList) {
@@ -95,7 +94,7 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onStart() {
-
+        scheduler.scheduleAtFixedRate(GameManager.getInstance(), 0, 250, TimeUnit.MILLISECONDS);
     }
 
     public void registerListener(ServerPacketListener listener) {
@@ -128,10 +127,6 @@ public class ERSServer extends WebSocketServer {
                 socket.send(packet.serialize());
             }
         }
-    }
-
-    public void schedule(GameAction gameAction) {
-        scheduler.schedule(gameAction, gameAction.getDelay(), TimeUnit.MILLISECONDS);
     }
 
     public ScheduledExecutorService getScheduler() {

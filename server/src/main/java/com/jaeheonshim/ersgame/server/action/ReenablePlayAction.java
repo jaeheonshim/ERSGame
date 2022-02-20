@@ -4,7 +4,7 @@ import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
 
-public class ReenablePlayAction implements GameAction {
+public class ReenablePlayAction extends ScheduleGameAction {
     private ERSServer server;
     private GameState gameState;
 

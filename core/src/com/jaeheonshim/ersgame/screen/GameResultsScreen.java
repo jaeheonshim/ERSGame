@@ -64,6 +64,13 @@ public class GameResultsScreen implements Screen, GameActionListener {
             }
         });
 
+        playAgain.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.lobbyScreen);
+            }
+        });
+
         GameStateManager.getInstance().registerActionListener(this);
     }
 

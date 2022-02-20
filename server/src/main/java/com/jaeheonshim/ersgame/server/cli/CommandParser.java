@@ -15,6 +15,7 @@ public class CommandParser {
         registerCommand(new ClientsCommand());
         registerCommand(new StatsCommand());
         registerCommand(new GcCommand());
+        registerCommand(new GamesCommand());
     }
 
     private void registerCommand(ICliCommand command) {

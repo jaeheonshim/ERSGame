@@ -2,20 +2,25 @@ package com.jaeheonshim.ersgame.server;
 
 import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.server.action.ScheduleGameAction;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class GameManager {
+public class GameManager implements Runnable {
     private Map<String, GameState> gameStates = new HashMap<>();
 
     private static GameManager instance = new GameManager();
+
+    private long lastTick;
+    private Queue<ScheduleGameAction> gameActions = new LinkedList<>();
 
     public static GameManager getInstance() {
         return instance;
     }
 
-    private GameManager() {}
+    private GameManager() {
+        lastTick = System.currentTimeMillis();
+    }
 
     public GameState getGameOfPlayer(String playerUuid) {
         for(GameState gameState : gameStates.values()) {
@@ -59,5 +64,27 @@ public class GameManager {
         } while(getGame(code) != null);
 
         return code;
+    }
+
+    public Map<String, GameState> getGameStates() {
+        return gameStates;
+    }
+
+    public void schedule(ScheduleGameAction gameAction) {
+        gameActions.add(gameAction);
+    }
+
+    @Override
+    public void run() {
+        long deltaMills = System.currentTimeMillis() - lastTick;
+        Iterator<ScheduleGameAction> scheduleGameActionIterator = gameActions.iterator();
+        while(scheduleGameActionIterator.hasNext()) {
+            ScheduleGameAction action = scheduleGameActionIterator.next();
+            if(action.update(deltaMills)) {
+                scheduleGameActionIterator.remove();
+            }
+        }
+
+        lastTick = System.currentTimeMillis();
     }
 }

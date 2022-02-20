@@ -114,7 +114,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener, GameActionL
     public void show() {
         onUpdate(GameStateManager.getInstance().getGameState());
         Gdx.input.setInputProcessor(stage);
-        startButton.setVisible(false);
+        startButton.setVisible(GameStateManager.getInstance().isAdmin());
     }
 
     @Override
