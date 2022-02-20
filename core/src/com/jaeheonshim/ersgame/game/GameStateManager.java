@@ -1,6 +1,8 @@
 package com.jaeheonshim.ersgame.game;
 
-import com.jaeheonshim.ersgame.net.GameAction;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.net.model.GameAction;
 import com.jaeheonshim.ersgame.net.NetManager;
 
 import java.util.ArrayList;

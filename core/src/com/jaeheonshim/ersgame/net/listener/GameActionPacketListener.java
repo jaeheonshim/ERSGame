@@ -3,11 +3,11 @@ package com.jaeheonshim.ersgame.net.listener;
 import com.badlogic.gdx.Gdx;
 import com.github.czyzby.websocket.WebSocket;
 import com.jaeheonshim.ersgame.game.GameStateManager;
-import com.jaeheonshim.ersgame.net.GameAction;
-import com.jaeheonshim.ersgame.net.UIMessageType;
+import com.jaeheonshim.ersgame.net.model.GameAction;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.scene.OverlayStage;
+import com.jaeheonshim.ersgame.scene.ui.OverlayStage;
 
 public class GameActionPacketListener extends SocketPacketListener {
     @Override

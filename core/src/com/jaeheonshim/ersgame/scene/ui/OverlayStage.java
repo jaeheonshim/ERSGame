@@ -1,6 +1,5 @@
-package com.jaeheonshim.ersgame.scene;
+package com.jaeheonshim.ersgame.scene.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,12 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.net.UIMessageType;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.scene.action.DisappearAction;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
-import com.jaeheonshim.ersgame.scene.ui.UIMessageLabel;
 
 import java.util.StringJoiner;
 

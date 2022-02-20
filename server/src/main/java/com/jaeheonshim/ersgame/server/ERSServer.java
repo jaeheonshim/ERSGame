@@ -1,9 +1,9 @@
 package com.jaeheonshim.ersgame.server;
 
-import com.jaeheonshim.ersgame.ERSException;
-import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.game.Player;
-import com.jaeheonshim.ersgame.net.UIMessageType;
+import com.jaeheonshim.ersgame.util.ERSException;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.action.GameAction;
 import com.jaeheonshim.ersgame.server.listener.CardActionListener;

@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.net;
+package com.jaeheonshim.ersgame.net.model;
 
 public enum GameAction {
     START,

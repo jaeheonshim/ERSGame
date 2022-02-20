@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.game;
+package com.jaeheonshim.ersgame.game.model;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;

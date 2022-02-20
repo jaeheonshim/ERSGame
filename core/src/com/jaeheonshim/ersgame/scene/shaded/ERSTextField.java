@@ -1,13 +1,12 @@
 package com.jaeheonshim.ersgame.scene.shaded;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.UniversalOnscreenKeyboard;
+import com.jaeheonshim.ersgame.util.UniversalOnscreenKeyboard;
 
 public class ERSTextField extends TextField {
     private ShaderProgram fontShader;

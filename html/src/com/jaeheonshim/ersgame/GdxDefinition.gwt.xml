@@ -13,5 +13,5 @@
 	<collapse-property name="user.agent" values="*" />
 
 	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame" />
-	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.game.CardType" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.jaeheonshim.ersgame.game.model.CardType" />
 </module>

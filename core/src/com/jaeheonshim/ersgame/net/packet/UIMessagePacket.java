@@ -1,6 +1,6 @@
 package com.jaeheonshim.ersgame.net.packet;
 
-import com.jaeheonshim.ersgame.net.UIMessageType;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 
 public class UIMessagePacket extends SocketPacket {
     public UIMessageType type;

@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.net.NetManager;
-import com.jaeheonshim.ersgame.net.UIMessageType;
-import com.jaeheonshim.ersgame.net.listener.UIMessagePacketListener;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 
 public class UIMessageLabel extends ERSLabel {

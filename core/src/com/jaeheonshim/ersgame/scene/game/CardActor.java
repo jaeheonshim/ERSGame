@@ -7,9 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
-import com.jaeheonshim.ersgame.game.CardType;
+import com.jaeheonshim.ersgame.game.model.CardType;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.scene.ActionUtil;
 
 public class CardActor extends Actor {
     private ERSGame game;

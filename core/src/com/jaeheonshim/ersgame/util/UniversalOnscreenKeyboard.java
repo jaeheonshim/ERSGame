@@ -1,8 +1,9 @@
-package com.jaeheonshim.ersgame;
+package com.jaeheonshim.ersgame.util;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.jaeheonshim.ersgame.ERSGame;
 
 public class UniversalOnscreenKeyboard implements TextField.OnscreenKeyboard {
     private ERSGame game;

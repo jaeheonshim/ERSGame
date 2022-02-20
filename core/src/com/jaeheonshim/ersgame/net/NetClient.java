@@ -3,6 +3,7 @@ package com.jaeheonshim.ersgame.net;
 import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
+import com.jaeheonshim.ersgame.net.model.ConnectionStatus;
 
 public class NetClient implements WebSocketListener {
     private NetManager netManager;

@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,19 +16,15 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.CardType;
-import com.jaeheonshim.ersgame.net.ConnectionStatus;
+import com.jaeheonshim.ersgame.game.model.CardType;
+import com.jaeheonshim.ersgame.net.model.ConnectionStatus;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.listener.ConnectStatusListener;
-import com.jaeheonshim.ersgame.scene.OverlayStage;
 import com.jaeheonshim.ersgame.scene.ui.ConnectionStatusLabel;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.shaded.ERSWindow;
-import com.jaeheonshim.ersgame.scene.ui.UIMessageLabel;
-
-import java.util.Arrays;
 
 public class MainScreen implements Screen, ConnectStatusListener {
     private ERSGame game;

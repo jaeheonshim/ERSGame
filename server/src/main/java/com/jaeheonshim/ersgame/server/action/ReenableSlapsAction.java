@@ -1,6 +1,6 @@
 package com.jaeheonshim.ersgame.server.action;
 
-import com.jaeheonshim.ersgame.game.GameState;
+import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
 

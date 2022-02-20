@@ -1,8 +1,8 @@
 package com.jaeheonshim.ersgame.server.listener;
 
-import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.game.Player;
-import com.jaeheonshim.ersgame.net.UIMessageType;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;

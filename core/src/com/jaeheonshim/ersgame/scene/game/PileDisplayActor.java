@@ -3,10 +3,8 @@ package com.jaeheonshim.ersgame.scene.game;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.utils.Array;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.CardType;
-import com.jaeheonshim.ersgame.scene.game.CardActor;
+import com.jaeheonshim.ersgame.game.model.CardType;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class PileDisplayActor extends Stack {

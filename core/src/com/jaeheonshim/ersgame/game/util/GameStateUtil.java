@@ -1,8 +1,12 @@
-package com.jaeheonshim.ersgame.game;
+package com.jaeheonshim.ersgame.game.util;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.jaeheonshim.ersgame.ERSException;
+import com.jaeheonshim.ersgame.util.ERSException;
+import com.jaeheonshim.ersgame.game.model.CardType;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.GameStatePhase;
+import com.jaeheonshim.ersgame.game.model.Player;
 
 public class GameStateUtil {
     public static void startGame(GameState gameState) {

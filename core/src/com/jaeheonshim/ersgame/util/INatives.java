@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame;
+package com.jaeheonshim.ersgame.util;
 
 import java.util.function.Consumer;
 

@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame;
+package com.jaeheonshim.ersgame.util;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;

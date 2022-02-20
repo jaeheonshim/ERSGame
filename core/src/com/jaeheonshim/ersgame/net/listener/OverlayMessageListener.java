@@ -1,10 +1,9 @@
 package com.jaeheonshim.ersgame.net.listener;
 
 import com.github.czyzby.websocket.WebSocket;
-import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.net.packet.OverlayMessagePacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.scene.OverlayStage;
+import com.jaeheonshim.ersgame.scene.ui.OverlayStage;
 
 public class OverlayMessageListener extends SocketPacketListener {
     @Override

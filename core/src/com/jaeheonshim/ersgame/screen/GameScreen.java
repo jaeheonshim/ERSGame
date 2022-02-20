@@ -13,10 +13,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.*;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.net.GameAction;
+import com.jaeheonshim.ersgame.game.model.CardType;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.net.model.GameAction;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
-import com.jaeheonshim.ersgame.scene.OverlayStage;
+import com.jaeheonshim.ersgame.scene.ui.OverlayStage;
 import com.jaeheonshim.ersgame.scene.game.CardActor;
 import com.jaeheonshim.ersgame.scene.game.PileDisplayActor;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
@@ -24,7 +27,6 @@ import com.jaeheonshim.ersgame.scene.shaded.ERSTextButton;
 import com.jaeheonshim.ersgame.scene.ui.PlayerElement;
 import com.jaeheonshim.ersgame.scene.ui.PlayersPane;
 
-import java.util.Arrays;
 import java.util.Map;
 
 public class GameScreen implements Screen, GameStateUpdateListener, GameActionListener {

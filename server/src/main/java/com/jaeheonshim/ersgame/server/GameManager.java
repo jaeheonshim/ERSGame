@@ -1,7 +1,7 @@
 package com.jaeheonshim.ersgame.server;
 
-import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.game.Player;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
 
 import java.util.HashMap;
 import java.util.Map;

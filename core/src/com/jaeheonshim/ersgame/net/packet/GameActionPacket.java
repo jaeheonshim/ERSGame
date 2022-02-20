@@ -1,6 +1,6 @@
 package com.jaeheonshim.ersgame.net.packet;
 
-import com.jaeheonshim.ersgame.net.GameAction;
+import com.jaeheonshim.ersgame.net.model.GameAction;
 
 public class GameActionPacket extends SocketPacket {
     public GameAction gameAction;

@@ -1,6 +1,6 @@
-package com.jaeheonshim.ersgame.game;
+package com.jaeheonshim.ersgame.game.util;
 
-import com.jaeheonshim.ersgame.net.NetManager;
+import com.jaeheonshim.ersgame.game.model.GameState;
 
 public class DummyGame {
     public static GameState gameState;

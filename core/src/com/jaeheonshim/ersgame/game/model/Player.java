@@ -1,11 +1,9 @@
-package com.jaeheonshim.ersgame.game;
+package com.jaeheonshim.ersgame.game.model;
 
 import com.badlogic.gdx.utils.Queue;
 
-import java.beans.Transient;
 import java.util.Iterator;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Player {
     private String uuid;

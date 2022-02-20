@@ -6,9 +6,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.jaeheonshim.ersgame.net.NetManager;
-import com.jaeheonshim.ersgame.scene.OverlayStage;
+import com.jaeheonshim.ersgame.scene.ui.OverlayStage;
 import com.jaeheonshim.ersgame.screen.*;
+import com.jaeheonshim.ersgame.util.INatives;
 
 public class ERSGame extends Game {
 	public final INatives natives;

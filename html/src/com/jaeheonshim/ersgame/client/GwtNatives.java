@@ -2,7 +2,7 @@ package com.jaeheonshim.ersgame.client;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.user.client.Window;
-import com.jaeheonshim.ersgame.INatives;
+import com.jaeheonshim.ersgame.util.INatives;
 
 import java.util.function.Consumer;
 import java.util.regex.Matcher;

@@ -2,6 +2,7 @@ package com.jaeheonshim.ersgame.net;
 
 import com.github.czyzby.websocket.WebSocket;
 import com.jaeheonshim.ersgame.net.listener.*;
+import com.jaeheonshim.ersgame.net.model.ConnectionStatus;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
 
 import java.util.ArrayList;

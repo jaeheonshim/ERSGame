@@ -7,9 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.jaeheonshim.ersgame.ERSGame;
-import com.jaeheonshim.ersgame.game.GameState;
 import com.jaeheonshim.ersgame.game.GameStateManager;
-import com.jaeheonshim.ersgame.game.Player;
+import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.scene.action.DisappearAction;
 import com.jaeheonshim.ersgame.scene.shaded.ERSLabel;
 

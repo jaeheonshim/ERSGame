@@ -1,4 +1,4 @@
-package com.jaeheonshim.ersgame.scene;
+package com.jaeheonshim.ersgame.scene.game;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 

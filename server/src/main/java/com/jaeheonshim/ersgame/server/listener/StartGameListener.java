@@ -1,13 +1,13 @@
 package com.jaeheonshim.ersgame.server.listener;
 
-import com.jaeheonshim.ersgame.game.GameState;
-import com.jaeheonshim.ersgame.game.GameStateUtil;
-import com.jaeheonshim.ersgame.game.Player;
-import com.jaeheonshim.ersgame.net.GameAction;
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.util.GameStateUtil;
+import com.jaeheonshim.ersgame.game.model.Player;
+import com.jaeheonshim.ersgame.net.model.GameAction;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
 import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.net.packet.SocketPacket;
-import com.jaeheonshim.ersgame.ERSException;
+import com.jaeheonshim.ersgame.util.ERSException;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
