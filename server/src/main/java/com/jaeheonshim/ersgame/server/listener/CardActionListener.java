@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.server.listener;
 
+import com.jaeheonshim.ersgame.server.action.ReenablePlayAction;
 import com.jaeheonshim.ersgame.util.ERSException;
 import com.jaeheonshim.ersgame.game.model.CardType;
 import com.jaeheonshim.ersgame.game.model.GameState;
@@ -35,6 +36,8 @@ public class CardActionListener extends ServerPacketListener {
                 server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
                 server.broadcast(new GameStatePacket(gameState), gameState);
                 server.schedule(new NextTurnAction(server, gameState));
+
+                // after play, next turn is delayed so that players have a chance to slap
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
                 if(gameState.isIgnoreSlap()) return true;
 
@@ -50,6 +53,10 @@ public class CardActionListener extends ServerPacketListener {
                         player.addCardToBottom(c);
                     }
 
+                    // After someone slaps, stop play for a few seconds to avoid confusion
+                    gameState.setCanPlay(false);
+                    server.schedule(new ReenablePlayAction(server, gameState));
+
                     server.broadcast(new PointChangePacket(player.getUuid(), incrementAmount), gameState);
                 } else {
                     server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
@@ -61,6 +68,7 @@ public class CardActionListener extends ServerPacketListener {
                     }
                 }
 
+                // after a slap happens, disable slap for a short amount of time to avoid multiple slaps unfairly penalizing players
                 gameState.setIgnoreSlap(true);
 
                 server.schedule(new ReenableSlapsAction(server, gameState));
