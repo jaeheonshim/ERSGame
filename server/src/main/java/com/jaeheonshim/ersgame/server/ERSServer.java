@@ -1,15 +1,13 @@
 package com.jaeheonshim.ersgame.server;
 
+import com.jaeheonshim.ersgame.game.util.GameStateUtil;
+import com.jaeheonshim.ersgame.server.listener.*;
 import com.jaeheonshim.ersgame.util.ERSException;
 import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.action.GameAction;
-import com.jaeheonshim.ersgame.server.listener.CardActionListener;
-import com.jaeheonshim.ersgame.server.listener.CreateGameListener;
-import com.jaeheonshim.ersgame.server.listener.JoinGameListener;
-import com.jaeheonshim.ersgame.server.listener.StartGameListener;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
@@ -47,15 +45,11 @@ public class ERSServer extends WebSocketServer {
         GameState gameState = GameManager.getInstance().getGameOfPlayer(conn.getAttachment());
         if(gameState != null) {
             Player player = gameState.getPlayer(conn.getAttachment());
-            gameState.removePlayer(conn.getAttachment());
+            boolean isEmpty = GameStateUtil.removePlayer(gameState, conn.getAttachment());
 
-            if(gameState.getPlayerList().size == 0) {
+            if(isEmpty) {
                 GameManager.getInstance().removeGame(gameState.getGameCode());
                 return;
-            }
-
-            if(gameState.getAdminPlayer().equals(player.getUuid())) {
-                gameState.setAdminPlayer(gameState.getPlayerList().get(0));
             }
 
             OverlayMessagePacket messagePacket = new OverlayMessagePacket(player.getUsername() + " left");
@@ -134,6 +128,7 @@ public class ERSServer extends WebSocketServer {
         server.registerListener(new JoinGameListener(server));
         server.registerListener(new StartGameListener(server));
         server.registerListener(new CardActionListener(server));
+        server.registerListener(new LeaveGameListener(server));
         server.run();
     }
 }

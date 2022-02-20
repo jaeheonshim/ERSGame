@@ -209,6 +209,13 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		fontColor: black
 		up: yellow-outline
 	}
+	orange: {
+		font: poppins-24
+		fontColor: white
+		downFontColor: down-font-color
+		up: btn-orange
+		down: btn-orange-down
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {

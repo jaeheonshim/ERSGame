@@ -109,6 +109,8 @@ public class JoinGameScreen implements Screen, GameStateUpdateListener {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        nameField.setText("");
+        codeField.setText("");
     }
 
     @Override

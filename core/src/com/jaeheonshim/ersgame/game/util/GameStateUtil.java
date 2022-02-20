@@ -30,6 +30,21 @@ public class GameStateUtil {
         gameState.setCanPlay(false);
     }
 
+    public static boolean removePlayer(GameState gameState, String uuid) {
+        Player player = gameState.getPlayer(uuid);
+        gameState.removePlayer(uuid);
+
+        if(gameState.getPlayerList().size == 0) {
+            return true;
+        }
+
+        if(gameState.getAdminPlayer().equals(player.getUuid())) {
+            gameState.setAdminPlayer(gameState.getPlayerList().get(0));
+        }
+
+        return false;
+    }
+
     public static boolean isGameOver(GameState gameState) {
         int count = 0;
 

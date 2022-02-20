@@ -8,4 +8,5 @@ public enum GameAction {
     SLAP,
     YOU_DISCARD,
     OTHERS_DISCARD,
+    LEAVE_GAME
 }

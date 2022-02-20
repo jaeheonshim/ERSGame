@@ -33,6 +33,7 @@ public class LobbyScreen implements Screen, GameStateUpdateListener, GameActionL
     private ERSLabel gameCodeLabel;
     private PlayersPane playersPane;
     private ERSTextButton startButton;
+    private ERSTextButton leaveButton;
 
     public LobbyScreen(ERSGame game) {
         this.game = game;
@@ -54,13 +55,23 @@ public class LobbyScreen implements Screen, GameStateUpdateListener, GameActionL
         table.row();
 
         startButton = new ERSTextButton("Start", skin, "green", game);
-        table.add(startButton).expandX().fill().bottom().pad(8);
+        table.add(startButton).expandX().fill().bottom().pad(8).row();
         startButton.setVisible(false);
+
+        leaveButton = new ERSTextButton("Leave Game", skin, "orange", game);
+        table.add(leaveButton).expandX().fill().bottom().pad(8);
 
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 NetManager.getInstance().send(new GameActionPacket(GameAction.START));
+            }
+        });
+
+        leaveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                NetManager.getInstance().send(new GameActionPacket(GameAction.LEAVE_GAME));
             }
         });
 
@@ -94,9 +105,16 @@ public class LobbyScreen implements Screen, GameStateUpdateListener, GameActionL
     }
 
     @Override
+    public void onLeaveGame() {
+        GameStateManager.getInstance().setGameState(null);
+        game.setScreen(game.mainScreen);
+    }
+
+    @Override
     public void show() {
         onUpdate(GameStateManager.getInstance().getGameState());
         Gdx.input.setInputProcessor(stage);
+        startButton.setVisible(false);
     }
 
     @Override

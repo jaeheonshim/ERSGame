@@ -57,6 +57,9 @@ public class GameStateManager {
                 case OTHERS_DISCARD:
                     listener.onDiscard(false);
                     break;
+                case LEAVE_GAME:
+                    listener.onLeaveGame();
+                    break;
             }
         }
     }
@@ -94,5 +97,9 @@ public class GameStateManager {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }

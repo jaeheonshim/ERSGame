@@ -26,6 +26,7 @@ public class CardActionListener extends ServerPacketListener {
         if(packet instanceof GameActionPacket) {
             String uuid = socket.getAttachment();
             GameActionPacket gameActionPacket = ((GameActionPacket) packet);
+            if(gameActionPacket.gameAction != GameAction.PLAY_CARD && gameActionPacket.gameAction != GameAction.SLAP) return false;
             GameState gameState = GameManager.getInstance().getGameOfPlayer(uuid);
 
             if(gameState == null) throw new ERSException("Player not in game");
