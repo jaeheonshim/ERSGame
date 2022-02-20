@@ -27,6 +27,7 @@ public class ERSServer extends WebSocketServer {
 
     public ERSServer(InetSocketAddress address) {
         super(address);
+        setTcpNoDelay(true);
         setupCommandThread();
     }
 

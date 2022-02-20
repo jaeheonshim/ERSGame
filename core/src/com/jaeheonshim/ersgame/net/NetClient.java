@@ -21,6 +21,7 @@ public class NetClient implements WebSocketListener {
         socket = WebSockets.newSocket(WebSockets.toWebSocketUrl("10.0.0.101", 8887));
         socket.setSendGracefully(true);
         socket.addListener(this);
+        socket.setUseTcpNoDelay(true);
     }
 
     public void connect() {
