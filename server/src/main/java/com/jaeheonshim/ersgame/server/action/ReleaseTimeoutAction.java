@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.server.action;
 
+import com.jaeheonshim.ersgame.game.model.GameStatePhase;
 import com.jaeheonshim.ersgame.game.model.Player;
 
 public class ReleaseTimeoutAction extends ScheduleGameAction {
@@ -19,5 +20,10 @@ public class ReleaseTimeoutAction extends ScheduleGameAction {
     @Override
     public void run() {
         player.setTimedOut(false);
+    }
+
+    @Override
+    protected boolean cancel() {
+        return false;
     }
 }

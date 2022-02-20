@@ -19,6 +19,8 @@ public class GameState {
     private boolean ignoreSlap;
     private boolean isGameOver;
 
+    private String winner;
+
     public void reset() {
         deck.clear();
         gamePhase = GameStatePhase.PLAYER_JOIN;
@@ -171,5 +173,13 @@ public class GameState {
 
     public void setGameOver(boolean gameOver) {
         isGameOver = gameOver;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    public void setWinner(String winner) {
+        this.winner = winner;
     }
 }

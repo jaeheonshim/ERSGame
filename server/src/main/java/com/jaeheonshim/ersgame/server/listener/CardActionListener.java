@@ -93,6 +93,17 @@ public class CardActionListener extends ServerPacketListener {
 
             if(GameStateUtil.isGameOver(gameState)) {
                 gameState.setGameOver(true);
+
+                String winner = "none";
+                for (Player player : gameState.getPlayerMap().values()) {
+                    if (player.getCardCount() > 0) {
+                        winner = player.getUsername();
+                        break;
+                    }
+                }
+
+                gameState.setWinner(winner);
+
                 server.broadcast(new GameStatePacket(gameState), gameState);
                 gameState.reset();
             }

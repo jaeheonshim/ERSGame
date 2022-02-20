@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.ERSGame;
 import com.jaeheonshim.ersgame.game.GameActionListener;
 import com.jaeheonshim.ersgame.game.GameStateManager;
+import com.jaeheonshim.ersgame.game.model.GameState;
 import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.net.NetManager;
 import com.jaeheonshim.ersgame.net.model.GameAction;
@@ -83,18 +84,9 @@ public class GameResultsScreen implements Screen, GameActionListener {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        GameState gameState = GameStateManager.getInstance().getGameState();
 
-        String winner = "none";
-        if(GameStateManager.getInstance().getGameState() != null) {
-            for (Player player : GameStateManager.getInstance().getGameState().getPlayerMap().values()) {
-                if (player.getCardCount() > 0) {
-                    winner = player.getUsername();
-                    break;
-                }
-            }
-        }
-
-        winnerLabel.setText("Winner: " + winner);
+        winnerLabel.setText("Winner: " + gameState.getWinner());
     }
 
     @Override

@@ -154,6 +154,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     @Override
     public void onUpdate(GameState newGameState, GameState oldGameState) {
         if (!game.getScreen().equals(this)) return;
+
         if(newGameState.isGameOver()) {
             game.setScreen(game.gameOverScreen);
         }

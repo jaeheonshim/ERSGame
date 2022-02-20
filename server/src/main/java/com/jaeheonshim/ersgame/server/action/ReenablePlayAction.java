@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server.action;
 
 import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.GameStatePhase;
 import com.jaeheonshim.ersgame.net.packet.GameStatePacket;
 import com.jaeheonshim.ersgame.server.ERSServer;
 
@@ -22,5 +23,10 @@ public class ReenablePlayAction extends ScheduleGameAction {
     public void run() {
         gameState.setCanPlay(true);
         server.broadcast(new GameStatePacket(gameState), gameState);
+    }
+
+    @Override
+    protected boolean cancel() {
+        return gameState.getGamePhase() != GameStatePhase.STARTED;
     }
 }

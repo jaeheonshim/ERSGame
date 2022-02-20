@@ -73,7 +73,6 @@ public class ERSServer extends WebSocketServer {
             return;
         }
 
-        System.out.println("PACKET RECEIVE");
         try {
             SocketPacket deserialized = SocketPacket.deserialize(message);
             for (ServerPacketListener listener : socketPacketListenerList) {

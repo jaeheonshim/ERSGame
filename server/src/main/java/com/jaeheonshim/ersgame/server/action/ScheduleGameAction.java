@@ -10,6 +10,8 @@ public abstract class ScheduleGameAction implements Runnable {
     }
 
     public boolean update(long deltaMillis) {
+        if(cancel()) return true;
+
         timer -= deltaMillis;
         if(timer <= 0 && !isRun) {
             run();
@@ -18,4 +20,6 @@ public abstract class ScheduleGameAction implements Runnable {
 
         return isRun;
     }
+
+    protected abstract boolean cancel();
 }

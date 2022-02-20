@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server.action;
 
 import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.GameStatePhase;
 import com.jaeheonshim.ersgame.game.util.GameStateUtil;
 import com.jaeheonshim.ersgame.net.model.GameAction;
 import com.jaeheonshim.ersgame.net.packet.GameActionPacket;
@@ -27,5 +28,10 @@ public class NextTurnAction extends ScheduleGameAction {
     @Override
     public long getDelay() {
         return 1500;
+    }
+
+    @Override
+    protected boolean cancel() {
+        return gameState.getGamePhase() != GameStatePhase.STARTED;
     }
 }
