@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server;
 
 import com.jaeheonshim.ersgame.game.util.GameStateUtil;
+import com.jaeheonshim.ersgame.server.cli.CommandParser;
 import com.jaeheonshim.ersgame.server.listener.*;
 import com.jaeheonshim.ersgame.util.ERSException;
 import com.jaeheonshim.ersgame.game.model.GameState;
@@ -15,6 +16,7 @@ import org.java_websocket.server.WebSocketServer;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.UUID;
 import java.util.concurrent.*;
 
@@ -23,9 +25,11 @@ public class ERSServer extends WebSocketServer {
     private List<ServerPacketListener> socketPacketListenerList = new ArrayList<>();
 
     private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
+    private CommandParser parser = new CommandParser(this);
 
     public ERSServer(InetSocketAddress address) {
         super(address);
+        setupCommandThread();
     }
 
     @Override
@@ -33,6 +37,8 @@ public class ERSServer extends WebSocketServer {
         UUID clientUUID = UUID.randomUUID();
         connectedClients.put(clientUUID.toString(), conn);
         conn.setAttachment(clientUUID.toString());
+
+        System.out.printf("%s connected. Server handling %d clients%n", ((String) conn.getAttachment()), connectedClients.size());
 
         conn.send(new SocketConnectPacket(clientUUID.toString()).serialize());
         conn.send(new UIMessagePacket(UIMessageType.SUCCESS, "Connected to server!").serialize());
@@ -128,6 +134,10 @@ public class ERSServer extends WebSocketServer {
         scheduler.schedule(gameAction, gameAction.getDelay(), TimeUnit.MILLISECONDS);
     }
 
+    public ScheduledExecutorService getScheduler() {
+        return scheduler;
+    }
+
     public static void main(String[] args) {
         ERSServer server = new ERSServer(new InetSocketAddress("10.0.0.101", 8887));
         server.registerListener(new CreateGameListener(server));
@@ -136,5 +146,18 @@ public class ERSServer extends WebSocketServer {
         server.registerListener(new CardActionListener(server));
         server.registerListener(new LeaveGameListener(server));
         server.run();
+    }
+
+    private void setupCommandThread() {
+        Scanner scanner = new Scanner(System.in);
+        Thread thread = new Thread(() -> {
+           while(scanner.hasNextLine()) {
+               String input = scanner.nextLine();
+               String s = parser.getCommandResult(input);
+               System.out.print(s);
+           }
+        });
+
+        thread.start();
     }
 }
