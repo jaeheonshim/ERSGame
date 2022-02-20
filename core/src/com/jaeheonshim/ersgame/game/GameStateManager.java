@@ -65,10 +65,6 @@ public class GameStateManager {
         }
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
-
     public Player getSelfPlayer() {
         if(gameState == null) return null;
         return gameState.getPlayer(NetManager.getInstance().getClientUuid());
@@ -86,5 +82,9 @@ public class GameStateManager {
 
     public boolean isTurn() {
         return gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(getSelfPlayer().getUuid());
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

@@ -48,18 +48,6 @@ public class NetManager {
         client.disconnect();
     }
 
-    public void reconnect() {
-        connect();
-    }
-
-    public void registerListener(SocketPacketListener listener) {
-        socketPacketListenerList.add(listener);
-    }
-
-    public void setConnectStatusListener(ConnectStatusListener connectStatusListener) {
-        this.connectStatusListener = connectStatusListener;
-    }
-
     public void onMessage(WebSocket socket, String s) {
         SocketPacket deserialized = SocketPacket.deserialize(s);
         for(SocketPacketListener listener : socketPacketListenerList) {
@@ -71,15 +59,23 @@ public class NetManager {
         client.sendMessage(socketPacket.serialize());
     }
 
-    public ConnectionStatus getConnectionStatus() {
-        return connectionStatus;
-    }
-
     public void setConnectionStatus(ConnectionStatus connectionStatus) {
         this.connectionStatus = connectionStatus;
 
         if(connectStatusListener != null)
             connectStatusListener.onStatusChange(connectionStatus);
+    }
+
+    public void registerListener(SocketPacketListener listener) {
+        socketPacketListenerList.add(listener);
+    }
+
+    public void setConnectStatusListener(ConnectStatusListener connectStatusListener) {
+        this.connectStatusListener = connectStatusListener;
+    }
+
+    public ConnectionStatus getConnectionStatus() {
+        return connectionStatus;
     }
 
     public String getClientUuid() {

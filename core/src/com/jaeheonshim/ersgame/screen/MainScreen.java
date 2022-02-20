@@ -112,7 +112,7 @@ public class MainScreen implements Screen, ConnectStatusListener {
         if (NetManager.getInstance().getConnectionStatus() != ConnectionStatus.CONNECTED) {
             pendingScreen = screen;
             displayConnectingWindow("Please wait while we connect to the server...");
-            NetManager.getInstance().reconnect();
+            NetManager.getInstance().connect();
         } else {
             game.setScreen(screen);
         }
