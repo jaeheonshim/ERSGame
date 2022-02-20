@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -126,34 +129,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     }
 
     @Override
-    public void show() {
-        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(stage);
-        onUpdate(GameStateManager.getInstance().getGameState());
-    }
-
-    @Override
-    public void render(float delta) {
-        ScreenUtils.clear(new Color(232 / 255f, 232 / 255f, 232 / 255f, 1));
-        stage.act(delta);
-        stage.draw();
-
-        if (pendingPileUpdate && !animationCard.hasActions()) {
-            pendingPileUpdate = false;
-
-            CardType oldTop = pileDisplayActor.getTopCard();
-            pileDisplayActor.updatePileState();
-
-            GameState gameState = GameStateManager.getInstance().getGameState();
-            if(pileDisplayActor.getTopCard() != null && gameState.getTopCard() != null && oldTop != gameState.getTopCard()) {
-                pileDisplayActor.setTopFlipped(true);
-                pileDisplayActor.flipTop();
-            }
-        }
-    }
-
-    @Override
-    public void onUpdate(GameState newGameState) {
+    public void onUpdate(GameState newGameState, GameState oldGameState) {
         if (!game.getScreen().equals(this)) return;
         if(newGameState.isGameOver()) {
             game.setScreen(game.gameOverScreen);
@@ -183,7 +159,11 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
         selfCount.setText("You have " + selfPlayer.getCardCount() + " cards");
 
-        if (awaitGameUpdatePile) {
+        int oldPileCount = oldGameState.getPileCount();
+        if(oldPileCount > 0 && newGameState.getPileCount() == 0) {
+            // if someone took all the cards, slowly fade away the pile
+            fadeAwayPile();
+        } else if (awaitGameUpdatePile) {
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
         } else {
@@ -192,13 +172,6 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         updatePlayButtonDisableState();
     }
-
-    public void updatePlayButtonDisableState() {
-        Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
-
-        playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn() || !GameStateManager.getInstance().getGameState().isCanPlay() || GameStateManager.getInstance().getGameState().isIgnoreSlap());
-    }
-
 
     @Override
     public void onTurnUpdate() {
@@ -235,17 +208,66 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         element.setPointChange(amount);
     }
 
+    @Override
+    public void onDiscard(boolean you) {
+        animationCard.setZIndex(0);
+        awaitGameUpdatePile = true;
+        animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), !you, () -> {});
+    }
+
+    public void updatePlayButtonDisableState() {
+        Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
+
+        playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn() || !GameStateManager.getInstance().getGameState().isCanPlay() || GameStateManager.getInstance().getGameState().isIgnoreSlap());
+    }
+
     public void playCard() {
         animationCard.setZIndex(pileDisplayActor.getZIndex() + 1);
         animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), false, () -> {
         });
     }
 
+    public void fadeAwayPile() {
+        AlphaAction action = new AlphaAction();
+        action.setAlpha(0);
+        action.setDuration(1.5f);
+
+        RunnableAction updatePileAction = new RunnableAction();
+        updatePileAction.setRunnable(() -> {
+            pileDisplayActor.updatePileState();
+        });
+
+        AlphaAction reshow = new AlphaAction();
+        reshow.setAlpha(1);
+
+        pileDisplayActor.addAction(new SequenceAction(action, updatePileAction, reshow));
+    }
+
     @Override
-    public void onDiscard(boolean you) {
-        animationCard.setZIndex(0);
-        awaitGameUpdatePile = true;
-        animationCard.flyIn(pileDisplayActor.getX(), pileDisplayActor.getY(), !you, () -> {});
+    public void show() {
+        resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Gdx.input.setInputProcessor(stage);
+        onUpdate(GameStateManager.getInstance().getGameState());
+    }
+
+    @Override
+    public void render(float delta) {
+        ScreenUtils.clear(new Color(232 / 255f, 232 / 255f, 232 / 255f, 1));
+        stage.act(delta);
+        stage.draw();
+
+        if (pendingPileUpdate && !animationCard.hasActions()) {
+            pendingPileUpdate = false;
+
+            CardType oldTop = pileDisplayActor.getTopCard();
+            pileDisplayActor.updatePileState();
+
+            GameState gameState = GameStateManager.getInstance().getGameState();
+            if(pileDisplayActor.getTopCard() != null && gameState.getTopCard() != null && oldTop != gameState.getTopCard()) {
+                pileDisplayActor.setTopFlipped(true);
+                pileDisplayActor.flipTop();
+            }
+        }
     }
 
     @Override

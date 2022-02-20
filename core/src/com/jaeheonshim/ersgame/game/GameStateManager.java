@@ -23,9 +23,11 @@ public class GameStateManager {
     }
 
     public void update(GameState newGameState) {
+        GameState oldGameState = gameState;
         this.gameState = newGameState;
         for(GameStateUpdateListener listener : updateListenerList) {
             listener.onUpdate(newGameState);
+            listener.onUpdate(newGameState, oldGameState);
         }
     }
 
