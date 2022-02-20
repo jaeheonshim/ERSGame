@@ -68,6 +68,11 @@ public class CardActionListener extends ServerPacketListener {
                         server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
                         gameState.addCardToBottom(player.removeTopCard());
                         server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
+
+                        if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
+                            gameState.setCanPlay(false);
+                            server.schedule(new NextTurnAction(server, gameState));
+                        }
                     } else {
                         float timeAmount = 10;
                         server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: " + ((int) timeAmount) + " sec penalty!"), gameState);

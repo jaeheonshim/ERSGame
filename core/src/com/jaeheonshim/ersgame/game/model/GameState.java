@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Queue;
 
 public class GameState {
-    private final String gameCode;
+    private String gameCode;
 
     private ObjectMap<String, Player> playerMap = new ObjectMap<>();
     private Array<String> playerList = new Array<>();
