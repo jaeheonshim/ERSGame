@@ -81,7 +81,7 @@ public class JoinGameScreen implements Screen, GameStateUpdateListener {
         table.add(codeField).fillX().padLeft(32).padRight(32).colspan(2);
         table.row();
 
-        joinButton = new ERSTextButton("Join Game", skin, game);
+        joinButton = new ERSTextButton("Join Game", skin, "green", game);
         table.add(joinButton).fillX().expandY().top().padLeft(38).padRight(38).padTop(16).colspan(2);
 
         joinButton.addListener(new ClickListener() {
