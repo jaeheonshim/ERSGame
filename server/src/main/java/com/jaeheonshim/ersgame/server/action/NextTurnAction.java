@@ -11,15 +11,17 @@ import com.jaeheonshim.ersgame.server.ERSServer;
 public class NextTurnAction extends ScheduleGameAction {
     private ERSServer server;
     private GameState gameState;
+    private boolean switchTurn;
 
-    public NextTurnAction(ERSServer server, GameState gameState) {
+    public NextTurnAction(ERSServer server, GameState gameState, boolean switchTurn) {
         this.server = server;
         this.gameState = gameState;
+        this.switchTurn = switchTurn;
     }
 
     @Override
     public void run() {
-        GameStateUtil.nextTurn(gameState);
+        GameStateUtil.nextTurn(gameState, switchTurn);
 
         server.broadcast(new GameStatePacket(gameState), gameState);
         server.broadcast(new GameActionPacket(GameAction.TURN_UPDATE), gameState);

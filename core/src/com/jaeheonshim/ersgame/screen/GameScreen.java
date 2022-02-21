@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.jaeheonshim.ersgame.game.*;
@@ -50,9 +53,11 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
     private ERSLabel pileCount;
     private ERSLabel selfCount;
+    private ERSLabel remainingCount;
     private ERSLabel timeoutLabel;
     private ERSTextButton playButton;
 
+    private Array<CardType> updatePile;
     private boolean awaitGameUpdatePile;
     private boolean pendingPileUpdate;
 
@@ -67,7 +72,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         pileDisplayActor = new PileDisplayActor(game, () -> {
             if (GameStateManager.getInstance().getGameState() == null) return null;
-            return GameStateManager.getInstance().getGameState().getTopNCards(PileDisplayActor.DISPLAY_COUNT);
+            return updatePile;
         });
         playersPane = new PlayersPane(game);
         playerScrollPane = new ScrollPane(playersPane);
@@ -84,12 +89,18 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         selfCount = new ERSLabel("You have 0 cards", skin, game);
         selfCount.setColor(Color.BLACK);
 
+        remainingCount = new ERSLabel("Play 0 cards", skin, game);
+        remainingCount.setColor(Color.BLACK);
+        remainingCount.setVisible(false);
+
         playButton = new ERSTextButton("Play", skin, game);
 
         timeoutLabel = new ERSLabel("0:00", skin, "timeout", game);
 
         table.setFillParent(true);
         table.add(playerScrollPane).expandX().height(200).fill().top();
+        table.row();
+        table.add(remainingCount).expandX();
         table.row();
         table.add(pileDisplayActor).top().padBottom(8).padLeft(50).padTop(70);
         table.row();
@@ -190,8 +201,17 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         } else if (awaitGameUpdatePile) {
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
+            updatePile = newGameState.getTopNCards(4);
         } else {
+            updatePile = newGameState.getTopNCards(4);
             pileDisplayActor.updatePileState();
+        }
+
+        if(newGameState.getPendingCardCount() > 0 && GameStateManager.getInstance().isTurn() && !GameStateManager.getInstance().getGameState().getLastFacePlayer().equals(GameStateManager.getInstance().getSelfPlayer().getUuid())) {
+            remainingCount.setText("Play " + newGameState.getPendingCardCount() + " cards");
+            remainingCount.setVisible(true);
+        } else {
+            remainingCount.setVisible(false);
         }
 
         updatePlayButtonDisableState();
@@ -257,19 +277,22 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     }
 
     public void fadeAwayPile() {
+        DelayAction delayAction = new DelayAction(0.5f);
+
         AlphaAction action = new AlphaAction();
         action.setAlpha(0);
         action.setDuration(1.5f);
 
         RunnableAction updatePileAction = new RunnableAction();
         updatePileAction.setRunnable(() -> {
+            updatePile = new Array<>();
             pileDisplayActor.updatePileState();
         });
 
         AlphaAction reshow = new AlphaAction();
         reshow.setAlpha(1);
 
-        pileDisplayActor.addAction(new SequenceAction(action, updatePileAction, reshow));
+        pileDisplayActor.addAction(new SequenceAction(delayAction, action, updatePileAction, reshow));
     }
 
     @Override

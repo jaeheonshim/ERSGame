@@ -34,11 +34,20 @@ public class CardActionListener extends ServerPacketListener {
 
             if(gameActionPacket.gameAction == GameAction.PLAY_CARD) {
                 if(!gameState.isCanPlay()) throw new ERSException("Can't play right now");
-                GameStateUtil.playCard(gameState, uuid);
+                boolean switchTurn = GameStateUtil.playCard(gameState, uuid);
 
-                server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
-                server.broadcast(new GameStatePacket(gameState), gameState);
-                GameManager.getInstance().schedule(new NextTurnAction(server, gameState));
+                if(gameState.getPendingCardCount() == 0 && gameState.getLastFacePlayer() != null && !gameState.getLastFacePlayer().equals(uuid)) {
+                    server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
+                    server.broadcast(new GameStatePacket(gameState), gameState);
+                    awardDeck(gameState, gameState.getPlayer(gameState.getLastFacePlayer()));
+                    GameStateUtil.nextTurn(gameState, true);
+                    server.broadcast(new GameStatePacket(gameState), gameState);
+                } else {
+                    server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
+                    server.broadcast(new GameStatePacket(gameState), gameState);
+
+                    GameManager.getInstance().schedule(new NextTurnAction(server, gameState, switchTurn));
+                }
 
                 // after play, next turn is delayed so that players have a chance to slap
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
@@ -50,19 +59,7 @@ public class CardActionListener extends ServerPacketListener {
                 if(player.isTimedOut()) throw new ERSException("You aren't allowed to slap right now!");
 
                 if(isValid) {
-                    int incrementAmount = gameState.getPileCount();
-                    server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: +" + incrementAmount + " cards"), gameState);
-
-                    CardType c;
-                    while((c = gameState.removeCardFromTop()) != null) {
-                        player.addCardToBottom(c);
-                    }
-
-                    // After someone slaps, stop play for a few seconds to avoid confusion
-                    gameState.setCanPlay(false);
-                    GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
-
-                    server.broadcast(new PointChangePacket(player.getUuid(), incrementAmount), gameState);
+                    awardDeck(gameState, player);
                 } else {
                     if(player.getCardCount() > 0) {
                         server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
@@ -73,7 +70,7 @@ public class CardActionListener extends ServerPacketListener {
 
                         if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
                             gameState.setCanPlay(false);
-                            GameManager.getInstance().schedule(new NextTurnAction(server, gameState));
+                            GameManager.getInstance().schedule(new NextTurnAction(server, gameState, true));
                         }
                     } else {
                         float timeAmount = 10;
@@ -112,5 +109,24 @@ public class CardActionListener extends ServerPacketListener {
         }
 
         return false;
+    }
+
+    private void awardDeck(GameState gameState, Player awardedPlayer) {
+        gameState.setLastFacePlayer(null);
+        gameState.setPendingCardCount(0);
+
+        int incrementAmount = gameState.getPileCount();
+        server.broadcast(new OverlayMessagePacket(awardedPlayer.getUsername() + ": +" + incrementAmount + " cards"), gameState);
+
+        CardType c;
+        while((c = gameState.removeCardFromTop()) != null) {
+            awardedPlayer.addCardToBottom(c);
+        }
+
+        // After someone slaps, stop play for a few seconds to avoid confusion
+        gameState.setCanPlay(false);
+        GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
+
+        server.broadcast(new PointChangePacket(awardedPlayer.getUuid(), incrementAmount), gameState);
     }
 }

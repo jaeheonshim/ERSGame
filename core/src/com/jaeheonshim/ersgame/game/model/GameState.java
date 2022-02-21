@@ -21,6 +21,9 @@ public class GameState {
 
     private String winner;
 
+    private String lastFacePlayer;
+    private int pendingCardCount;
+
     public void reset() {
         deck.clear();
         gamePhase = GameStatePhase.PLAYER_JOIN;
@@ -28,6 +31,7 @@ public class GameState {
         canPlay = false;
         ignoreSlap = false;
         isGameOver = false;
+        pendingCardCount = 0;
 
         for(Player player : playerMap.values()) {
             player.reset();
@@ -181,5 +185,25 @@ public class GameState {
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public String getLastFacePlayer() {
+        return lastFacePlayer;
+    }
+
+    public void setLastFacePlayer(String lastFacePlayer) {
+        this.lastFacePlayer = lastFacePlayer;
+    }
+
+    public int getPendingCardCount() {
+        return pendingCardCount;
+    }
+
+    public void setPendingCardCount(int pendingCardCount) {
+        this.pendingCardCount = pendingCardCount;
+    }
+
+    public Queue<CardType> getDeck() {
+        return deck;
     }
 }

@@ -37,6 +37,10 @@ public class PileDisplayActor extends Stack {
 
     public void updatePileState() {
         Array<CardType> cards = getCards.get();
+        updatePileState(cards);
+    }
+
+    public void updatePileState(Array<CardType> cards) {
         if(cards == null) return;
         if(cards.size != cardActors.length) initializeActors();
 

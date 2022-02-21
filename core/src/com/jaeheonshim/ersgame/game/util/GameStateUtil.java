@@ -20,7 +20,8 @@ public class GameStateUtil {
         gameState.setCanPlay(true);
     }
 
-    public static void playCard(GameState gameState, String uuid) {
+    // returns true of turn should be switched, false if not
+    public static boolean playCard(GameState gameState, String uuid) {
         Player player = gameState.getPlayer(uuid);
         CardType type = player.removeTopCard();
 
@@ -28,6 +29,32 @@ public class GameStateUtil {
 
         gameState.addCardToTop(type);
         gameState.setCanPlay(false);
+
+        if(gameState.getPendingCardCount() > 0) {
+            gameState.setPendingCardCount(gameState.getPendingCardCount() - 1);
+        }
+
+        if(type.number >= 11 || type.number == 1) {
+            gameState.setLastFacePlayer(uuid);
+            switch(type.number) {
+                case 1:
+                    gameState.setPendingCardCount(4);
+                    break;
+                case 11:
+                    gameState.setPendingCardCount(1);
+                    break;
+                case 12:
+                    gameState.setPendingCardCount(2);
+                    break;
+                case 13:
+                    gameState.setPendingCardCount(3);
+                    break;
+                default:
+                    break;
+            }
+        } else return gameState.getPendingCardCount() <= 0;
+
+        return true;
     }
 
     public static boolean removePlayer(GameState gameState, String uuid) {
@@ -57,7 +84,12 @@ public class GameStateUtil {
         return count <= 1 && !isValidSlap(gameState);
     }
 
-    public static void nextTurn(GameState gameState) {
+    public static void nextTurn(GameState gameState, boolean switchTurn) {
+        if(!switchTurn) {
+            gameState.setCanPlay(true);
+            return;
+        }
+
         int i = gameState.getCurrentTurnIndex();
 
         do {
