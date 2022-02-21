@@ -6,6 +6,7 @@ import com.github.czyzby.websocket.WebSocket;
 import com.github.czyzby.websocket.WebSocketListener;
 import com.github.czyzby.websocket.WebSockets;
 import com.jaeheonshim.ersgame.net.model.ConnectionStatus;
+import com.jaeheonshim.ersgame.net.util.PacketObfuscator;
 
 public class NetClient implements WebSocketListener {
     public static final int PING_INTERVAL = 3;
@@ -58,6 +59,7 @@ public class NetClient implements WebSocketListener {
 
     @Override
     public boolean onMessage(WebSocket webSocket, String packet) {
+        packet = PacketObfuscator.applyMask(packet);
         if(packet.equals("PONG")) {
             onPong();
             return true;
@@ -93,6 +95,8 @@ public class NetClient implements WebSocketListener {
     }
 
     public void sendMessage(String packet) {
+        packet = PacketObfuscator.applyMask(packet);
+
         socket.send(packet);
     }
 }

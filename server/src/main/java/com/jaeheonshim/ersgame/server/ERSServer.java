@@ -1,6 +1,7 @@
 package com.jaeheonshim.ersgame.server;
 
 import com.jaeheonshim.ersgame.game.util.GameStateUtil;
+import com.jaeheonshim.ersgame.net.util.PacketObfuscator;
 import com.jaeheonshim.ersgame.server.cli.CommandParser;
 import com.jaeheonshim.ersgame.server.listener.*;
 import com.jaeheonshim.ersgame.util.ERSException;
@@ -29,6 +30,7 @@ public class ERSServer extends WebSocketServer {
         super(address);
         setTcpNoDelay(true);
         setupCommandThread();
+
     }
 
     @Override
@@ -39,8 +41,8 @@ public class ERSServer extends WebSocketServer {
 
         System.out.printf("%s connected. Server handling %d clients%n", ((String) conn.getAttachment()), connectedClients.size());
 
-        conn.send(new SocketConnectPacket(clientUUID.toString()).serialize());
-        conn.send(new UIMessagePacket(UIMessageType.SUCCESS, "Connected to server!").serialize());
+        conn.send(PacketObfuscator.applyMask(new SocketConnectPacket(clientUUID.toString()).serialize()));
+        conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.SUCCESS, "Connected to server!").serialize()));
     }
 
     @Override
@@ -69,8 +71,10 @@ public class ERSServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
+        message = PacketObfuscator.applyMask(message);
+
         if(message.equals("PING")) {
-            conn.send("PONG");
+            conn.send(PacketObfuscator.applyMask("PONG"));
             return;
         }
 
@@ -80,10 +84,10 @@ public class ERSServer extends WebSocketServer {
                 if (listener.receive(conn, deserialized)) break;
             }
         } catch (ERSException e) {
-            conn.send(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize());
+            conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize()));
         } catch (Exception e) {
             e.printStackTrace();
-            conn.send(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize());
+            conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize()));
         }
     }
 
@@ -104,27 +108,33 @@ public class ERSServer extends WebSocketServer {
     public void send(SocketPacket packet, String uuid) {
         WebSocket client = connectedClients.get(uuid);
         if(client != null) {
-            client.send(packet.serialize());
+            client.send(PacketObfuscator.applyMask(packet.serialize()));
         }
     }
 
     public void broadcast(SocketPacket packet, GameState game) {
+        String serialized = packet.serialize();
+        serialized = PacketObfuscator.applyMask(serialized);
+
         for(String uuid : game.getPlayerList()) {
             WebSocket socket = connectedClients.get(uuid);
 
             if(socket != null) {
-                socket.send(packet.serialize());
+                socket.send(serialized);
             }
         }
     }
 
     public void broadcastExcept(SocketPacket packet, GameState game, String except) {
+        String serialized = packet.serialize();
+        serialized = PacketObfuscator.applyMask(serialized);
+
         for(String uuid : game.getPlayerList()) {
             if(uuid.equals(except)) continue;
             WebSocket socket = connectedClients.get(uuid);
 
             if(socket != null) {
-                socket.send(packet.serialize());
+                socket.send(serialized);
             }
         }
     }
