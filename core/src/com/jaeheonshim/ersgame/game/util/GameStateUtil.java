@@ -70,7 +70,7 @@ public class GameStateUtil {
     }
 
     public static boolean isValidSlap(GameState gameState) {
-        return isDouble(gameState) || isSandwich(gameState) || isMarriage(gameState);
+        return isDouble(gameState) || isSandwich(gameState) || isMarriage(gameState) || isConsecutiveAscending(gameState) || isConsecutiveDescending(gameState);
     }
 
     private static boolean isDouble(GameState gameState) {
@@ -92,5 +92,33 @@ public class GameStateUtil {
         if(cardTypeArray.size < 2) return false;
 
         return (cardTypeArray.get(0).number == 12 && cardTypeArray.get(1).number == 13) || (cardTypeArray.get(1).number == 12 && cardTypeArray.get(0).number == 13);
+    }
+
+    public static boolean isConsecutiveAscending(GameState gameState) {
+        Array<CardType> cardTypeArray = gameState.getTopNCards(3);
+        if(cardTypeArray.size < 3) return false;
+
+        for(int i = 1; i < cardTypeArray.size; i++) {
+            boolean isAce = (cardTypeArray.get(i - 1).number == 13 && cardTypeArray.get(i).number == 1);
+            boolean isAscending = (cardTypeArray.get(i).number - cardTypeArray.get(i - 1).number) == 1;
+
+            if(!isAscending && !isAce) return false;
+        }
+
+        return true;
+    }
+
+    public static boolean isConsecutiveDescending(GameState gameState) {
+        Array<CardType> cardTypeArray = gameState.getTopNCards(3);
+        if(cardTypeArray.size < 3) return false;
+
+        for(int i = 1; i < cardTypeArray.size; i++) {
+            boolean isAce = (cardTypeArray.get(i).number == 13 && cardTypeArray.get(i - 1).number == 1);
+            boolean isAscending = (cardTypeArray.get(i - 1).number - cardTypeArray.get(i).number) == 1;
+
+            if(!isAscending && !isAce) return false;
+        }
+
+        return true;
     }
 }
