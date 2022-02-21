@@ -70,7 +70,7 @@ public class GameStateUtil {
     }
 
     public static boolean isValidSlap(GameState gameState) {
-        return isDouble(gameState) || isSandwich(gameState);
+        return isDouble(gameState) || isSandwich(gameState) || isMarriage(gameState);
     }
 
     private static boolean isDouble(GameState gameState) {
@@ -85,5 +85,12 @@ public class GameStateUtil {
         if(cardTypeArray.size < 3) return false;
 
         return cardTypeArray.get(0).number == cardTypeArray.get(2).number;
+    }
+
+    private static boolean isMarriage(GameState gameState) {
+        Array<CardType> cardTypeArray = gameState.getTopNCards(2);
+        if(cardTypeArray.size < 2) return false;
+
+        return (cardTypeArray.get(0).number == 12 && cardTypeArray.get(1).number == 13) || (cardTypeArray.get(1).number == 12 && cardTypeArray.get(0).number == 13);
     }
 }
