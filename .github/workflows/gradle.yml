@@ -26,7 +26,18 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
-      - name: Execute Gradle build (server)
-        run: ./gradlew server:jar
+
+      - name: Execute gradle build
+        run: ./gradlew build
+
       - name: Execute Gradle build (html)
         run: ./gradlew html:dist
+
+      - name: Deploy server jar
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 207.244.235.226
+          username: ersgame
+          password: ${{ secrets.ftp_password }}
+          local-dir: ./server/build/libs/
+          server-dir: ~/server/
