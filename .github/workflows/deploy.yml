@@ -43,3 +43,12 @@ jobs:
           password: ${{ secrets.ftp_password }}
           local-dir: ./server/build/libs/
           server-dir: ~/server/
+
+      - name: Deploy web files
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
+        with:
+          server: 207.244.235.226
+          username: ersgame
+          password: ${{ secrets.ftp_password }}
+          local-dir: ./html/build/dist/
+          server-dir: ~/html/
