@@ -32,7 +32,7 @@ public class HtmlLauncher extends GwtApplication {
 
     @Override
     public Preloader.PreloaderCallback getPreloaderCallback() {
-        return createPreloaderPanel(GWT.getHostPageBaseURL() + "jaeheonshim.png");
+        return createPreloaderPanel(GWT.getHostPageBaseURL() + "loading.jpg");
     }
 
     @Override
