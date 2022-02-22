@@ -1,22 +1,45 @@
 package com.jaeheonshim.ersgame.server;
 
+import com.jaeheonshim.ersgame.game.model.GameState;
+import com.jaeheonshim.ersgame.game.model.Player;
 import com.jaeheonshim.ersgame.game.util.GameStateUtil;
+import com.jaeheonshim.ersgame.net.model.UIMessageType;
+import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.net.util.PacketObfuscator;
 import com.jaeheonshim.ersgame.server.cli.CommandParser;
 import com.jaeheonshim.ersgame.server.listener.*;
 import com.jaeheonshim.ersgame.util.ERSException;
-import com.jaeheonshim.ersgame.game.model.GameState;
-import com.jaeheonshim.ersgame.game.model.Player;
-import com.jaeheonshim.ersgame.net.model.UIMessageType;
-import com.jaeheonshim.ersgame.net.packet.*;
-import com.jaeheonshim.ersgame.server.action.ScheduleGameAction;
+import org.apache.commons.cli.*;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
+import org.java_websocket.server.DefaultSSLWebSocketServerFactory;
 import org.java_websocket.server.WebSocketServer;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.xml.bind.DatatypeConverter;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.*;
-import java.util.concurrent.*;
+import java.nio.file.Files;
+import java.security.*;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ERSServer extends WebSocketServer {
     private final ConcurrentHashMap<String, WebSocket> connectedClients = new ConcurrentHashMap<>();
@@ -30,7 +53,6 @@ public class ERSServer extends WebSocketServer {
         super(address);
         setTcpNoDelay(true);
         setupCommandThread();
-
     }
 
     @Override
@@ -143,8 +165,36 @@ public class ERSServer extends WebSocketServer {
         return scheduler;
     }
 
-    public static void main(String[] args) {
-        ERSServer server = new ERSServer(new InetSocketAddress("10.0.0.101", 8887));
+    public static void main(String[] args) throws ParseException {
+        Options options = new Options();
+        options.addOption("p", "port",true, "server port");
+        options.addOption("h", "hostname",true, "specify server hostname");
+        options.addOption("c", "cert",true, "specify ssl cert path");
+
+        CommandLineParser parser = new DefaultParser();
+        CommandLine cmd = parser.parse(options, args);
+
+        int port = 8887;
+        String hostName = "localhost";
+
+        if(cmd.hasOption("p")) {
+            port = Integer.parseInt(cmd.getOptionValue("p"));
+        }
+
+        if(cmd.hasOption("h")) {
+            hostName = cmd.getOptionValue("h").trim();
+        }
+
+        System.out.println("Running on " + hostName + ":" + port);
+
+        ERSServer server = new ERSServer(new InetSocketAddress(hostName, port));
+
+        if(cmd.hasOption("c")) {
+            String pathTo = cmd.getOptionValue("c");
+            SSLContext context = server.getSSLContextFromLetsEncrypt(pathTo);
+            server.setWebSocketFactory(new DefaultSSLWebSocketServerFactory(context));
+        }
+
         server.registerListener(new CreateGameListener(server));
         server.registerListener(new JoinGameListener(server));
         server.registerListener(new StartGameListener(server));
@@ -164,5 +214,54 @@ public class ERSServer extends WebSocketServer {
         });
 
         thread.start();
+    }
+
+    private SSLContext getSSLContextFromLetsEncrypt(String pathTo) {
+        SSLContext context;
+        String keyPassword = "";
+
+        try {
+            context = SSLContext.getInstance("TLS");
+
+            byte[] certBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "cert.pem").toPath()), "-----BEGIN CERTIFICATE-----", "-----END CERTIFICATE-----");
+            byte[] keyBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "privkey.pem").toPath()), "-----BEGIN PRIVATE KEY-----", "-----END PRIVATE KEY-----");
+
+            X509Certificate cert = generateCertificateFromDER(certBytes);
+            RSAPrivateKey key = generatePrivateKeyFromDER(keyBytes);
+
+            KeyStore keystore = KeyStore.getInstance("JKS");
+            keystore.load(null);
+            keystore.setCertificateEntry("cert-alias", cert);
+            keystore.setKeyEntry("key-alias", key, keyPassword.toCharArray(), new Certificate[]{cert});
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+            kmf.init(keystore, keyPassword.toCharArray());
+
+            KeyManager[] km = kmf.getKeyManagers();
+
+            context.init(km, null, null);
+        } catch (IOException | KeyManagementException | KeyStoreException | InvalidKeySpecException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException e) {
+            throw new IllegalArgumentException();
+        }
+        return context;
+    }
+
+    protected static byte[] parseDERFromPEM(byte[] pem, String beginDelimiter, String endDelimiter) {
+        String data = new String(pem);
+        String[] tokens = data.split(beginDelimiter);
+        tokens = tokens[1].split(endDelimiter);
+        return DatatypeConverter.parseBase64Binary(tokens[0]);
+    }
+
+    protected static RSAPrivateKey generatePrivateKeyFromDER(byte[] keyBytes) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory factory = KeyFactory.getInstance("RSA");
+        return (RSAPrivateKey) factory.generatePrivate(spec);
+    }
+
+    protected static X509Certificate generateCertificateFromDER(byte[] certBytes) throws CertificateException {
+        CertificateFactory factory = CertificateFactory.getInstance("X.509");
+
+        return (X509Certificate) factory.generateCertificate(new ByteArrayInputStream(certBytes));
     }
 }

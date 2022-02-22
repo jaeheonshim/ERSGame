@@ -131,5 +131,7 @@ project(":server") {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation 'org.java-websocket:Java-WebSocket:1.5.2'
+        implementation 'commons-cli:commons-cli:1.5.0'
+        compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
     }
 }
