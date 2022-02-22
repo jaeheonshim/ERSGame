@@ -93,6 +93,16 @@ public class CreditsScreen implements Screen {
         ERSLabel gdxWebsocketOSS = new ERSLabel("MrStahlfelge/gdx-websockets\nhttps://github.com/MrStahlfelge/gdx-websockets\nLicense: Apache 2.0", skin, "small", game);
         gdxWebsocketOSS.setColor(Color.BLACK);
         creditsTable.add(gdxWebsocketOSS).padTop(16);
+        creditsTable.row();
+
+        Image githubImage = new Image(game.assets.get(game.defaultAtlas, TextureAtlas.class).findRegion("jaeheonshim"));
+        creditsTable.add(githubImage).padTop(16);
+        githubImage.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.net.openURI("https://github.com/jaeheonshim");
+            }
+        });
     }
 
     @Override
