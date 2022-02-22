@@ -21,6 +21,7 @@ import javax.net.ssl.SSLContext;
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.file.Files;
@@ -218,29 +219,22 @@ public class ERSServer extends WebSocketServer {
 
     private SSLContext getSSLContextFromLetsEncrypt(String pathTo) {
         SSLContext context;
-        String keyPassword = "";
 
         try {
             context = SSLContext.getInstance("TLS");
 
-            byte[] certBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "cert.pem").toPath()), "-----BEGIN CERTIFICATE-----", "-----END CERTIFICATE-----");
-            byte[] keyBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "privkey.pem").toPath()), "-----BEGIN PRIVATE KEY-----", "-----END PRIVATE KEY-----");
+            char[] pwdArray = "password".toCharArray();
 
-            X509Certificate cert = generateCertificateFromDER(certBytes);
-            RSAPrivateKey key = generatePrivateKeyFromDER(keyBytes);
-
-            KeyStore keystore = KeyStore.getInstance("JKS");
-            keystore.load(null);
-            keystore.setCertificateEntry("cert-alias", cert);
-            keystore.setKeyEntry("key-alias", key, keyPassword.toCharArray(), new Certificate[]{cert});
-
+            KeyStore keystore = KeyStore.getInstance("PKCS12");
+            keystore.load(new FileInputStream(pathTo + File.separator + "keystore.p12"), pwdArray);
             KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
-            kmf.init(keystore, keyPassword.toCharArray());
+            kmf.init(keystore, pwdArray);
 
             KeyManager[] km = kmf.getKeyManagers();
 
             context.init(km, null, null);
-        } catch (IOException | KeyManagementException | KeyStoreException | InvalidKeySpecException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException e) {
+        } catch (IOException | KeyManagementException | KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException | CertificateException e) {
+            e.printStackTrace();
             throw new IllegalArgumentException();
         }
         return context;
