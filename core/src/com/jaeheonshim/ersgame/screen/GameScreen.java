@@ -108,7 +108,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         table.row();
         table.add(selfCount).bottom().padTop(20);
         table.row();
-        table.add(playButton).expandY().top().pad(8).growX().height(100);
+        table.add(playButton).expandY().top().pad(8).growX().height(100).bottom();
 
         overlayTable = new Table();
         table.setFillParent(true);
