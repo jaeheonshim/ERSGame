@@ -7,6 +7,7 @@ import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
 import com.badlogic.gdx.backends.gwt.preloader.Preloader;
 import com.github.czyzby.websocket.GwtWebSockets;
+import com.github.czyzby.websocket.WebSockets;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.user.client.ui.Panel;
@@ -18,7 +19,7 @@ public class HtmlLauncher extends GwtApplication {
     @Override
     public GwtApplicationConfiguration getConfig() {
         GwtWebSockets.initiate();
-        NetManager.initialize();
+        NetManager.initialize(WebSockets.toSecureWebSocketUrl("localhost", 8080));
         // Resizable application, uses available space in browser
         return new GwtApplicationConfiguration(true);
         // Fixed size application:

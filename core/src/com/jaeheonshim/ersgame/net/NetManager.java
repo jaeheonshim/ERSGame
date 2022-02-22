@@ -22,8 +22,8 @@ public class NetManager {
         return instance;
     }
 
-    public static void initialize() {
-        instance = new NetManager();
+    public static void initialize(String connectionUrl) {
+        instance = new NetManager(connectionUrl);
 
         instance.registerListener(new ConnectPacketListener());
         instance.registerListener(new UIMessagePacketListener());
@@ -34,8 +34,8 @@ public class NetManager {
         instance.registerListener(new SlapTimeoutPacketListener());
     }
 
-    private NetManager() {
-        client = new NetClient(this);
+    private NetManager(String connectionUrl) {
+        client = new NetClient(this, connectionUrl);
     }
 
     public void connect() {

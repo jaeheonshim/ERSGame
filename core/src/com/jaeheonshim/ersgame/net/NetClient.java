@@ -16,10 +16,10 @@ public class NetClient implements WebSocketListener {
     private long roundTripTime;
     private long lastPingTime;
 
-    public NetClient(NetManager netManager) {
+    public NetClient(NetManager netManager, String connectionUrl) {
         this.netManager = netManager;
 
-        socket = WebSockets.newSocket(WebSockets.toSecureWebSocketUrl("ers.jaeheonshim.dev", 8080));
+        socket = WebSockets.newSocket(connectionUrl);
         socket.setSendGracefully(true);
         socket.addListener(this);
         socket.setUseTcpNoDelay(true);
