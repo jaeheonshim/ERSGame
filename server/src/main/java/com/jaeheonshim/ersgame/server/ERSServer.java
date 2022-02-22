@@ -223,7 +223,7 @@ public class ERSServer extends WebSocketServer {
         try {
             context = SSLContext.getInstance("TLS");
 
-            byte[] certBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "cert.pem").toPath()), "-----BEGIN CERTIFICATE-----", "-----END CERTIFICATE-----");
+            byte[] certBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "fullchain.pem").toPath()), "-----BEGIN CERTIFICATE-----", "-----END CERTIFICATE-----");
             byte[] keyBytes = parseDERFromPEM(Files.readAllBytes(new File(pathTo + File.separator + "privkey.pem").toPath()), "-----BEGIN PRIVATE KEY-----", "-----END PRIVATE KEY-----");
 
             X509Certificate cert = generateCertificateFromDER(certBytes);
