@@ -71,7 +71,7 @@ public class OverlayStage extends Stage {
     public void onMessageUpdate(UIMessageType type, String message) {
         uiMessageLabel.onMessageUpdate(type, message);
         uiMessageLabel.clearActions();
-        uiMessageLabel.addAction(new DisappearAction(2.5f));
+        uiMessageLabel.addAction(new DisappearAction(1f));
     }
 
     public void postOverlayMessage(String message) {
