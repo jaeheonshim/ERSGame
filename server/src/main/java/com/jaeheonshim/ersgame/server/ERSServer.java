@@ -175,7 +175,7 @@ public class ERSServer extends WebSocketServer {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
 
-        int port = 8887;
+        int port = 8080;
         String hostName = "localhost";
 
         if(cmd.hasOption("p")) {
