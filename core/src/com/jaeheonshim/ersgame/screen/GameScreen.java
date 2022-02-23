@@ -293,7 +293,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         PlayerElement element = playersPane.getElement(uuid);
         element.setPointChange(amount);
 
-        if(uuid.equals(GameStateManager.getInstance().getSelfPlayer().getUuid())) {
+        if(uuid.equals(GameStateManager.getInstance().getSelfPlayer().getUuid()) && amount > 0) {
             onWinCards();
         }
     }

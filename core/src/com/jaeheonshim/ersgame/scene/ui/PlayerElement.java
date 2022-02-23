@@ -29,6 +29,8 @@ public class PlayerElement extends Table {
         this.skin = game.assets.get(game.uiSkin);
         this.player = player;
 
+        if(player == null) return;
+
         NinePatchDrawable backgroundDrawable = new NinePatchDrawable(skin.getPatch("grey_panel"));
         setBackground(backgroundDrawable);
 

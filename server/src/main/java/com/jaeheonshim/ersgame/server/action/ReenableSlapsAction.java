@@ -8,7 +8,7 @@ import com.jaeheonshim.ersgame.server.ERSServer;
 public class ReenableSlapsAction extends ScheduleGameAction {
     private ERSServer ersServer;
     private GameState gameState;
-    private static final long DEFAULT_DELAY = 1000;
+    private static final long DEFAULT_DELAY = 800;
 
     public ReenableSlapsAction(ERSServer ersServer, GameState gameState) {
         super(DEFAULT_DELAY);
