@@ -8,13 +8,9 @@ public class ReleaseTimeoutAction extends ScheduleGameAction {
     private Player player;
 
     public ReleaseTimeoutAction(float timer, Player player) {
+        super((long) (timer * 1000));
         this.timer = timer;
         this.player = player;
-    }
-
-    @Override
-    public long getDelay() {
-        return (long) (timer * 1000);
     }
 
     @Override

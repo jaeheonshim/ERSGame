@@ -9,14 +9,12 @@ public class ReenablePlayAction extends ScheduleGameAction {
     private ERSServer server;
     private GameState gameState;
 
+    private static final long DEFAULT_DELAY = 2000;
+
     public ReenablePlayAction(ERSServer server, GameState gameState) {
+        super(DEFAULT_DELAY);
         this.server = server;
         this.gameState = gameState;
-    }
-
-    @Override
-    public long getDelay() {
-        return 2000;
     }
 
     @Override

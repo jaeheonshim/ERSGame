@@ -12,8 +12,17 @@ public class NextTurnAction extends ScheduleGameAction {
     private ERSServer server;
     private GameState gameState;
     private boolean switchTurn;
+    private static long DEFAULT_DELAY = 750;
 
     public NextTurnAction(ERSServer server, GameState gameState, boolean switchTurn) {
+        super(DEFAULT_DELAY);
+        this.server = server;
+        this.gameState = gameState;
+        this.switchTurn = switchTurn;
+    }
+
+    public NextTurnAction(ERSServer server, GameState gameState, boolean switchTurn, long delay) {
+        super(delay);
         this.server = server;
         this.gameState = gameState;
         this.switchTurn = switchTurn;
@@ -25,11 +34,6 @@ public class NextTurnAction extends ScheduleGameAction {
 
         server.broadcast(new GameStatePacket(gameState), gameState);
         server.broadcast(new GameActionPacket(GameAction.TURN_UPDATE), gameState);
-    }
-
-    @Override
-    public long getDelay() {
-        return 1500;
     }
 
     @Override

@@ -52,7 +52,9 @@ public class GameStateUtil {
                 default:
                     break;
             }
-        } else return gameState.getPendingCardCount() <= 0;
+        } else {
+            return gameState.getPendingCardCount() <= 0 || gameState.getPlayer(gameState.getPlayerList().get(gameState.getCurrentTurnIndex())).getCardCount() <= 0;
+        }
 
         return true;
     }

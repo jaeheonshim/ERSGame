@@ -112,7 +112,6 @@ public class MainScreen implements Screen, ConnectStatusListener {
         if (NetManager.getInstance().getConnectionStatus() != ConnectionStatus.CONNECTED) {
             pendingScreen = screen;
             displayConnectingWindow("Please wait while we connect to the server...");
-            NetManager.getInstance().connect();
         } else {
             game.setScreen(screen);
         }
@@ -160,7 +159,6 @@ public class MainScreen implements Screen, ConnectStatusListener {
         Gdx.input.setInputProcessor(stage);
         NetManager.getInstance().setConnectStatusListener(this);
         connectingWindow.setVisible(false);
-        NetManager.getInstance().connect();
     }
 
     @Override
