@@ -90,4 +90,8 @@ public class NetManager {
     public long getRoundTripTime() {
         return client.getRoundTripTime();
     }
+
+    public void initConnectInterval() {
+        client.initConnectInterval();
+    }
 }

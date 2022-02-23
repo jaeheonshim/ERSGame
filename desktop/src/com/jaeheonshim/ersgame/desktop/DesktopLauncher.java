@@ -27,12 +27,6 @@ public class DesktopLauncher {
 
 		CommonWebSockets.initiate();
 
-		if(ssl) {
-			NetManager.initialize(WebSockets.toSecureWebSocketUrl(host, port));
-		} else {
-			NetManager.initialize(WebSockets.toWebSocketUrl(host, port));
-		}
-
 		TexturePacker.Settings settings = new TexturePacker.Settings();
 		settings.maxWidth = 2048;
 		settings.maxHeight = 2048;
@@ -43,5 +37,11 @@ public class DesktopLauncher {
 		config.width = 768;
 		config.height = 1024;
 		new LwjglApplication(new ERSGame(), config);
+
+		if(ssl) {
+			NetManager.initialize(WebSockets.toSecureWebSocketUrl(host, port));
+		} else {
+			NetManager.initialize(WebSockets.toWebSocketUrl(host, port));
+		}
 	}
 }

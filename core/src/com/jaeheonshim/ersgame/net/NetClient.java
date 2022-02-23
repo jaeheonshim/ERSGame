@@ -1,5 +1,6 @@
 package com.jaeheonshim.ersgame.net;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.github.czyzby.websocket.WebSocket;
@@ -16,6 +17,10 @@ public class NetClient implements WebSocketListener {
     private long roundTripTime;
     private long lastPingTime;
 
+    private Timer connectInterval;
+    private int connectionTries = 0;
+    private static final int MAX_CONNECTIONTRIES = 10;
+
     public NetClient(NetManager netManager, String connectionUrl) {
         this.netManager = netManager;
 
@@ -23,6 +28,26 @@ public class NetClient implements WebSocketListener {
         socket.setSendGracefully(true);
         socket.addListener(this);
         socket.setUseTcpNoDelay(true);
+    }
+
+    public void initConnectInterval( ){
+        if(connectInterval == null) {
+            connectInterval = new Timer();
+            connectInterval.scheduleTask(new Timer.Task() {
+                @Override
+                public void run() {
+                    if(socket.isClosed()) {
+                        if(connectionTries <= MAX_CONNECTIONTRIES) {
+                            Gdx.app.log("NET", "Attempting to reconnect...");
+                            connect();
+                            connectionTries++;
+                        }
+                    }
+                }
+            }, 0, 5);
+
+            connectInterval.start();
+        }
     }
 
     public void connect() {
@@ -36,7 +61,10 @@ public class NetClient implements WebSocketListener {
 
     @Override
     public boolean onOpen(WebSocket webSocket) {
+        Gdx.app.log("NET", "Connected!");
         netManager.setConnectionStatus(ConnectionStatus.CONNECTED);
+        connectInterval.stop();
+        connectionTries = 0;
 
         Timer timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
@@ -53,7 +81,9 @@ public class NetClient implements WebSocketListener {
 
     @Override
     public boolean onClose(WebSocket webSocket, int closeCode, String reason) {
+        Gdx.app.log("NET", "Disconnected");
         netManager.setConnectionStatus(ConnectionStatus.DISCONNECTED);
+        connectInterval.start();
         return true;
     }
 
