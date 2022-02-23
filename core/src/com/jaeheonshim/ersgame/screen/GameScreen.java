@@ -44,6 +44,7 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
     private Table table;
     private Table overlayTable;
+    private Table debugTable;
     private Stack stack;
 
     private PileDisplayActor pileDisplayActor;
@@ -57,11 +58,16 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     private ERSLabel timeoutLabel;
     private ERSTextButton playButton;
 
+    private ERSLabel debugCanPlay;
+    private ERSLabel debugIgnoreSlap;
+
     private Array<CardType> updatePile;
     private boolean awaitGameUpdatePile;
     private boolean pendingPileUpdate;
 
     private float timeoutTimer = 0;
+
+    private boolean debug = false;
 
     public GameScreen(ERSGame game) {
         this.game = game;
@@ -112,8 +118,21 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         overlayTable = new Table();
         table.setFillParent(true);
-        overlayTable.add(timeoutLabel).center().padLeft(50);
+        overlayTable.add(timeoutLabel).center().padLeft(50).row();
         timeoutLabel.setVisible(false);
+
+        debugCanPlay = new ERSLabel("canPlay: ", skin, "small", game);
+        debugCanPlay.setColor(Color.RED);
+        debugIgnoreSlap = new ERSLabel("ignoreSlap: ", skin, "small", game);
+        debugIgnoreSlap.setColor(Color.RED);
+
+        debugTable = new Table();
+        debugTable.setVisible(debug);
+        debugTable.left().padLeft(4);
+        debugTable.add(debugCanPlay).left().row();
+        debugTable.add(debugIgnoreSlap).left().row();
+
+        overlayTable.add(debugTable).growX().left();
 
         stack = new Stack();
         stack.setFillParent(true);
@@ -156,6 +175,19 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             }
         });
 
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if(keycode == Input.Keys.Z) {
+                    debug = !debug;
+                    debugTable.setVisible(debug);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         GameStateManager.getInstance().registerListener(this);
         GameStateManager.getInstance().registerActionListener(this);
 
@@ -165,6 +197,11 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     @Override
     public void onUpdate(GameState newGameState, GameState oldGameState) {
         if (!game.getScreen().equals(this)) return;
+
+        if(debug) {
+            debugIgnoreSlap.setText("ignoreSlap: " + newGameState.isIgnoreSlap());
+            debugCanPlay.setText("canPlay: " + newGameState.isCanPlay());
+        }
 
         if(newGameState.isGameOver()) {
             game.setScreen(game.gameOverScreen);
@@ -204,7 +241,12 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             updatePile = newGameState.getTopNCards(4);
         } else {
             updatePile = newGameState.getTopNCards(4);
-            pileDisplayActor.updatePileState();
+
+            if(animationCard.hasActions()) {
+                pendingPileUpdate = true;
+            } else {
+                pileDisplayActor.updatePileState();
+            }
         }
 
         if(newGameState.getPendingCardCount() > 0 && GameStateManager.getInstance().isTurn() && !GameStateManager.getInstance().getGameState().getLastFacePlayer().equals(GameStateManager.getInstance().getSelfPlayer().getUuid())) {

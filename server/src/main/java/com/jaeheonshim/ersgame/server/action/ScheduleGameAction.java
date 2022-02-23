@@ -3,10 +3,9 @@ package com.jaeheonshim.ersgame.server.action;
 public abstract class ScheduleGameAction implements Runnable {
     private long timer;
     private boolean isRun;
-    public abstract long getDelay();
 
-    public ScheduleGameAction() {
-        timer = getDelay();
+    public ScheduleGameAction(long delay) {
+        timer = delay;
     }
 
     public boolean update(long deltaMillis) {

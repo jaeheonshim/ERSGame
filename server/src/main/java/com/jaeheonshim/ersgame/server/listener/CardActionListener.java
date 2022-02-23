@@ -73,10 +73,6 @@ public class CardActionListener extends ServerPacketListener {
             awardedPlayer.addCardToBottom(c);
         }
 
-        // After someone slaps, stop play for a few seconds to avoid confusion
-        gameState.setCanPlay(false);
-        GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
-
         server.broadcast(new PointChangePacket(awardedPlayer.getUuid(), incrementAmount), gameState);
     }
 
@@ -87,16 +83,19 @@ public class CardActionListener extends ServerPacketListener {
         if(gameState.getPendingCardCount() == 0 && gameState.getLastFacePlayer() != null && !gameState.getLastFacePlayer().equals(playerUuid)) {
             // If player failed to fulfill face card action, award deck to player who played the last face card
             server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, playerUuid);
-            server.broadcast(new GameStatePacket(gameState), gameState);
+
             awardDeck(gameState, gameState.getPlayer(gameState.getLastFacePlayer()));
-            GameStateUtil.nextTurn(gameState, true);
             server.broadcast(new GameStatePacket(gameState), gameState);
+
+            GameManager.getInstance().schedule(new NextTurnAction(server, gameState, true, 2000));
         } else {
+            gameState.setIgnoreSlap(true);
             server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, playerUuid);
             server.broadcast(new GameStatePacket(gameState), gameState);
 
             // after play, next turn is delayed so that players have a chance to slap
             GameManager.getInstance().schedule(new NextTurnAction(server, gameState, switchTurn));
+            GameManager.getInstance().schedule(new ReenableSlapsAction(server, gameState, 250));
         }
     }
 
@@ -110,6 +109,9 @@ public class CardActionListener extends ServerPacketListener {
 
         if(isValid) {
             awardDeck(gameState, player);
+            // After someone slaps, stop play for a few seconds to avoid confusion
+            gameState.setCanPlay(false);
+            GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
         } else {
             if(player.getCardCount() > 0) {
                 server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
@@ -119,6 +121,7 @@ public class CardActionListener extends ServerPacketListener {
                 server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
 
                 if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
+                    // player ran out of cards by falsely slapping
                     gameState.setCanPlay(false);
                     GameManager.getInstance().schedule(new NextTurnAction(server, gameState, true));
                 }
