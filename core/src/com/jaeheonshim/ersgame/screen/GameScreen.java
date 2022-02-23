@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
-import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
@@ -236,10 +234,12 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
             // if someone took all the cards, slowly fade away the pile
             fadeAwayPile();
         } else if (awaitGameUpdatePile) {
+            pileDisplayActor.pack();
             awaitGameUpdatePile = false;
             pendingPileUpdate = true;
             updatePile = newGameState.getTopNCards(4);
         } else {
+            pileDisplayActor.pack();
             updatePile = newGameState.getTopNCards(4);
 
             if(animationCard.hasActions()) {
@@ -292,6 +292,10 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
     public void onPointUpdate(String uuid, int amount) {
         PlayerElement element = playersPane.getElement(uuid);
         element.setPointChange(amount);
+
+        if(uuid.equals(GameStateManager.getInstance().getSelfPlayer().getUuid())) {
+            onWinCards();
+        }
     }
 
     @Override
@@ -310,6 +314,15 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         Player selfPlayer = GameStateManager.getInstance().getSelfPlayer();
 
         playButton.setDisabled(selfPlayer.getCardCount() <= 0 || !GameStateManager.getInstance().isTurn() || !GameStateManager.getInstance().getGameState().isCanPlay() || GameStateManager.getInstance().getGameState().isIgnoreSlap());
+    }
+
+    private void onWinCards() {
+        MoveToAction moveToAction = new MoveToAction();
+        moveToAction.setPosition(pileDisplayActor.getX(), -500);
+        moveToAction.setDuration(1.5f);
+        moveToAction.setInterpolation(Interpolation.slowFast);
+
+        pileDisplayActor.addAction(moveToAction);
     }
 
     public void playCard() {
