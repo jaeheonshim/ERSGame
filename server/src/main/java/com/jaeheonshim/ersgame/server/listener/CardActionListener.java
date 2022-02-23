@@ -83,6 +83,7 @@ public class CardActionListener extends ServerPacketListener {
         if(gameState.getPendingCardCount() == 0 && gameState.getLastFacePlayer() != null && !gameState.getLastFacePlayer().equals(playerUuid)) {
             // If player failed to fulfill face card action, award deck to player who played the last face card
             server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, playerUuid);
+            server.broadcast(new GameStatePacket(gameState), gameState);
 
             awardDeck(gameState, gameState.getPlayer(gameState.getLastFacePlayer()));
             server.broadcast(new GameStatePacket(gameState), gameState);
