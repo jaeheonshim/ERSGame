@@ -33,59 +33,9 @@ public class CardActionListener extends ServerPacketListener {
             if(gameState == null) throw new ERSException("Player not in game");
 
             if(gameActionPacket.gameAction == GameAction.PLAY_CARD) {
-                if(!gameState.isCanPlay()) throw new ERSException("Can't play right now");
-                boolean switchTurn = GameStateUtil.playCard(gameState, uuid);
-
-                if(gameState.getPendingCardCount() == 0 && gameState.getLastFacePlayer() != null && !gameState.getLastFacePlayer().equals(uuid)) {
-                    server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
-                    server.broadcast(new GameStatePacket(gameState), gameState);
-                    awardDeck(gameState, gameState.getPlayer(gameState.getLastFacePlayer()));
-                    GameStateUtil.nextTurn(gameState, true);
-                    server.broadcast(new GameStatePacket(gameState), gameState);
-                } else {
-                    server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, uuid);
-                    server.broadcast(new GameStatePacket(gameState), gameState);
-
-                    GameManager.getInstance().schedule(new NextTurnAction(server, gameState, switchTurn));
-                }
-
-                // after play, next turn is delayed so that players have a chance to slap
+                onPlayCard(gameState, uuid);
             } else if(gameActionPacket.gameAction == GameAction.SLAP) {
-                if(gameState.isIgnoreSlap()) return true;
-
-                boolean isValid = GameStateUtil.isValidSlap(gameState);
-                Player player = gameState.getPlayer(uuid);
-
-                if(player.isTimedOut()) throw new ERSException("You aren't allowed to slap right now!");
-
-                if(isValid) {
-                    awardDeck(gameState, player);
-                } else {
-                    if(player.getCardCount() > 0) {
-                        server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
-                        server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
-                        server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
-                        gameState.addCardToBottom(player.removeTopCard());
-                        server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
-
-                        if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
-                            gameState.setCanPlay(false);
-                            GameManager.getInstance().schedule(new NextTurnAction(server, gameState, true));
-                        }
-                    } else {
-                        float timeAmount = 10;
-                        server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: " + ((int) timeAmount) + " sec penalty!"), gameState);
-                        server.send(new SlapTimeoutPacket(timeAmount), player.getUuid());
-                        player.setTimedOut(true);
-                        GameManager.getInstance().schedule(new ReleaseTimeoutAction(timeAmount, player));
-                    }
-                }
-
-                // after a slap happens, disable slap for a short amount of time to avoid multiple slaps unfairly penalizing players
-                gameState.setIgnoreSlap(true);
-
-                GameManager.getInstance().schedule(new ReenableSlapsAction(server, gameState));
-                server.broadcast(new GameStatePacket(gameState), gameState);
+                onSlap(gameState, uuid);
             }
 
             if(GameStateUtil.isGameOver(gameState)) {
@@ -128,5 +78,63 @@ public class CardActionListener extends ServerPacketListener {
         GameManager.getInstance().schedule(new ReenablePlayAction(server, gameState));
 
         server.broadcast(new PointChangePacket(awardedPlayer.getUuid(), incrementAmount), gameState);
+    }
+
+    private void onPlayCard(GameState gameState, String playerUuid) {
+        if(!gameState.isCanPlay()) throw new ERSException("Can't play right now");
+        boolean switchTurn = GameStateUtil.playCard(gameState, playerUuid);
+
+        if(gameState.getPendingCardCount() == 0 && gameState.getLastFacePlayer() != null && !gameState.getLastFacePlayer().equals(playerUuid)) {
+            // If player failed to fulfill face card action, award deck to player who played the last face card
+            server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, playerUuid);
+            server.broadcast(new GameStatePacket(gameState), gameState);
+            awardDeck(gameState, gameState.getPlayer(gameState.getLastFacePlayer()));
+            GameStateUtil.nextTurn(gameState, true);
+            server.broadcast(new GameStatePacket(gameState), gameState);
+        } else {
+            server.broadcastExcept(new GameActionPacket(GameAction.RECEIVE_CARD), gameState, playerUuid);
+            server.broadcast(new GameStatePacket(gameState), gameState);
+
+            // after play, next turn is delayed so that players have a chance to slap
+            GameManager.getInstance().schedule(new NextTurnAction(server, gameState, switchTurn));
+        }
+    }
+
+    private void onSlap(GameState gameState, String uuid) {
+        if(gameState.isIgnoreSlap()) return;
+
+        boolean isValid = GameStateUtil.isValidSlap(gameState);
+        Player player = gameState.getPlayer(uuid);
+
+        if(player.isTimedOut()) throw new ERSException("You aren't allowed to slap right now!");
+
+        if(isValid) {
+            awardDeck(gameState, player);
+        } else {
+            if(player.getCardCount() > 0) {
+                server.broadcastExcept(new GameActionPacket(GameAction.OTHERS_DISCARD), gameState, uuid);
+                server.send(new GameActionPacket(GameAction.YOU_DISCARD), uuid);
+                server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: -1 cards"), gameState);
+                gameState.addCardToBottom(player.removeTopCard());
+                server.broadcast(new PointChangePacket(player.getUuid(), -1), gameState);
+
+                if(gameState.getPlayerList().get(gameState.getCurrentTurnIndex()).equals(player.getUuid()) && player.getCardCount() <= 0) {
+                    gameState.setCanPlay(false);
+                    GameManager.getInstance().schedule(new NextTurnAction(server, gameState, true));
+                }
+            } else {
+                float timeAmount = 10;
+                server.broadcast(new OverlayMessagePacket(player.getUsername() + " slapped: " + ((int) timeAmount) + " sec penalty!"), gameState);
+                server.send(new SlapTimeoutPacket(timeAmount), player.getUuid());
+                player.setTimedOut(true);
+                GameManager.getInstance().schedule(new ReleaseTimeoutAction(timeAmount, player));
+            }
+        }
+
+        // after a slap happens, disable slap for a short amount of time to avoid multiple slaps unfairly penalizing players
+        gameState.setIgnoreSlap(true);
+
+        GameManager.getInstance().schedule(new ReenableSlapsAction(server, gameState));
+        server.broadcast(new GameStatePacket(gameState), gameState);
     }
 }
