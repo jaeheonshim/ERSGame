@@ -19,7 +19,7 @@ public class HtmlLauncher extends GwtApplication {
     @Override
     public GwtApplicationConfiguration getConfig() {
         GwtWebSockets.initiate();
-        NetManager.initialize(WebSockets.toWebSocketUrl("localhost", 8080));
+        NetManager.initialize(WebSockets.toSecureWebSocketUrl("ers.jaeheonshim.dev", 8080));
         // Resizable application, uses available space in browser
         return new GwtApplicationConfiguration(true);
         // Fixed size application:
