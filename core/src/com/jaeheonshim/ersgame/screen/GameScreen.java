@@ -188,8 +188,6 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
 
         GameStateManager.getInstance().registerListener(this);
         GameStateManager.getInstance().registerActionListener(this);
-
-        pileDisplayActor.setZIndex(3);
     }
 
     @Override
@@ -264,6 +262,14 @@ public class GameScreen implements Screen, GameStateUpdateListener, GameActionLi
         GameState gameState = GameStateManager.getInstance().getGameState();
         String currentTurnUUID = gameState.getPlayerList().get(gameState.getCurrentTurnIndex());
         Player currentTurn = gameState.getPlayer(currentTurnUUID);
+
+        PlayerElement element = playersPane.getElement(currentTurnUUID);
+        float x = element.getX();
+        float y = element.getY();
+        float width = element.getWidth();
+        float height = element.getHeight();
+
+        playerScrollPane.scrollTo(x, y, width, height, false, true);
 
         if (currentTurn.equals(GameStateManager.getInstance().getSelfPlayer())) {
             OverlayStage.getInstance().postOverlayMessage("It's your turn!");
