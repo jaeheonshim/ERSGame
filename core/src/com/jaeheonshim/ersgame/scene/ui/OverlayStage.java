@@ -112,6 +112,6 @@ public class OverlayStage extends Stage {
     @Override
     public void act(float delta) {
         super.act(delta);
-        pingLabel.setText("Ping: " + NetManager.getInstance().getRoundTripTime() + "ms");
+        pingLabel.setText("Ping: " + NetManager.getInstance().getRoundTripTime() + "ms" + (!NetManager.getInstance().isProductionServer() ? " (TEST)" : ""));
     }
 }

@@ -94,4 +94,8 @@ public class NetManager {
     public void initConnectInterval() {
         client.initConnectInterval();
     }
+
+    public boolean isProductionServer() {
+        return client.getHost().equalsIgnoreCase("wss://ers.jaeheonshim.dev:8080");
+    }
 }

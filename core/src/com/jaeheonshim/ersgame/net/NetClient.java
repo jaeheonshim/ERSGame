@@ -130,4 +130,8 @@ public class NetClient implements WebSocketListener {
 
         socket.send(packet);
     }
+
+    public String getHost() {
+        return socket.getUrl();
+    }
 }
