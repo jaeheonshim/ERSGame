@@ -107,7 +107,11 @@ public class ERSServer extends WebSocketServer {
                 if (listener.receive(conn, deserialized)) break;
             }
         } catch (ERSException e) {
-            conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize()));
+            if(!e.getMessage().isEmpty()) {
+                conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, e.getMessage()).serialize()));
+            } else {
+                conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
             conn.send(PacketObfuscator.applyMask(new UIMessagePacket(UIMessageType.ERROR, "A server error occurred").serialize()));

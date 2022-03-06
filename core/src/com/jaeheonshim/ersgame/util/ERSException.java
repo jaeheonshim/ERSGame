@@ -4,4 +4,8 @@ public class ERSException extends RuntimeException {
     public ERSException(String message) {
         super(message);
     }
+
+    public ERSException() {
+
+    }
 }

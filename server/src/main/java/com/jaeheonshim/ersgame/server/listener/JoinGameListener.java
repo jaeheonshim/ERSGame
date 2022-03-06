@@ -6,7 +6,9 @@ import com.jaeheonshim.ersgame.net.model.UIMessageType;
 import com.jaeheonshim.ersgame.net.packet.*;
 import com.jaeheonshim.ersgame.server.ERSServer;
 import com.jaeheonshim.ersgame.server.GameManager;
+import com.jaeheonshim.ersgame.server.InputValidator;
 import com.jaeheonshim.ersgame.server.ServerPacketListener;
+import com.jaeheonshim.ersgame.util.ERSException;
 import org.java_websocket.WebSocket;
 
 public class JoinGameListener extends ServerPacketListener {
@@ -19,6 +21,15 @@ public class JoinGameListener extends ServerPacketListener {
         if(packet instanceof JoinGamePacket) {
             String uuid = socket.getAttachment();
             JoinGamePacket joinGamePacket = ((JoinGamePacket) packet);
+
+            if(!InputValidator.validateGameCode(joinGamePacket.joinCode)) {
+                throw new ERSException();
+            }
+
+            if(!InputValidator.validateUsername(joinGamePacket.username)) {
+                throw new ERSException();
+            }
+
             GameState gameState = GameManager.getInstance().getGame(joinGamePacket.joinCode);
 
             if(gameState == null) {
